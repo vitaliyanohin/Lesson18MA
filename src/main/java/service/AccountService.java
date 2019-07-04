@@ -17,6 +17,9 @@ public class AccountService {
       e.printStackTrace();
     }
   }
+  public int count() {
+    return dbService.count();
+  }
 
   public User getUserByLogin(String name) {
     try {
@@ -26,5 +29,12 @@ public class AccountService {
     }
     return null;
   }
-
+  public User getUserByLogin(Long id) {
+    try {
+      return dbService.getUser(id);
+    } catch (DBException e) {
+      e.printStackTrace();
+    }
+    return null;
+  }
 }

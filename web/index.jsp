@@ -12,8 +12,16 @@
   </head>
   <body>
   <center>
+    <form  action="allUsers" method="post">
+
+      Email <input name="email" type="email" value='<%= (request.getParameter("email") == null)? "": request.getParameter("email") %>' /><br>
+      Password <input name="pass" id="password" type="password"><br>
+      R password <input name="rpass" id="rpassword" type="password"><br>
+      <input type="submit" ><br>
+    </form>
     <a href="register"> Registration </a>
     <a href="newProduct"> New Product </a>
+    <a href="allUsers"> All Users </a>
   </center>
   </body>
 </html>

@@ -17,6 +17,13 @@ public class Executor {
     stmt.execute(update);
     stmt.close();
   }
+  public int count(String sqlSelect) throws SQLException {
+    Statement stmt = connection.createStatement();
+    ResultSet rs = stmt.executeQuery(sqlSelect);
+    rs.next();
+    int count = rs.getInt(1);
+    return count;
+  }
 
   public <T> T execQuery(String query, ResultHandler<T> handler) throws SQLException {
     Statement stmt = connection.createStatement();

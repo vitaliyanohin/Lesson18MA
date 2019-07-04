@@ -1,6 +1,7 @@
 package controller;
 
 
+import factory.ProductDaoFactory;
 import model.Product;
 import service.ProductService;
 
@@ -13,16 +14,15 @@ import java.io.IOException;
 
 @WebServlet(value = "/newProduct")
 public class NewProductServlet extends HttpServlet {
-  private final ProductService productService;
-  {
-    productService = new ProductService();
+  private static final ProductService PRODUCT_SERVICE;
+
+  static {
+    PRODUCT_SERVICE = ProductDaoFactory.ProductServiceSingleton();
   }
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     System.out.println("get");
     req.getRequestDispatcher("newProduct.jsp").forward(req, resp);
-
-
   }
 
   @Override
@@ -32,7 +32,7 @@ public class NewProductServlet extends HttpServlet {
     String description = req.getParameter("description");
     Double price = Double.valueOf(req.getParameter("price"));
     Product newProduct = new Product(product, description, price);
-    productService.addNewProduct(newProduct);
+    PRODUCT_SERVICE.addNewProduct(newProduct);
     resp.setStatus(HttpServletResponse.SC_OK);
     resp.sendRedirect("/");
 

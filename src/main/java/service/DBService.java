@@ -1,7 +1,7 @@
 package service;
 
-import dao.ProductDao;
-import dao.UserDao;
+import dao.impl.ProductDaoImpl;
+import dao.impl.UserDaoImpl;
 import model.Product;
 import model.User;
 
@@ -19,7 +19,7 @@ public class DBService {
 
     public Product getProduct(String name) throws DBException {
         try {
-            return (new ProductDao(connection).getProduct(name));
+            return (new ProductDaoImpl(connection).getProduct(name));
         } catch (SQLException e) {
             throw new DBException(e);
         }
@@ -28,7 +28,7 @@ public class DBService {
     public Boolean addProduct(Product name) throws DBException {
         try {
             connection.setAutoCommit(false);
-            ProductDao dao = new ProductDao(connection);
+            ProductDaoImpl dao = new ProductDaoImpl(connection);
             dao.createTable();
             dao.insertUser(name);
             connection.commit();
@@ -48,16 +48,32 @@ public class DBService {
     }
     public User getUser(String name) throws DBException {
         try {
-            return (new UserDao(connection).getUser(name));
+            return (new UserDaoImpl(connection).getUser(name));
         } catch (SQLException e) {
             throw new DBException(e);
         }
+
+    }
+    public User getUser(Long id) throws DBException {
+        try {
+            return (new UserDaoImpl(connection).getUser(id));
+        } catch (SQLException e) {
+            throw new DBException(e);
+        }
+    }
+    public int count() {
+        try {
+            return new UserDaoImpl(connection).count();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     public Boolean addUser(User name) throws DBException {
         try {
             connection.setAutoCommit(false);
-            UserDao dao = new UserDao(connection);
+            UserDaoImpl dao = new UserDaoImpl(connection);
             dao.createTable();
             dao.insertUser(name);
             connection.commit();
@@ -77,7 +93,7 @@ public class DBService {
     }
 
     public void cleanUp() throws DBException {
-        UserDao dao = new UserDao(connection);
+        UserDaoImpl dao = new UserDaoImpl(connection);
         try {
             dao.dropTable();
         } catch (SQLException e) {
