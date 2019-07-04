@@ -23,13 +23,13 @@ public class UserDao {
   }
 
   public void insertUser(User user) throws SQLException {
-    executor.execUpdate("insert into users (user_name) values ('" + user.getEmail() + "')");
-    executor.execUpdate("insert into users (password) values ('" + user.getPassword() + "')");
+    executor.execUpdate("insert into users (user_name, password) values " +
+            "('" + user.getEmail() + "', " +  "'"  + user.getPassword() + "');");
   }
 
   public void createTable() throws SQLException {
     executor.execUpdate("create table if not exists users (id bigint auto_increment," +
-            " user_name varchar(256), password varchar(256), primary key (id))");
+            " user_name varchar(256), password varchar(256), primary key (id));");
   }
 
   public void dropTable() throws SQLException {

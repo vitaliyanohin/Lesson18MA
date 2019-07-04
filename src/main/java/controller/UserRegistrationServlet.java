@@ -22,17 +22,23 @@ public class UserRegistrationServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     System.out.println("get");
-   req.getRequestDispatcher("register.jsp").forward(req, resp);
+    req.getRequestDispatcher("register.jsp").forward(req, resp);
   }
+
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
     String login = req.getParameter("email");
-    String pass = req.getParameter("password");
-    User userProfile = new User(login, pass);
-    accountService.addNewUser(userProfile);
-    resp.setStatus(HttpServletResponse.SC_OK);
-    resp.sendRedirect("/");
+    String pass = req.getParameter("pass");
+    String rPass = req.getParameter("rpass");
+    if (pass.equals(rPass)) {
+      User userProfile = new User(login, pass);
+      accountService.addNewUser(userProfile);
+      resp.setStatus(HttpServletResponse.SC_OK);
+      resp.sendRedirect("/");
+    }
+    req.setAttribute("error", "Your password not equals!");
+    req.getRequestDispatcher("register.jsp").forward(req, resp);
 
   }
 }

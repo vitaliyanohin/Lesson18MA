@@ -25,14 +25,15 @@ public class ProductDao {
   }
 
   public void insertUser(Product product) throws SQLException {
-    executor.execUpdate("insert into products (product_name) values ('" + product.getName() + "')");
-    executor.execUpdate("insert into products (description) values ('" + product.getDescription() + "')");
-    executor.execUpdate("insert into products (price) values ('" + product.getPrice() + "')");
+    executor.execUpdate("insert into products (product_name, description, price) values " +
+            "('" + product.getName() + "', " +  "'"  + product.getDescription() + "', " + "'" + product.getPrice() + "');");
+
+
   }
 
   public void createTable() throws SQLException {
     executor.execUpdate("create table if not exists products (id bigint auto_increment," +
-            " product_name varchar(255), description varchar(255), price varchar(255), primary key (id))");
+            " product_name varchar(256), description varchar(256), price varchar(256), primary key (id))");
   }
 
   public void dropTable() throws SQLException {

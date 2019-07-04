@@ -27,6 +27,7 @@ public class NewProductServlet extends HttpServlet {
 
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
     String product = req.getParameter("product");
     String description = req.getParameter("description");
     Double price = Double.valueOf(req.getParameter("price"));
