@@ -1,7 +1,7 @@
 package controller;
 
 
-import factory.UserDaoFactory;
+import factory.AccountServiceFactory;
 import model.User;
 import service.AccountService;
 
@@ -11,13 +11,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 
 @WebServlet(value = "/register")
 public class UserRegistrationServlet extends HttpServlet {
   private static final AccountService ACCOUNT_SERVICE;
 
   static {
-    ACCOUNT_SERVICE = UserDaoFactory.AccountServiceSingltone();
+    ACCOUNT_SERVICE = AccountServiceFactory.AccountServiceSingleton();
   }
 
   @Override
@@ -34,7 +35,11 @@ public class UserRegistrationServlet extends HttpServlet {
     String rPass = req.getParameter("rpass");
     if (pass.equals(rPass)) {
       User userProfile = new User(login, pass);
-      ACCOUNT_SERVICE.addNewUser(userProfile);
+      try {
+        ACCOUNT_SERVICE.addUser(userProfile);
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
       resp.setStatus(HttpServletResponse.SC_OK);
       resp.sendRedirect("/");
     } else {

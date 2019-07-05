@@ -1,14 +1,15 @@
 package factory;
 
-import service.ProductService;
+import dao.ProductDao;
+import dao.impl.ProductDaoImpl;
 
 public class ProductDaoFactory {
-  private static ProductService productService;
+  private static ProductDao productDaoInstance;
 
-  public static ProductService ProductServiceSingleton() {
-    if (productService == null) {
-      productService = new ProductService();
+  public static ProductDao ProductDaoImplSingleton() {
+    if (productDaoInstance == null) {
+      productDaoInstance = new ProductDaoImpl();
     }
-    return productService;
+    return productDaoInstance;
   }
 }

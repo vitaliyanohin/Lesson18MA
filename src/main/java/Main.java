@@ -11,7 +11,7 @@
 //    Product product = new Product("ololo");
 //    accountService.addNewProduct(product);
 //    try {
-//      System.out.println(dbService.getUser("ololo").getName());
+//      System.out.println(dbService.getProductById("ololo").getName());
 //    } catch (DBException e) {
 //      e.printStackTrace();
 //    }

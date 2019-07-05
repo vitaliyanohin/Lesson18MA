@@ -1,30 +1,34 @@
 package service;
 
+import dao.ProductDao;
+import factory.ProductDaoFactory;
 import model.Product;
 
+import java.sql.SQLException;
+
 public class ProductService {
-  private DBService dbService;
+  private static final ProductDao PRODUCT_DAO;
 
-  public ProductService() {
-    dbService = new DBService();
-    dbService.printConnectInfo();
+
+  static {
+    PRODUCT_DAO = ProductDaoFactory.ProductDaoImplSingleton();
   }
 
-  public void addNewProduct(Product product) {
-    try {
-      dbService.addProduct(product);
-    } catch (DBException e) {
-      e.printStackTrace();
-    }
+  public Product getProduct(String name) {
+    return PRODUCT_DAO.getProduct(name);
   }
 
-  public Product getProductByName(String neme) {
-    try {
-      return dbService.getProduct(neme);
-    } catch (DBException e) {
-      e.printStackTrace();
-    }
-    return null;
+  public Product getProductById(Long id) {
+    return PRODUCT_DAO.getProductById(id);
   }
 
+  public Boolean addProduct(Product name) throws SQLException {
+    PRODUCT_DAO.createTable();
+    PRODUCT_DAO.addProduct(name);
+    return true;
+  }
+
+  public int count() {
+    return PRODUCT_DAO.count();
+  }
 }

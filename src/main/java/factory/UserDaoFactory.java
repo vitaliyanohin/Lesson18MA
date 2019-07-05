@@ -1,14 +1,15 @@
 package factory;
 
-import service.AccountService;
+import dao.UserDao;
+import dao.impl.UserDaoImpl;
 
 public class UserDaoFactory {
-  private static AccountService userInstance;
+  private static UserDao userDao;
 
-  public static AccountService AccountServiceSingltone() {
-    if (userInstance == null) {
-      userInstance = new AccountService();
+  public static UserDao UserDaoSingleton() {
+    if (userDao == null) {
+      userDao = new UserDaoImpl();
     }
-    return userInstance;
+    return userDao;
   }
 }

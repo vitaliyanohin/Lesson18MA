@@ -19,9 +19,10 @@
       R password <input name="rpass" id="rpassword" type="password"><br>
       <input type="submit" ><br>
     </form>
-    <a href="register"> Registration </a>
-    <a href="newProduct"> New Product </a>
-    <a href="allUsers"> All Users </a>
+    <a href="register"> Registration </a><br>
+    <a href="newProduct"> New Product </a><br>
+    <a href="allUsers"> All Users </a><br>
+    <a href="allProducts"> All Products </a> <br>
   </center>
   </body>
 </html>

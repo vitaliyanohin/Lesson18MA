@@ -1,40 +1,38 @@
 package service;
 
+import dao.UserDao;
+import factory.UserDaoFactory;
 import model.User;
 
+import java.sql.SQLException;
+
 public class AccountService {
-  private DBService dbService;
 
-  public AccountService() {
-    dbService = new DBService();
-    dbService.printConnectInfo();
-  }
+  private static final UserDao USER_DAO;
 
-  public void addNewUser(User userProfile) {
-    try {
-      dbService.addUser(userProfile);
-    } catch (DBException e) {
-      e.printStackTrace();
-    }
-  }
-  public int count() {
-    return dbService.count();
+
+  static {
+    USER_DAO = UserDaoFactory.UserDaoSingleton();
   }
 
-  public User getUserByLogin(String name) {
-    try {
-      return dbService.getUser(name);
-    } catch (DBException e) {
-      e.printStackTrace();
-    }
-    return null;
+  public User getUser(String name) throws SQLException {
+    return USER_DAO.getUser(name);
   }
-  public User getUserByLogin(Long id) {
-    try {
-      return dbService.getUser(id);
-    } catch (DBException e) {
-      e.printStackTrace();
-    }
-    return null;
+
+  public User getUser(Long id) throws SQLException {
+    return USER_DAO.getUser(id);
+  }
+
+  public int count() throws SQLException {
+    return USER_DAO.count();
+  }
+
+  public void addUser(User name) throws SQLException {
+    USER_DAO.createTable();
+    USER_DAO.addUser(name);
+  }
+
+  public void cleanUp() throws SQLException {
+    USER_DAO.dropTable();
   }
 }

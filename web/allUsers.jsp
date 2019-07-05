@@ -1,6 +1,7 @@
 <%@ page import="factory.UserDaoFactory" %>
 <%@ page import="service.AccountService" %>
 <%@ page import="java.io.PrintWriter" %>
+<%@ page import="factory.AccountServiceFactory" %>
 <%--
   Created by IntelliJ IDEA.
   User: Vitaliy
@@ -25,13 +26,13 @@
     boolean valid = true;
     long id = 1L;
 
-    AccountService accountService = UserDaoFactory.AccountServiceSingltone();
+    AccountService accountService = AccountServiceFactory.AccountServiceSingleton();
     id = accountService.count();
     while (id > 0) {
         printWriter.write("<tr>");
-        printWriter.write("<td>" + accountService.getUserByLogin(id).getEmail() + "</td>");
+        printWriter.write("<td>" + accountService.getUser(id).getEmail() + "</td>");
         printWriter.write("<center>");
-        printWriter.write("<td>" + accountService.getUserByLogin(id).getPassword() + "</td>");
+        printWriter.write("<td>" + accountService.getUser(id).getPassword() + "</td>");
         printWriter.write("</tr>");
         id--;
     }
