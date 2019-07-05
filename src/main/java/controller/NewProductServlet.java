@@ -21,6 +21,7 @@ public class NewProductServlet extends HttpServlet {
   static {
     PRODUCT_SERVICE = ProductServiceFactory.ProductServiceSingleton();
   }
+
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     System.out.println("get");
