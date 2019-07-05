@@ -20,10 +20,10 @@ public class ProductDaoImpl implements ProductDao {
   }
 
   @Override
-  public Product getProduct(String name){
+  public Product getProduct(String name) {
     try {
-      return executor.execQuery("select * from products where product_name='"
-              + name + "'", result -> { result.next();
+      return executor.execQuery("select * from products where product_name='" + name + "'",
+              result -> { result.next();
         return new Product(result.getLong(1),
                 result.getString(2),
                 result.getString(3),
@@ -38,8 +38,8 @@ public class ProductDaoImpl implements ProductDao {
   @Override
   public Product getProductById(long id) {
     try {
-      return executor.execQuery("select * from products where id= "
-              + id, result -> { result.next();
+      return executor.execQuery("select * from products where id= " + id,
+              result -> { result.next();
         return new Product(result.getLong(1),
                 result.getString(2),
                 result.getString(3),
@@ -51,32 +51,34 @@ public class ProductDaoImpl implements ProductDao {
     return null;
   }
 
-@Override
+  @Override
   public boolean addProduct(Product product) {
-  try {
-    connection.setAutoCommit(false);
-    executor.execUpdate("insert into products (product_name, description, price) values " +
-            "('" + product.getName() + "', " +  "'"  + product.getDescription() + "', " + "'" + product.getPrice() + "');");
-    connection.commit();
-    return true;
-  } catch (SQLException e) {
     try {
-      connection.rollback();
-    } catch (SQLException ignore) {
+      connection.setAutoCommit(false);
+      executor.execUpdate("insert into products (product_name, description, price) values " + "('" +
+              product.getName() + "', " + "'" +
+              product.getDescription() + "', " + "'" +
+              product.getPrice() + "');");
+      connection.commit();
+      return true;
+    } catch (SQLException e) {
+      try {
+        connection.rollback();
+      } catch (SQLException ignore) {
+      }
+    } finally {
+      try {
+        connection.setAutoCommit(true);
+      } catch (SQLException ignore) {
+      }
     }
-  } finally {
-    try {
-      connection.setAutoCommit(true);
-    } catch (SQLException ignore) {
-    }
+    return false;
   }
-  return false;
-}
 
   @Override
   public void createTable() throws SQLException {
-    executor.execUpdate("create table if not exists products (id bigint auto_increment," +
-            " product_name varchar(256), description varchar(256), price varchar(256), primary key (id))");
+    executor.execUpdate("create table if not exists products (id bigint auto_increment,"
+            + " product_name varchar(256), description varchar(256), price varchar(256), primary key (id))");
   }
 
   @Override

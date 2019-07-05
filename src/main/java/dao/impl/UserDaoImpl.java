@@ -21,16 +21,18 @@ public class UserDaoImpl implements UserDao {
 
   @Override
   public User getUser(String name) throws SQLException {
-    return executor.execQuery("select * from users where user_name='"
-            + name + "'", result -> { result.next();
-      return new User(result.getLong(1), result.getString(2), result.getString(3) );
+    return executor.execQuery("select * from users where user_name='" + name + "'",
+            result -> { result.next();
+      return new User(result.getLong(1),
+              result.getString(2),
+              result.getString(3));
     });
   }
 
   @Override
   public User getUser(long id) throws SQLException {
-    return executor.execQuery("select * from users where id="
-            + id, result -> { result.next();
+    return executor.execQuery("select * from users where id=" + id,
+            result -> { result.next();
       return new User(result.getString(2), result.getString(3));
     });
   }
@@ -39,21 +41,21 @@ public class UserDaoImpl implements UserDao {
   public boolean addUser(User user) {
     try {
       connection.setAutoCommit(false);
-      executor.execUpdate("insert into users (user_name, password) values " +
-              "('" + user.getEmail() + "', " +  "'"  + user.getPassword() + "');");
+      executor.execUpdate("insert into users (user_name, password) values " + "('" +
+              user.getEmail() + "', " + "'" + user.getPassword() + "');");
       connection.commit();
       return true;
-        } catch (SQLException e) {
-            try {
-                connection.rollback();
-            } catch (SQLException ignore) {
-            }
-        } finally {
-            try {
-                connection.setAutoCommit(true);
-            } catch (SQLException ignore) {
-            }
-        }
+    } catch (SQLException e) {
+      try {
+        connection.rollback();
+      } catch (SQLException ignore) {
+      }
+    } finally {
+      try {
+        connection.setAutoCommit(true);
+      } catch (SQLException ignore) {
+      }
+    }
     return false;
   }
 
@@ -65,8 +67,8 @@ public class UserDaoImpl implements UserDao {
   @Override
   public void createTable() {
     try {
-      executor.execUpdate("create table if not exists users (id bigint auto_increment," +
-              " user_name varchar(256), password varchar(256), primary key (id));");
+      executor.execUpdate("create table if not exists users (id bigint auto_increment,"
+              + " user_name varchar(256), password varchar(256), primary key (id));");
     } catch (SQLException e) {
       e.printStackTrace();
     }
