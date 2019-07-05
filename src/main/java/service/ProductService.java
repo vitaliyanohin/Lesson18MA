@@ -7,8 +7,8 @@ import model.Product;
 import java.sql.SQLException;
 
 public class ProductService {
-  private static final ProductDao PRODUCT_DAO;
 
+  private static final ProductDao PRODUCT_DAO;
 
   static {
     PRODUCT_DAO = ProductDaoFactory.ProductDaoImplSingleton();

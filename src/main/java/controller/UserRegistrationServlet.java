@@ -4,7 +4,6 @@ package controller;
 import factory.AccountServiceFactory;
 import model.User;
 import service.AccountService;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,6 +14,7 @@ import java.sql.SQLException;
 
 @WebServlet(value = "/register")
 public class UserRegistrationServlet extends HttpServlet {
+
   private static final AccountService ACCOUNT_SERVICE;
 
   static {
@@ -44,9 +44,8 @@ public class UserRegistrationServlet extends HttpServlet {
       resp.sendRedirect("/");
     } else {
       req.setAttribute("error", "Your password not equals!");
-req.setAttribute("email", login);
+      req.setAttribute("email", login);
       req.getRequestDispatcher("register.jsp").forward(req, resp);
     }
-
   }
 }

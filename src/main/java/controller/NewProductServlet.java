@@ -15,6 +15,7 @@ import java.sql.SQLException;
 
 @WebServlet(value = "/newProduct")
 public class NewProductServlet extends HttpServlet {
+
   private static final ProductService PRODUCT_SERVICE;
 
   static {
@@ -33,15 +34,12 @@ public class NewProductServlet extends HttpServlet {
     String description = req.getParameter("description");
     Double price = Double.valueOf(req.getParameter("price"));
     Product newProduct = new Product(product, description, price);
-
     try {
       PRODUCT_SERVICE.addProduct(newProduct);
     } catch (SQLException e) {
       e.printStackTrace();
     }
-
     resp.setStatus(HttpServletResponse.SC_OK);
     resp.sendRedirect("/");
-
   }
 }

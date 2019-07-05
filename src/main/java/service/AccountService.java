@@ -10,7 +10,6 @@ public class AccountService {
 
   private static final UserDao USER_DAO;
 
-
   static {
     USER_DAO = UserDaoFactory.UserDaoSingleton();
   }

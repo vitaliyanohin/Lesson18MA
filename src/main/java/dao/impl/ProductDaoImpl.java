@@ -18,6 +18,7 @@ public class ProductDaoImpl implements ProductDao {
     connection = GetSQLConnectionFactory.getMysqlConnection();
     executor = new Executor(connection);
   }
+
   @Override
   public Product getProduct(String name){
     try {
@@ -77,10 +78,12 @@ public class ProductDaoImpl implements ProductDao {
     executor.execUpdate("create table if not exists products (id bigint auto_increment," +
             " product_name varchar(256), description varchar(256), price varchar(256), primary key (id))");
   }
+
   @Override
   public void dropTable() throws SQLException {
     executor.execUpdate("drop table products");
   }
+
   @Override
   public int count() {
     try {
@@ -90,5 +93,4 @@ public class ProductDaoImpl implements ProductDao {
     }
     return 0;
   }
-
 }

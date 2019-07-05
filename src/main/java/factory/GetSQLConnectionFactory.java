@@ -20,9 +20,7 @@ public class GetSQLConnectionFactory {
               append("mysql?").          //db name
               append("user=user&").          //login
               append("password=user");       //password
-
       System.out.println("URL: " + url + "\n");
-
       Connection connection = DriverManager.getConnection(url.toString());
       try {
         System.out.println("DB name: " + connection.getMetaData().getDatabaseProductName());
@@ -33,10 +31,9 @@ public class GetSQLConnectionFactory {
         e.printStackTrace();
       }
       return connection;
-    } catch ( InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e) {
+    } catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e) {
       e.printStackTrace();
     }
-
     return null;
   }
 }

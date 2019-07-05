@@ -4,6 +4,7 @@ import dao.UserDao;
 import dao.impl.UserDaoImpl;
 
 public class UserDaoFactory {
+
   private static UserDao userDao;
 
   public static UserDao UserDaoSingleton() {

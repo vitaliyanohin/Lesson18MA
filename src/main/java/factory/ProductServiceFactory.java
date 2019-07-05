@@ -3,6 +3,7 @@ package factory;
 import service.ProductService;
 
 public class ProductServiceFactory {
+
   private static ProductService productService;
 
   public static ProductService ProductServiceSingleton() {

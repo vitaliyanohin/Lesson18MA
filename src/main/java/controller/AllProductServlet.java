@@ -12,6 +12,7 @@ import java.io.IOException;
 
 @WebServlet(value = "/allProducts")
 public class AllProductServlet extends HttpServlet {
+
   private static final ProductService PRODUCT_SERVICE;
 
   static {
@@ -27,6 +28,5 @@ public class AllProductServlet extends HttpServlet {
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     req.getRequestDispatcher("allProducts.jsp").forward(req, resp);
-
   }
 }
