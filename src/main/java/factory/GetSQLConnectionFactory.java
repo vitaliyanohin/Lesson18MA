@@ -1,11 +1,16 @@
 package factory;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class GetSQLConnectionFactory {
+
+  private static final Logger LOGGER =  Logger.getLogger(GetSQLConnectionFactory.class);
 
   public static Connection getMysqlConnection() {
     try {
@@ -28,11 +33,11 @@ public class GetSQLConnectionFactory {
         System.out.println("Driver: " + connection.getMetaData().getDriverName());
         System.out.println("Autocommit: " + connection.getAutoCommit());
       } catch (SQLException e) {
-        e.printStackTrace();
+         LOGGER.log(Level.ALL, "Error: ", e);
       }
       return connection;
     } catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e) {
-      e.printStackTrace();
+       LOGGER.log(Level.ALL, "Error: ", e);
     }
     return null;
   }

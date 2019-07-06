@@ -18,7 +18,7 @@ public class Executor {
     stmt.close();
   }
 
-  public int count(String sqlSelect) throws SQLException {
+  public int size(String sqlSelect) throws SQLException {
     Statement stmt = connection.createStatement();
     ResultSet rs = stmt.executeQuery(sqlSelect);
     rs.next();

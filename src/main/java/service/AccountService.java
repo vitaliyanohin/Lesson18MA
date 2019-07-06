@@ -4,34 +4,34 @@ import dao.UserDao;
 import factory.UserDaoFactory;
 import model.User;
 
-import java.sql.SQLException;
+import java.util.Optional;
 
 public class AccountService {
 
-  private static final UserDao USER_DAO;
+  private static final UserDao userDao;
 
   static {
-    USER_DAO = UserDaoFactory.UserDaoSingleton();
+    userDao = UserDaoFactory.UserDaoSingleton();
   }
 
-  public User getUser(String name) throws SQLException {
-    return USER_DAO.getUser(name);
+  public Optional<User> getUser(String name) {
+    return userDao.getUser(name);
   }
 
-  public User getUser(Long id) throws SQLException {
-    return USER_DAO.getUser(id);
+  public Optional<User> getUser(int id) {
+    return userDao.getUser(id);
   }
 
-  public int count() throws SQLException {
-    return USER_DAO.count();
+  public int size() {
+    return userDao.size();
   }
 
-  public void addUser(User name) throws SQLException {
-    USER_DAO.createTable();
-    USER_DAO.addUser(name);
+  public void addUser(User name) {
+    userDao.createTable();
+    userDao.addUser(name);
   }
 
-  public void cleanUp() throws SQLException {
-    USER_DAO.dropTable();
+  public void cleanUp() {
+    userDao.dropTable();
   }
 }

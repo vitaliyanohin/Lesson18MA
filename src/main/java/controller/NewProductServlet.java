@@ -11,15 +11,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
 
 @WebServlet(value = "/newProduct")
 public class NewProductServlet extends HttpServlet {
 
-  private static final ProductService PRODUCT_SERVICE;
+  private static final ProductService productService;
 
   static {
-    PRODUCT_SERVICE = ProductServiceFactory.ProductServiceSingleton();
+    productService = ProductServiceFactory.ProductServiceSingleton();
   }
 
   @Override
@@ -35,11 +34,7 @@ public class NewProductServlet extends HttpServlet {
     String description = req.getParameter("description");
     Double price = Double.valueOf(req.getParameter("price"));
     Product newProduct = new Product(product, description, price);
-    try {
-      PRODUCT_SERVICE.addProduct(newProduct);
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
+    productService.addProduct(newProduct);
     resp.setStatus(HttpServletResponse.SC_OK);
     resp.sendRedirect("/");
   }

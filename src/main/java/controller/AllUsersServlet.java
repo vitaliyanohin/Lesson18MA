@@ -1,8 +1,5 @@
 package controller;
 
-import factory.AccountServiceFactory;
-import service.AccountService;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,12 +9,6 @@ import java.io.IOException;
 
 @WebServlet(value = "/allUsers")
 public class AllUsersServlet extends HttpServlet {
-
-  private static final AccountService ACCOUNT_SERVICE;
-
-  static {
-    ACCOUNT_SERVICE = AccountServiceFactory.AccountServiceSingleton();
-  }
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

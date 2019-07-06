@@ -2,19 +2,19 @@ package dao;
 
 import model.User;
 
-import java.sql.SQLException;
+import java.util.Optional;
 
 public interface UserDao {
 
-  User getUser(String name) throws SQLException;
+  Optional<User>  getUser(String name);
 
-  User getUser(long id) throws SQLException;
+  Optional<User> getUser(int id);
 
-  boolean addUser(User user) throws SQLException;
+  boolean addUser(User user);
 
-  int count() throws SQLException;
+  int size();
 
-  void createTable() throws SQLException;
+  void createTable() ;
 
-  void dropTable() throws SQLException;
+  void dropTable();
 }

@@ -1,6 +1,7 @@
 <%@ page import="java.io.PrintWriter" %>
 <%@ page import="service.ProductService" %>
-<%@ page import="factory.ProductServiceFactory" %><%--
+<%@ page import="factory.ProductServiceFactory" %>
+<%@ page import="java.util.Optional" %><%--
   Created by IntelliJ IDEA.
   User: Vitaliy
   Date: 05.07.2019
@@ -18,15 +19,16 @@
     printWriter.write(" <h2> Список пользователей:</h2>");
     printWriter.write(" <table border=\"1\" align=\"center\">\n" + "<tr>" + "<th> Name </th>\n" + "<th> Price </th>\n");
     boolean valid = true;
-    long id = 1L;
+
 
     ProductService productService = ProductServiceFactory.ProductServiceSingleton();
-    id = productService.count();
+    int id = productService.size();
+
     while (id > 0) {
         printWriter.write("<tr>");
-        printWriter.write("<td>" + productService.getProductById(id).getName() + "</td>");
+        printWriter.write("<td>" + productService.getProductById(id).get().getName() + "</td>");
         printWriter.write("<center>");
-        printWriter.write("<td>" + productService.getProductById(id).getPrice() + "</td>");
+        printWriter.write("<td>" + productService.getProductById(id).get().getPrice() + "</td>");
         printWriter.write("</tr>");
         id--;
     }

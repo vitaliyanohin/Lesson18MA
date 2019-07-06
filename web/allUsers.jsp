@@ -24,15 +24,15 @@
     printWriter.write(" <h2> Список пользователей:</h2>");
     printWriter.write(" <table border=\"1\" align=\"center\">\n" + "<tr>" + "<th> Email </th>\n" + "<th> Password </th>\n");
     boolean valid = true;
-    long id = 1L;
+
 
     AccountService accountService = AccountServiceFactory.AccountServiceSingleton();
-    id = accountService.count();
+    int id = accountService.size();
     while (id > 0) {
         printWriter.write("<tr>");
-        printWriter.write("<td>" + accountService.getUser(id).getEmail() + "</td>");
+        printWriter.write("<td>" + accountService.getUser(id).get().getEmail() + "</td>");
         printWriter.write("<center>");
-        printWriter.write("<td>" + accountService.getUser(id).getPassword() + "</td>");
+        printWriter.write("<td>" + accountService.getUser(id).get().getPassword() + "</td>");
         printWriter.write("</tr>");
         id--;
     }

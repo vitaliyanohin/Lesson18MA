@@ -1,19 +1,20 @@
 package dao;
 
 import model.Product;
-import java.sql.SQLException;
+
+import java.util.Optional;
 
 public interface ProductDao {
 
-  Product getProduct(String name);
+  Optional<Product> getProduct(String name);
 
-  Product getProductById(long id);
+  Optional<Product>  getProductById(int id);
 
   boolean addProduct(Product product);
 
-  void createTable() throws SQLException;
+  void createTable();
 
-  void dropTable() throws SQLException;
+  void dropTable();
 
-  int count();
+  int size();
 }
