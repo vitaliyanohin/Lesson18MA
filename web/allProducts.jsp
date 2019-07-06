@@ -1,7 +1,8 @@
 <%@ page import="java.io.PrintWriter" %>
-<%@ page import="service.ProductService" %>
+<%@ page import="service.impl.ProductServiceImpl" %>
 <%@ page import="factory.ProductServiceFactory" %>
-<%@ page import="java.util.Optional" %><%--
+<%@ page import="java.util.Optional" %>
+<%--
   Created by IntelliJ IDEA.
   User: Vitaliy
   Date: 05.07.2019
@@ -19,7 +20,7 @@
     printWriter.write(" <h2> Список пользователей:</h2>");
     printWriter.write(" <table border=\"1\" align=\"center\">\n"
             + "<tr>" + "<th> Name </th>\n" + "<th> Price </th>\n");
-    ProductService productService = ProductServiceFactory.ProductServiceSingleton();
+    ProductServiceImpl productService = ProductServiceFactory.ProductServiceSingleton();
     int id = productService.size();
     while (id > 0) {
         printWriter.write("<tr>");

@@ -2,7 +2,7 @@ package controller;
 
 import factory.ProductServiceFactory;
 import model.Product;
-import service.ProductService;
+import service.impl.ProductServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,7 +14,7 @@ import java.io.IOException;
 @WebServlet(value = "/newProduct")
 public class NewProductServlet extends HttpServlet {
 
-  private static final ProductService productService;
+  private static final ProductServiceImpl productService;
 
   static {
     productService = ProductServiceFactory.ProductServiceSingleton();

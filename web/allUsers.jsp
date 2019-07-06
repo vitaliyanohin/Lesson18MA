@@ -1,5 +1,5 @@
 <%@ page import="factory.UserDaoFactory" %>
-<%@ page import="service.AccountService" %>
+<%@ page import="service.impl.AccountServiceImpl" %>
 <%@ page import="java.io.PrintWriter" %>
 <%@ page import="factory.AccountServiceFactory" %>
 <%--
@@ -24,7 +24,7 @@
     printWriter.write(" <h2> Список пользователей:</h2>");
     printWriter.write(" <table border=\"1\" align=\"center\">\n"
             + "<tr>" + "<th> Email </th>\n" + "<th> Password </th>\n");
-    AccountService accountService = AccountServiceFactory.AccountServiceSingleton();
+    AccountServiceImpl accountService = AccountServiceFactory.AccountServiceSingleton();
     int id = accountService.size();
     while (id > 0) {
         printWriter.write("<tr>");

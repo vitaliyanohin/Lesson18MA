@@ -2,7 +2,7 @@ package controller;
 
 import factory.AccountServiceFactory;
 import model.User;
-import service.AccountService;
+import service.impl.AccountServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,7 +14,7 @@ import java.io.IOException;
 @WebServlet(value = "/register")
 public class UserRegistrationServlet extends HttpServlet {
 
-  private static final AccountService accountService;
+  private static final AccountServiceImpl accountService;
 
   static {
     accountService = AccountServiceFactory.AccountServiceSingleton();

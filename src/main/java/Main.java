@@ -1,5 +1,5 @@
 //import model.Product;
-//import service.ProductService;
+//import service.impl.ProductServiceImpl;
 //import service.DBException;
 //import service.DBService;
 //
@@ -7,7 +7,7 @@
 //  public static void main(String[] args) {
 //    DBService dbService = new DBService();
 //
-//    ProductService accountService = new ProductService();
+//    ProductServiceImpl accountService = new ProductServiceImpl();
 //    Product product = new Product("ololo");
 //    accountService.addNewProduct(product);
 //    try {

@@ -1,33 +1,16 @@
 package service;
 
-import dao.ProductDao;
-import factory.ProductDaoFactory;
 import model.Product;
+
 import java.util.Optional;
 
-public class ProductService {
+public interface ProductService {
 
-  private static final ProductDao productDao;
+  Optional<Product> getProduct(String name);
 
-  static {
-    productDao = ProductDaoFactory.ProductDaoImplSingleton();
-  }
+  Optional<Product> getProductById(int id);
 
-  public Optional<Product> getProduct(String name) {
-    return productDao.getProduct(name);
-  }
+  Boolean addProduct(Product name);
 
-  public Optional<Product> getProductById(int id) {
-    return productDao.getProductById(id);
-  }
-
-  public Boolean addProduct(Product name) {
-    productDao.createTable();
-    productDao.addProduct(name);
-    return true;
-  }
-
-  public int size() {
-    return productDao.size();
-  }
+  int size();
 }
