@@ -32,9 +32,9 @@ public class ProductDaoImpl implements ProductDao {
                             result.getString(2),
                             result.getString(3),
                             result.getDouble(4)));
-      });
+                        });
     } catch (SQLException e) {
-      LOGGER.log(Level.ALL, "Error: ", e);
+       LOGGER.log(Level.ALL, "Error: ", e);
     }
     return Optional.empty();
   }
@@ -51,7 +51,7 @@ public class ProductDaoImpl implements ProductDao {
                                 result.getDouble(4)));
                         });
     } catch (SQLException e) {
-      LOGGER.log(Level.ALL, "Error: ", e);
+       LOGGER.log(Level.ALL, "Error: ", e);
     }
     return Optional.empty();
   }
@@ -70,14 +70,14 @@ public class ProductDaoImpl implements ProductDao {
       try {
         connection.rollback();
       } catch (SQLException ex) {
-        LOGGER.log(Level.ALL, "Error: ", ex);
+         LOGGER.log(Level.ALL, "Error: ", ex);
       }
     } finally {
 
       try {
         connection.setAutoCommit(true);
       } catch (SQLException e) {
-        LOGGER.log(Level.ALL, "Error: ", e);
+         LOGGER.log(Level.ALL, "Error: ", e);
       }
     }
     return false;
@@ -90,7 +90,7 @@ public class ProductDaoImpl implements ProductDao {
               + " product_name varchar(256), description varchar(256), "
               + "price varchar(256), primary key (id))");
     } catch (SQLException e) {
-      LOGGER.log(Level.ALL, "Error: ", e);
+       LOGGER.log(Level.ALL, "Error: ", e);
     }
   }
 
@@ -99,7 +99,7 @@ public class ProductDaoImpl implements ProductDao {
     try {
       executor.execUpdate("drop table products");
     } catch (SQLException e) {
-      LOGGER.log(Level.ALL, "Error: ", e);
+       LOGGER.log(Level.ALL, "Error: ", e);
     }
   }
 
@@ -108,7 +108,7 @@ public class ProductDaoImpl implements ProductDao {
     try {
       return executor.size("SELECT COUNT(*) FROM products;\n");
     } catch (SQLException e) {
-      LOGGER.log(Level.ALL, "Error: ", e);
+       LOGGER.log(Level.ALL, "Error: ", e);
     }
     return 0;
   }

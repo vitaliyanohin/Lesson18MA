@@ -72,7 +72,7 @@ public class UserDaoImpl implements UserDao {
       try {
         connection.setAutoCommit(true);
       } catch (SQLException ignore) {
-        LOGGER.log(Level.ALL, "Error: ", ignore);
+         LOGGER.log(Level.ALL, "Error: ", ignore);
       }
     }
     return false;
@@ -94,7 +94,7 @@ public class UserDaoImpl implements UserDao {
       executor.execUpdate("create table if not exists users (id bigint auto_increment,"
               + " user_name varchar(256), password varchar(256), primary key (id));");
     } catch (SQLException e) {
-      LOGGER.log(Level.ALL, "Error: ", e);
+       LOGGER.log(Level.ALL, "Error: ", e);
     }
   }
 
@@ -103,7 +103,7 @@ public class UserDaoImpl implements UserDao {
     try {
       executor.execUpdate("drop table users");
     } catch (SQLException e) {
-      LOGGER.log(Level.ALL, "Error: ", e);
+       LOGGER.log(Level.ALL, "Error: ", e);
     }
   }
 }
