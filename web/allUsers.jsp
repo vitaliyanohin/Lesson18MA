@@ -22,10 +22,8 @@
 <% PrintWriter printWriter = response.getWriter();
     printWriter.write("<center>");
     printWriter.write(" <h2> Список пользователей:</h2>");
-    printWriter.write(" <table border=\"1\" align=\"center\">\n" + "<tr>" + "<th> Email </th>\n" + "<th> Password </th>\n");
-    boolean valid = true;
-
-
+    printWriter.write(" <table border=\"1\" align=\"center\">\n"
+            + "<tr>" + "<th> Email </th>\n" + "<th> Password </th>\n");
     AccountService accountService = AccountServiceFactory.AccountServiceSingleton();
     int id = accountService.size();
     while (id > 0) {

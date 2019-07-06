@@ -8,12 +8,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-
     <title> New Product </title>
 </head>
 <body>
 <form  action="newProduct" method="post">
-
     <input name="product" type="text"/>
     <input name="description" type="text">
     <input name="price" type="text">

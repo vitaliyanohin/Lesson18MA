@@ -14,7 +14,8 @@
   <center>
     <form  action="allUsers" method="post">
 
-      Email <input name="email" type="email" value='<%= (request.getParameter("email") == null)? "": request.getParameter("email") %>' /><br>
+      Email <input name="email" type="email" value='<%= (request
+      .getParameter("email") == null)? "": request.getParameter("email") %>' /><br>
       Password <input name="pass" id="password" type="password"><br>
       R password <input name="rpass" id="rpassword" type="password"><br>
       <input type="submit" ><br>

@@ -17,13 +17,10 @@
 <% PrintWriter printWriter = response.getWriter();
     printWriter.write("<center>");
     printWriter.write(" <h2> Список пользователей:</h2>");
-    printWriter.write(" <table border=\"1\" align=\"center\">\n" + "<tr>" + "<th> Name </th>\n" + "<th> Price </th>\n");
-    boolean valid = true;
-
-
+    printWriter.write(" <table border=\"1\" align=\"center\">\n"
+            + "<tr>" + "<th> Name </th>\n" + "<th> Price </th>\n");
     ProductService productService = ProductServiceFactory.ProductServiceSingleton();
     int id = productService.size();
-
     while (id > 0) {
         printWriter.write("<tr>");
         printWriter.write("<td>" + productService.getProductById(id).get().getName() + "</td>");
