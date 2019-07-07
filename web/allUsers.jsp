@@ -1,7 +1,6 @@
-<%@ page import="factory.UserDaoFactory" %>
+<%@ page import="factory.AccountServiceFactory" %>
 <%@ page import="service.impl.AccountServiceImpl" %>
 <%@ page import="java.io.PrintWriter" %>
-<%@ page import="factory.AccountServiceFactory" %>
 <%--
   Created by IntelliJ IDEA.
   User: Vitaliy
@@ -19,11 +18,11 @@
 
     <a href="register"> Registration </a> <br>
 
-        <form action="allProducts" method="post">
+    <form action="allProducts" method="post">
 
-            <a href="allProducts"> All Product </a><br>
-</form>
-<% PrintWriter printWriter = response.getWriter();
+        <a href="allProducts"> All Product </a><br>
+    </form>
+        <% PrintWriter printWriter = response.getWriter();
     printWriter.write("<center>");
     printWriter.write(" <h2> Список пользователей:</h2>");
     printWriter.write(" <table border=\"1\" align=\"center\">\n"

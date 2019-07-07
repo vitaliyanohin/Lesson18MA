@@ -1,7 +1,6 @@
-<%@ page import="java.io.PrintWriter" %>
-<%@ page import="service.impl.ProductServiceImpl" %>
 <%@ page import="factory.ProductServiceFactory" %>
-<%@ page import="java.util.Optional" %>
+<%@ page import="service.impl.ProductServiceImpl" %>
+<%@ page import="java.io.PrintWriter" %>
 <%--
   Created by IntelliJ IDEA.
   User: Vitaliy
@@ -22,7 +21,7 @@
     <form action="allUsers" method="post">
 
         <a href="allUsers"> All Users </a><br>
-<% PrintWriter printWriter = response.getWriter();
+            <% PrintWriter printWriter = response.getWriter();
     printWriter.write("<center>");
     printWriter.write(" <h2> Список пользователей:</h2>");
     printWriter.write(" <table border=\"1\" align=\"center\">\n"
