@@ -17,7 +17,11 @@
 <body>
 <form action="register" method="post">
 
-    <a href="register"> Registration </a>
+    <a href="register"> Registration </a> <br>
+
+        <form action="allProducts" method="post">
+
+            <a href="allProducts"> All Product </a><br>
 </form>
 <% PrintWriter printWriter = response.getWriter();
     printWriter.write("<center>");

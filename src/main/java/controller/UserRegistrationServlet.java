@@ -35,7 +35,7 @@ public class UserRegistrationServlet extends HttpServlet {
       User userProfile = new User(login, pass);
         accountService.addUser(userProfile);
       resp.setStatus(HttpServletResponse.SC_OK);
-      resp.sendRedirect("/");
+    //  resp.sendRedirect("/");
     } else {
       req.setAttribute("error", "Your password not equals!");
       req.setAttribute("email", login);

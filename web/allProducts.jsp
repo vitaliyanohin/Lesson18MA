@@ -15,6 +15,13 @@
     <title>Title</title>
 </head>
 <body>
+<form action="newProduct" method="post">
+
+    <a href="newProduct"> NewProduct </a><br>
+
+    <form action="allUsers" method="post">
+
+        <a href="allUsers"> All Users </a><br>
 <% PrintWriter printWriter = response.getWriter();
     printWriter.write("<center>");
     printWriter.write(" <h2> Список пользователей:</h2>");

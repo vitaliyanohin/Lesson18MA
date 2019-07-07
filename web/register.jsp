@@ -18,6 +18,7 @@
       response.getWriter().write("<center>");
       response.getWriter().print(error);
         response.getWriter().write("</center>");
+
     }
     %>
 
@@ -26,7 +27,7 @@
    .getParameter("email") == null)? "": request.getParameter("email") %>' /><br>
     Password <input name="pass" id="password" type="password"> <br>
     R password <input name="rpass" id="rpassword" type="password"><br>
-    <input type="submit" ><br>
+    <input type="submit"><br>
 
 </form>
 </center>
