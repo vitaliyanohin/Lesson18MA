@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Executor {
   private final Connection connection;
@@ -35,5 +37,17 @@ public class Executor {
     statement.close();
 
     return value;
+  }
+  public List<Long> execAllUserIDQuery(String query) throws SQLException {
+    Statement statement = connection.createStatement();
+    statement.execute(query);
+    ResultSet resultSet = statement.getResultSet();
+    List<Long> list = new ArrayList<>();
+    while (resultSet.next()) {
+      list.add( resultSet.getLong(1));
+    }
+    resultSet.close();
+    statement.close();
+    return list;
   }
 }
