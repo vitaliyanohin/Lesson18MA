@@ -38,13 +38,13 @@ public class Executor {
 
     return value;
   }
-  public List<Long> execAllUserIDQuery(String query) throws SQLException {
+  public List<Long> execQueryForAllID(String query) throws SQLException {
     Statement statement = connection.createStatement();
     statement.execute(query);
     ResultSet resultSet = statement.getResultSet();
     List<Long> list = new ArrayList<>();
     while (resultSet.next()) {
-      list.add( resultSet.getLong(1));
+      list.add(resultSet.getLong(1));
     }
     resultSet.close();
     statement.close();

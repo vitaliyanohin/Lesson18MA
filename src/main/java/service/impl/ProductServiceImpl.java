@@ -5,6 +5,7 @@ import factory.ProductDaoFactory;
 import model.Product;
 import service.ProductService;
 
+import java.util.List;
 import java.util.Optional;
 
 public class ProductServiceImpl implements ProductService {
@@ -17,8 +18,13 @@ public class ProductServiceImpl implements ProductService {
   }
 
   @Override
-  public Optional<Product> getProductById(int id) {
+  public Optional<Product> getProductById(long id) {
     return productDao.getProductById(id);
+  }
+
+  @Override
+  public Optional<List<Long>> getAllProductID() {
+    return productDao.getAllProductID();
   }
 
   @Override

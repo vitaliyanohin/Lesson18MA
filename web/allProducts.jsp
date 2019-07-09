@@ -1,6 +1,7 @@
 <%@ page import="factory.ProductServiceFactory" %>
 <%@ page import="service.impl.ProductServiceImpl" %>
 <%@ page import="java.io.PrintWriter" %>
+<%@ page import="java.util.List" %>
 <%--
   Created by IntelliJ IDEA.
   User: Vitaliy
@@ -24,15 +25,19 @@
             printWriter.write(" <table border=\"1\" align=\"center\">\n"
             + "<tr>" + "<th> Name </th>\n" + "<th> Price </th>\n");
     ProductServiceImpl productService = ProductServiceFactory.getInstance();
-    int id = productService.size();
-    while (id > 0){
-      printWriter.write("<tr>");
-      printWriter.write("<td>" + productService.getProductById(id).get().getName() + "</td>");
-      printWriter.write("<center>");
-      printWriter.write("<td>" + productService.getProductById(id).get().getPrice() + "</td>");
-      printWriter.write("</tr>");
-      id--;
-    }
-%>
+  List<Long> allProductIdList =  productService.getAllProductID().get();
+     for (Long currentId : allProductIdList) {
+            printWriter.write("<tr>");
+            printWriter.write("<td>" + productService.getProductById(currentId).get().getName() + "</td>");
+            printWriter.write("<center>");
+            printWriter.write("<td>" + productService.getProductById(currentId).get().getPrice() + "</td>");
+            printWriter.write("<td>"
+                 + "<form  action=\"delete\" method=\"post\">\n" //functional "Delete" in development
+                 +"<button name=\"delete\" type=\"submit\" value=\"" + currentId + "\" </button> Delete </form>"
+                 +"<form  action=\"allUsers\" method=\"post\">\n" //functional "Edit" in development
+                 +"<button name=\"edit\" type=\"submit\" value=\"" + currentId + "\"  </button> Edit </form>" + "</td>");
+            printWriter.write("</tr>");
+     }
+        %>
 </body>
 </html>

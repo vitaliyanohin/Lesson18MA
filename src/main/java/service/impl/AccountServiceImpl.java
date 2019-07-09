@@ -23,7 +23,7 @@ public class AccountServiceImpl implements AccountService {
   }
 
   @Override
-  public Optional<List<Long>> getAllUserIDQuery() {
+  public Optional<List<Long>> getAllUserID() {
     return userDao.getAllUserID();
   }
 

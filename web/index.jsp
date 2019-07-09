@@ -28,7 +28,7 @@
       <button type="submit"> Sing in</button> <br>
       <button type="submit"
               formaction="register"
-              formmethod="post" value="2">Sing up</button> <br>
+              formmethod="post">Sing up</button> <br>
     </form>
     <a href="register"> Registration </a><br>
     <a href="newProduct"> New Product </a><br>

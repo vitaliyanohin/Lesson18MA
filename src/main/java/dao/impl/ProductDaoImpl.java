@@ -6,8 +6,10 @@ import model.Product;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import service.executor.Executor;
+
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 
 public class ProductDaoImpl implements ProductDao {
@@ -40,7 +42,7 @@ public class ProductDaoImpl implements ProductDao {
   }
 
   @Override
-  public Optional<Product> getProductById(int id) {
+  public Optional<Product> getProductById(long id) {
     try {
       return executor.execQuery("SELECT * FROM products WHERE id= " + id,
               result -> {
@@ -52,6 +54,16 @@ public class ProductDaoImpl implements ProductDao {
                         });
     } catch (SQLException e) {
        LOGGER.log(Level.ERROR, "Failed to get product by ID: ", e);
+    }
+    return Optional.empty();
+  }
+
+  @Override
+  public Optional<List<Long>> getAllProductID() {
+    try {
+      return Optional.ofNullable(executor.execQueryForAllID("SELECT * FROM products"));
+    } catch (SQLException e) {
+      LOGGER.log(Level.ERROR, "Failed to get all Product ID: ", e);
     }
     return Optional.empty();
   }

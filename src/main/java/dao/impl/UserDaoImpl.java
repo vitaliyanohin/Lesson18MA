@@ -105,10 +105,10 @@ public class UserDaoImpl implements UserDao {
     return false;
   }
 
-@Override
+  @Override
   public Optional<List<Long>> getAllUserID() {
     try {
-      return Optional.ofNullable(executor.execAllUserIDQuery("SELECT * FROM users"));
+      return Optional.ofNullable(executor.execQueryForAllID("SELECT * FROM users"));
     } catch (SQLException e) {
       LOGGER.log(Level.ERROR, "Failed to get all users ID: ", e);
     }
