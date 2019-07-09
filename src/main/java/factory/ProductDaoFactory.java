@@ -7,7 +7,7 @@ public class ProductDaoFactory {
 
   private static ProductDao productDaoInstance;
 
-  public static ProductDao ProductDaoImplSingleton() {
+  public static ProductDao getInstance() {
     if (productDaoInstance == null) {
       productDaoInstance = new ProductDaoImpl();
     }

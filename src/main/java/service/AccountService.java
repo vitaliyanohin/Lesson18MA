@@ -6,9 +6,9 @@ import java.util.Optional;
 
 public interface AccountService {
 
-  Optional<User> getUser(String name);
+  Optional<User> getUserByName(String name);
 
-  Optional<User> getUser(int id);
+  Optional<User> getUserById(int id);
 
   void addUser(User name);
 

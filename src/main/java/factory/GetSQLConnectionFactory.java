@@ -11,10 +11,11 @@ import java.sql.SQLException;
 public class GetSQLConnectionFactory {
 
   private static final Logger LOGGER =  Logger.getLogger(GetSQLConnectionFactory.class);
+  public static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
 
   public static Connection getMysqlConnection() {
     try {
-      DriverManager.registerDriver((Driver) Class.forName("com.mysql.jdbc.Driver").newInstance());
+      DriverManager.registerDriver((Driver) Class.forName(JDBC_DRIVER).newInstance());
 
       StringBuilder url = new StringBuilder();
 
@@ -25,19 +26,19 @@ public class GetSQLConnectionFactory {
               append("mysql?").          //db name
               append("user=user&").          //login
               append("password=user");       //password
-      System.out.println("URL: " + url + "\n");
+      LOGGER.info("URL: " + url + "\n");
       Connection connection = DriverManager.getConnection(url.toString());
       try {
-        System.out.println("DB name: " + connection.getMetaData().getDatabaseProductName());
-        System.out.println("DB version: " + connection.getMetaData().getDatabaseProductVersion());
-        System.out.println("Driver: " + connection.getMetaData().getDriverName());
-        System.out.println("Autocommit: " + connection.getAutoCommit());
+        LOGGER.info("DB name: " + connection.getMetaData().getDatabaseProductName());
+        LOGGER.info("DB version: " + connection.getMetaData().getDatabaseProductVersion());
+        LOGGER.info("Driver: " + connection.getMetaData().getDriverName());
+        LOGGER.info("Autocommit: " + connection.getAutoCommit());
       } catch (SQLException e) {
-         LOGGER.log(Level.ALL, "Error: ", e);
+         LOGGER.log(Level.ERROR, "Failed to get table status: ", e);
       }
       return connection;
     } catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e) {
-       LOGGER.log(Level.ALL, "Error: ", e);
+       LOGGER.log(Level.ERROR, "Failed to get connection: ", e);
     }
     return null;
   }

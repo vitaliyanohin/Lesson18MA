@@ -9,19 +9,15 @@ import java.util.Optional;
 
 public class AccountServiceImpl implements AccountService {
 
-  private static final UserDao userDao;
-
-  static {
-    userDao = UserDaoFactory.UserDaoSingleton();
-  }
+  private static final UserDao userDao = UserDaoFactory.getInstance();;
 
   @Override
-  public Optional<User> getUser(String name) {
+  public Optional<User> getUserByName(String name) {
     return userDao.getUser(name);
   }
 
   @Override
-  public Optional<User> getUser(int id) {
+  public Optional<User> getUserById(int id) {
     return userDao.getUser(id);
   }
 

@@ -9,14 +9,10 @@ import java.util.Optional;
 
 public class ProductServiceImpl implements ProductService {
 
-  private static final ProductDao productDao;
-
-  static {
-    productDao = ProductDaoFactory.ProductDaoImplSingleton();
-  }
+  private static final ProductDao productDao = ProductDaoFactory.getInstance();
 
   @Override
-  public Optional<Product> getProduct(String name) {
+  public Optional<Product> getProductByName(String name) {
     return productDao.getProduct(name);
   }
 

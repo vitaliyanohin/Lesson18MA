@@ -14,11 +14,7 @@ import java.io.IOException;
 @WebServlet(value = "/newProduct")
 public class NewProductServlet extends HttpServlet {
 
-  private static final ProductServiceImpl productService;
-
-  static {
-    productService = ProductServiceFactory.ProductServiceSingleton();
-  }
+  private static final ProductServiceImpl productService = ProductServiceFactory.getInstance();
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -28,7 +24,6 @@ public class NewProductServlet extends HttpServlet {
 
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
     String product = req.getParameter("product");
     String description = req.getParameter("description");
     Double price = Double.valueOf(req.getParameter("price"));

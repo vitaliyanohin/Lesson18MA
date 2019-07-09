@@ -13,26 +13,26 @@ public class Executor {
   }
 
   public void execUpdate(String update) throws SQLException {
-    Statement stmt = connection.createStatement();
-    stmt.execute(update);
-    stmt.close();
+    Statement statement = connection.createStatement();
+    statement.execute(update);
+    statement.close();
   }
 
   public int size(String sqlSelect) throws SQLException {
-    Statement stmt = connection.createStatement();
-    ResultSet rs = stmt.executeQuery(sqlSelect);
-    rs.next();
-    int count = rs.getInt(1);
+    Statement statement = connection.createStatement();
+    ResultSet resultSet = statement.executeQuery(sqlSelect);
+    resultSet.next();
+    int count = resultSet.getInt(1);
     return count;
   }
 
   public <T> T execQuery(String query, ResultHandler<T> handler) throws SQLException {
-    Statement stmt = connection.createStatement();
-    stmt.execute(query);
-    ResultSet result = stmt.getResultSet();
-    T value = handler.handle(result);
-    result.close();
-    stmt.close();
+    Statement statement = connection.createStatement();
+    statement.execute(query);
+    ResultSet resultSet = statement.getResultSet();
+    T value = handler.handle(resultSet);
+    resultSet.close();
+    statement.close();
 
     return value;
   }

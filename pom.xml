@@ -5,6 +5,10 @@
     <modelVersion>4.0.0</modelVersion>
     <properties>
         <log4j.version>1.2</log4j.version>
+        <properties>
+            <maven.compiler.source>1.8</maven.compiler.source>
+            <maven.compiler.target>1.8</maven.compiler.target>
+        </properties>
     </properties>
     <groupId>onlineshop</groupId>
     <artifactId>onlineshop</artifactId>

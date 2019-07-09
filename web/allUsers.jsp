@@ -27,13 +27,13 @@
     printWriter.write(" <h2> Список пользователей:</h2>");
     printWriter.write(" <table border=\"1\" align=\"center\">\n"
             + "<tr>" + "<th> Email </th>\n" + "<th> Password </th>\n");
-    AccountServiceImpl accountService = AccountServiceFactory.AccountServiceSingleton();
+    AccountServiceImpl accountService = AccountServiceFactory.getInstance();
     int id = accountService.size();
     while (id > 0) {
         printWriter.write("<tr>");
-        printWriter.write("<td>" + accountService.getUser(id).get().getEmail() + "</td>");
+        printWriter.write("<td>" + accountService.getUserById(id).get().getEmail() + "</td>");
         printWriter.write("<center>");
-        printWriter.write("<td>" + accountService.getUser(id).get().getPassword() + "</td>");
+        printWriter.write("<td>" + accountService.getUserById(id).get().getPassword() + "</td>");
         printWriter.write("</tr>");
         id--;
     }

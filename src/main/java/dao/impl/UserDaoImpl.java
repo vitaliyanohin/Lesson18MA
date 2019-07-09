@@ -26,7 +26,7 @@ public class UserDaoImpl implements UserDao {
   @Override
   public Optional<User> getUser(String name) {
     try {
-      executor.execQuery("select * from users where user_name='" + name + "'",
+      executor.execQuery("SELECT * FROM users WHERE user_name='" + name + "'",
               result -> {
                         result.next();
                         return Optional.of(new User(result.getLong(1),
@@ -34,7 +34,7 @@ public class UserDaoImpl implements UserDao {
                                 result.getString(3)));
                         });
     } catch (SQLException e) {
-       LOGGER.log(Level.ALL, "Error: ", e);
+       LOGGER.log(Level.ERROR, "Failed to get user by name: ", e);
     }
     return Optional.empty();
   }
@@ -42,14 +42,14 @@ public class UserDaoImpl implements UserDao {
   @Override
   public Optional<User> getUser(int id) {
     try {
-     return executor.execQuery("select * from users where id=" + id,
+     return executor.execQuery("SELECT * FROM users WHERE id=" + id,
               result -> {
                         result.next();
                         return Optional.of(new User(result.getString(2),
                                 result.getString(3)));
                         });
     } catch (SQLException e) {
-       LOGGER.log(Level.ALL, "Error: ", e);
+       LOGGER.log(Level.ERROR, "Failed to get user by ID: ", e);
     }
     return Optional.empty();
   }
@@ -58,22 +58,22 @@ public class UserDaoImpl implements UserDao {
   public boolean addUser(User user) {
     try {
       connection.setAutoCommit(false);
-      executor.execUpdate("insert into users (user_name, password) values "
+      executor.execUpdate("INSERT INTO users (user_name, password) VALUES "
               + "('" + user.getEmail() + "', " + "'" + user.getPassword() + "');");
       connection.commit();
       return true;
     } catch (SQLException e) {
-       LOGGER.log(Level.ALL, "Error: ", e);
+      LOGGER.log(Level.ERROR, "Failed to set user: ", e);
       try {
         connection.rollback();
       } catch (SQLException ex) {
-         LOGGER.log(Level.ALL, "Error: ", ex);
+         LOGGER.log(Level.ERROR, "Failed to rollback user: ", ex);
       }
     } finally {
       try {
         connection.setAutoCommit(true);
-      } catch (SQLException ignore) {
-         LOGGER.log(Level.ALL, "Error: ", ignore);
+      } catch (SQLException e) {
+         LOGGER.log(Level.ERROR, "Failed to set AutoCommit: ", e);
       }
     }
     return false;
@@ -84,7 +84,7 @@ public class UserDaoImpl implements UserDao {
     try {
       return executor.size("SELECT COUNT(*) FROM users;\n");
     } catch (SQLException e) {
-       LOGGER.log(Level.ALL, "Error: ", e);
+       LOGGER.log(Level.ERROR, "Failed to get table size: ", e);
     }
     return 0;
   }
@@ -92,19 +92,19 @@ public class UserDaoImpl implements UserDao {
   @Override
   public void createTable() {
     try {
-      executor.execUpdate("create table if not exists users (id bigint auto_increment,"
+      executor.execUpdate("CREATE TABLE IF NOT EXISTS users (id bigint auto_increment,"
               + " user_name varchar(256), password varchar(256), primary key (id));");
     } catch (SQLException e) {
-       LOGGER.log(Level.ALL, "Error: ", e);
+       LOGGER.log(Level.ERROR, "Failed to create table: ", e);
     }
   }
 
   @Override
   public void dropTable() {
     try {
-      executor.execUpdate("drop table users");
+      executor.execUpdate("DROP TABLE users");
     } catch (SQLException e) {
-       LOGGER.log(Level.ALL, "Error: ", e);
+       LOGGER.log(Level.ERROR, "Failed to drop table: ", e);
     }
   }
 }

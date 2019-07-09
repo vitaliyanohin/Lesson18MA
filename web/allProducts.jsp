@@ -26,7 +26,7 @@
     printWriter.write(" <h2> Список пользователей:</h2>");
     printWriter.write(" <table border=\"1\" align=\"center\">\n"
             + "<tr>" + "<th> Name </th>\n" + "<th> Price </th>\n");
-    ProductServiceImpl productService = ProductServiceFactory.ProductServiceSingleton();
+    ProductServiceImpl productService = ProductServiceFactory.getInstance();
     int id = productService.size();
     while (id > 0) {
         printWriter.write("<tr>");

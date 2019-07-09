@@ -25,7 +25,7 @@ public class ProductDaoImpl implements ProductDao {
   @Override
   public Optional<Product> getProduct(String name) {
     try {
-      return executor.execQuery("select * from products where product_name='" + name + "'",
+      return executor.execQuery("SELECT * FROM products WHERE product_name='" + name + "'",
               result -> {
                     result.next();
                     return Optional.of(new Product(result.getLong(1),
@@ -34,7 +34,7 @@ public class ProductDaoImpl implements ProductDao {
                             result.getDouble(4)));
                         });
     } catch (SQLException e) {
-       LOGGER.log(Level.ALL, "Error: ", e);
+       LOGGER.log(Level.ERROR, "Failed to get product by name: ", e);
     }
     return Optional.empty();
   }
@@ -42,7 +42,7 @@ public class ProductDaoImpl implements ProductDao {
   @Override
   public Optional<Product> getProductById(int id) {
     try {
-      return executor.execQuery("select * from products where id= " + id,
+      return executor.execQuery("SELECT * FROM products WHERE id= " + id,
               result -> {
                         result.next();
                         return Optional.of(new  Product(result.getLong(1),
@@ -51,7 +51,7 @@ public class ProductDaoImpl implements ProductDao {
                                 result.getDouble(4)));
                         });
     } catch (SQLException e) {
-       LOGGER.log(Level.ALL, "Error: ", e);
+       LOGGER.log(Level.ERROR, "Failed to get product by ID: ", e);
     }
     return Optional.empty();
   }
@@ -60,24 +60,24 @@ public class ProductDaoImpl implements ProductDao {
   public boolean addProduct(Product product) {
     try {
       connection.setAutoCommit(false);
-      executor.execUpdate("insert into products (product_name, description, price) values "
+      executor.execUpdate("INSERT INTO products (product_name, description, price) VALUES "
               + "('" + product.getName() + "', '"
               + product.getDescription() + "', '"
               + product.getPrice() + "');");
       connection.commit();
       return true;
     } catch (SQLException e) {
+       LOGGER.log(Level.ERROR, "Failed to set product: ", e);
       try {
         connection.rollback();
       } catch (SQLException ex) {
-         LOGGER.log(Level.ALL, "Error: ", ex);
+         LOGGER.log(Level.ERROR, "Failed to rollback product: ", ex);
       }
     } finally {
-
       try {
         connection.setAutoCommit(true);
       } catch (SQLException e) {
-         LOGGER.log(Level.ALL, "Error: ", e);
+         LOGGER.log(Level.ERROR, "Failed to set AutoCommit: ", e);
       }
     }
     return false;
@@ -86,20 +86,20 @@ public class ProductDaoImpl implements ProductDao {
   @Override
   public void createTable() {
     try {
-      executor.execUpdate("create table if not exists products (id bigint auto_increment,"
+      executor.execUpdate("CREATE TABLE IF NOT EXISTS products (id bigint auto_increment,"
               + " product_name varchar(256), description varchar(256), "
               + "price varchar(256), primary key (id))");
     } catch (SQLException e) {
-       LOGGER.log(Level.ALL, "Error: ", e);
+       LOGGER.log(Level.ERROR, "Failed to create table: ", e);
     }
   }
 
   @Override
   public void dropTable() {
     try {
-      executor.execUpdate("drop table products");
+      executor.execUpdate("DROP TABLE products");
     } catch (SQLException e) {
-       LOGGER.log(Level.ALL, "Error: ", e);
+       LOGGER.log(Level.ERROR, "Failed to drop table: ", e);
     }
   }
 
@@ -108,7 +108,7 @@ public class ProductDaoImpl implements ProductDao {
     try {
       return executor.size("SELECT COUNT(*) FROM products;\n");
     } catch (SQLException e) {
-       LOGGER.log(Level.ALL, "Error: ", e);
+       LOGGER.log(Level.ERROR, "Failed to get table size: ", e);
     }
     return 0;
   }

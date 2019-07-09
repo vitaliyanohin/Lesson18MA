@@ -14,11 +14,7 @@ import java.io.IOException;
 @WebServlet(value = "/register")
 public class UserRegistrationServlet extends HttpServlet {
 
-  private static final AccountServiceImpl accountService;
-
-  static {
-    accountService = AccountServiceFactory.AccountServiceSingleton();
-  }
+  private static final AccountServiceImpl accountService = AccountServiceFactory.getInstance();
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -35,7 +31,7 @@ public class UserRegistrationServlet extends HttpServlet {
       User userProfile = new User(login, pass);
         accountService.addUser(userProfile);
       resp.setStatus(HttpServletResponse.SC_OK);
-    //  resp.sendRedirect("/");
+      resp.sendRedirect("/");
     } else {
       req.setAttribute("error", "Your password not equals!");
       req.setAttribute("email", login);

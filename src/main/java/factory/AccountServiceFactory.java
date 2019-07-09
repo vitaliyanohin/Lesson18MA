@@ -6,7 +6,7 @@ public class AccountServiceFactory {
 
   private static AccountServiceImpl userInstance;
 
-  public static AccountServiceImpl AccountServiceSingleton() {
+  public static AccountServiceImpl getInstance() {
     if (userInstance == null) {
       userInstance = new AccountServiceImpl();
     }
