@@ -13,10 +13,10 @@
 <body>
 <center>
 <%
-    String error = (String) request.getAttribute("error");
-    if (error != null) {
+    String info = (String) request.getAttribute("info");
+    if (info != null) {
       response.getWriter().write("<center>");
-      response.getWriter().print(error);
+      response.getWriter().print(info);
         response.getWriter().write("</center>");
     }
     %>
