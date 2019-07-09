@@ -26,7 +26,7 @@
     printWriter.write("<center>");
     printWriter.write(" <h2> Список пользователей:</h2>");
     printWriter.write(" <table border=\"1\" align=\"center\">\n"
-            + "<tr>" + "<th> Email </th>\n" + "<th> Password </th>\n");
+            + "<tr>" + "<th> Email </th>\n" + "<th> Password </th>\n" + "<th> Actions </th>\n");
     AccountServiceImpl accountService = AccountServiceFactory.getInstance();
     int id = accountService.size();
     while (id > 0) {
@@ -34,6 +34,11 @@
         printWriter.write("<td>" + accountService.getUserById(id).get().getEmail() + "</td>");
         printWriter.write("<center>");
         printWriter.write("<td>" + accountService.getUserById(id).get().getPassword() + "</td>");
+        printWriter.write("<td>"
+                          + "<form  action=\"allUsers\" method=\"post\">\n"
+                          +"<input type=\"submit\"></form>"
+                          +"<form  action=\"allProducts\" method=\"post\">\n"
+                          +"<input type=\"submit\"> </form>" + "</td>");
         printWriter.write("</tr>");
         id--;
     }

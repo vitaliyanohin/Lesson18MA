@@ -26,7 +26,7 @@ public class UserDaoImpl implements UserDao {
   @Override
   public Optional<User> getUser(String name) {
     try {
-      executor.execQuery("SELECT * FROM users WHERE user_name='" + name + "'",
+     return executor.execQuery("SELECT * FROM users WHERE user_name='" + name + "'",
               result -> {
                         result.next();
                         return Optional.of(new User(result.getLong(1),
