@@ -22,8 +22,8 @@ public class DeleteUserServlet extends HttpServlet {
 
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-  long id = Long.parseLong(req.getParameter("delete"));
-  accountService.deleteUser(id);
+    long id = Long.parseLong(req.getParameter("delete"));
+    accountService.deleteUser(id);
     req.getRequestDispatcher("allUsers.jsp").forward(req, resp);
   }
 }
