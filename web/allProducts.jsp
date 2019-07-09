@@ -15,26 +15,23 @@
 </head>
 <body>
 <form action="newProduct" method="post">
-
     <a href="newProduct"> NewProduct </a><br>
-
     <form action="allUsers" method="post">
-
         <a href="allUsers"> All Users </a><br>
             <% PrintWriter printWriter = response.getWriter();
-    printWriter.write("<center>");
-    printWriter.write(" <h2> Список пользователей:</h2>");
-    printWriter.write(" <table border=\"1\" align=\"center\">\n"
+            printWriter.write("<center>");
+            printWriter.write(" <h2> Список пользователей:</h2>");
+            printWriter.write(" <table border=\"1\" align=\"center\">\n"
             + "<tr>" + "<th> Name </th>\n" + "<th> Price </th>\n");
     ProductServiceImpl productService = ProductServiceFactory.getInstance();
     int id = productService.size();
-    while (id > 0) {
-        printWriter.write("<tr>");
-        printWriter.write("<td>" + productService.getProductById(id).get().getName() + "</td>");
-        printWriter.write("<center>");
-        printWriter.write("<td>" + productService.getProductById(id).get().getPrice() + "</td>");
-        printWriter.write("</tr>");
-        id--;
+    while (id > 0){
+      printWriter.write("<tr>");
+      printWriter.write("<td>" + productService.getProductById(id).get().getName() + "</td>");
+      printWriter.write("<center>");
+      printWriter.write("<td>" + productService.getProductById(id).get().getPrice() + "</td>");
+      printWriter.write("</tr>");
+      id--;
     }
 %>
 </body>
