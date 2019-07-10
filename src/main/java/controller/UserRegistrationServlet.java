@@ -43,7 +43,7 @@ public class UserRegistrationServlet extends HttpServlet {
       resp.sendRedirect("/allUsers");
     } else {
       req.setAttribute("info", "Your password not equals!");
-      req.setAttribute("pass", login);
+      req.setAttribute("email", login);
       req.getRequestDispatcher("register.jsp").forward(req, resp);
     }
   }
