@@ -31,12 +31,12 @@ public class DeleteModelServlet extends HttpServlet {
     if (referer.equals("http://localhost:8080/allUsers")){
       long id = Long.parseLong(req.getParameter("delete"));
       accountService.deleteUser(id);
-      resp.sendRedirect("/allUsers");
+      resp.sendRedirect(referer);
     }
     if (referer.equals("http://localhost:8080/allProducts")){
       long id = Long.parseLong(req.getParameter("delete"));
 productService.deleteProduct(id);
-      resp.sendRedirect("/allProducts");
+      resp.sendRedirect(referer);
     }
   }
 }
