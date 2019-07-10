@@ -30,7 +30,7 @@ public class UserAuthorizationServlet extends HttpServlet {
     Optional<User> currentUser = accountService.getUserByName(login);
     if (currentUser.isPresent() & pass.equals(rPass) & currentUser.get().getPassword().equals(pass)) {
       resp.setStatus(HttpServletResponse.SC_OK);
-      req.setAttribute("info", "such user already exists!");
+      req.setAttribute("info", "HELLO!");
       resp.sendRedirect("allUsers.jsp");
       return;
     }
