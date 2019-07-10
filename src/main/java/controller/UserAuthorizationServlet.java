@@ -33,12 +33,8 @@ public class UserAuthorizationServlet extends HttpServlet {
       req.setAttribute("info", "HELLO!");
       resp.sendRedirect("allUsers.jsp");
       return;
-    }
-    if (pass.equals(rPass)) {
-      resp.setStatus(HttpServletResponse.SC_OK);
-      resp.sendRedirect("allUsers.jsp");
     } else {
-      req.setAttribute("info", "Your password not equals!");
+      req.setAttribute("info", "Your password not equals, or User exists!");
       req.setAttribute("email", login);
       req.getRequestDispatcher("index.jsp").forward(req, resp);
     }
