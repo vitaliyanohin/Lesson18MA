@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface AccountService {
 
-  Optional<User> getUserByLogin(String name);
+  Optional<User> getUserByLogin(String login);
 
   Optional<User> getUserById(long id);
 
