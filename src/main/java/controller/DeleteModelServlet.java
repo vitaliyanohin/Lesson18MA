@@ -35,7 +35,7 @@ public class DeleteModelServlet extends HttpServlet {
     }
     if (referer.equals("http://localhost:8080/allProducts")){
       long id = Long.parseLong(req.getParameter("delete"));
-productService.deleteProduct(id);
+      productService.deleteProduct(id);
       resp.sendRedirect(referer);
     }
   }
