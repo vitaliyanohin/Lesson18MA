@@ -24,7 +24,7 @@ public class UserDaoImpl implements UserDao {
   }
 
   @Override
-  public Optional<User> getUser(String name) {
+  public Optional<User> getUserByLogin(String name) {
     try {
       executor.execQuery("SELECT * FROM users WHERE user_name='" + name + "'",
               result -> {
@@ -40,7 +40,7 @@ public class UserDaoImpl implements UserDao {
   }
 
   @Override
-  public Optional<User> getUser(int id) {
+  public Optional<User> getUserById(int id) {
     try {
      return executor.execQuery("SELECT * FROM users WHERE id=" + id,
               result -> {
@@ -93,7 +93,7 @@ public class UserDaoImpl implements UserDao {
   public void createTable() {
     try {
       executor.execUpdate("CREATE TABLE IF NOT EXISTS users (id bigint auto_increment,"
-              + " user_name varchar(256), password varchar(256), primary key (id));");
+              + " user_name VARCHAR(256), password VARCHAR(256), PRIMARY KEY (id));");
     } catch (SQLException e) {
        LOGGER.log(Level.ERROR, "Failed to create table: ", e);
     }

@@ -12,13 +12,13 @@ public class AccountServiceImpl implements AccountService {
   private static final UserDao userDao = UserDaoFactory.getInstance();;
 
   @Override
-  public Optional<User> getUserByName(String name) {
-    return userDao.getUser(name);
+  public Optional<User> getUserByLogin(String name) {
+    return userDao.getUserByLogin(name);
   }
 
   @Override
   public Optional<User> getUserById(int id) {
-    return userDao.getUser(id);
+    return userDao.getUserById(id);
   }
 
   @Override

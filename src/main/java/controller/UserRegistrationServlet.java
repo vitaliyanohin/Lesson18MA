@@ -14,22 +14,23 @@ import java.io.IOException;
 @WebServlet(value = "/register")
 public class UserRegistrationServlet extends HttpServlet {
 
-  private static final AccountServiceImpl accountService = AccountServiceFactory.getInstance();
+  private static final AccountServiceImpl ACCOUNT_SERVICE = AccountServiceFactory.getInstance();
 
   @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    System.out.println("get");
+  protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+          throws ServletException, IOException {
     req.getRequestDispatcher("register.jsp").forward(req, resp);
   }
 
   @Override
-  protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+  protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+          throws ServletException, IOException {
     String login = req.getParameter("email");
     String pass = req.getParameter("pass");
-    String rPass = req.getParameter("rpass");
-    if (pass.equals(rPass)) {
+    String repeatPassword = req.getParameter("repeatPassword");
+    if (pass.equals(repeatPassword)) {
       User userProfile = new User(login, pass);
-        accountService.addUser(userProfile);
+      ACCOUNT_SERVICE.addUser(userProfile);
       resp.setStatus(HttpServletResponse.SC_OK);
       resp.sendRedirect("/");
     } else {

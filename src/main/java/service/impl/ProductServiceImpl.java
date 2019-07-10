@@ -13,7 +13,7 @@ public class ProductServiceImpl implements ProductService {
 
   @Override
   public Optional<Product> getProductByName(String name) {
-    return productDao.getProduct(name);
+    return productDao.getProductName(name);
   }
 
   @Override

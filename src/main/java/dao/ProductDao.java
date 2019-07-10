@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public interface ProductDao {
 
-  Optional<Product> getProduct(String name);
+  Optional<Product> getProductName(String name);
 
   Optional<Product> getProductById(int id);
 
