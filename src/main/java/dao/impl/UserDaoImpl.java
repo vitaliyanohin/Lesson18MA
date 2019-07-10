@@ -9,6 +9,7 @@ import service.executor.Executor;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 
 public class UserDaoImpl implements UserDao {
@@ -26,7 +27,7 @@ public class UserDaoImpl implements UserDao {
   @Override
   public Optional<User> getUser(String name) {
     try {
-      executor.execQuery("SELECT * FROM users WHERE user_name='" + name + "'",
+     return executor.execQuery("SELECT * FROM users WHERE user_name='" + name + "'",
               result -> {
                         result.next();
                         return Optional.of(new User(result.getLong(1),
@@ -40,7 +41,7 @@ public class UserDaoImpl implements UserDao {
   }
 
   @Override
-  public Optional<User> getUser(int id) {
+  public Optional<User> getUser(long id) {
     try {
      return executor.execQuery("SELECT * FROM users WHERE id=" + id,
               result -> {
@@ -77,6 +78,41 @@ public class UserDaoImpl implements UserDao {
       }
     }
     return false;
+  }
+
+  @Override
+  public boolean deleteUser(long id) {
+    try {
+      connection.setAutoCommit(false);
+      executor.execUpdate("DELETE FROM users WHERE id="
+              + "'" + id + "';");
+      connection.commit();
+      return true;
+    } catch (SQLException e) {
+      LOGGER.log(Level.ERROR, "Failed to set user: ", e);
+      try {
+        connection.rollback();
+      } catch (SQLException ex) {
+        LOGGER.log(Level.ERROR, "Failed to rollback user: ", ex);
+      }
+    } finally {
+      try {
+        connection.setAutoCommit(true);
+      } catch (SQLException e) {
+        LOGGER.log(Level.ERROR, "Failed to set AutoCommit: ", e);
+      }
+    }
+    return false;
+  }
+
+  @Override
+  public Optional<List<Long>> getAllUserID() {
+    try {
+      return Optional.ofNullable(executor.execQueryForAllID("SELECT * FROM users"));
+    } catch (SQLException e) {
+      LOGGER.log(Level.ERROR, "Failed to get all users ID: ", e);
+    }
+    return Optional.empty();
   }
 
   @Override

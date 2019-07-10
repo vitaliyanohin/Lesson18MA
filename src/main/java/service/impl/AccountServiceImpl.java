@@ -5,11 +5,12 @@ import factory.UserDaoFactory;
 import model.User;
 import service.AccountService;
 
+import java.util.List;
 import java.util.Optional;
 
 public class AccountServiceImpl implements AccountService {
 
-  private static final UserDao userDao = UserDaoFactory.getInstance();;
+  private static final UserDao userDao = UserDaoFactory.getInstance();
 
   @Override
   public Optional<User> getUserByName(String name) {
@@ -17,8 +18,13 @@ public class AccountServiceImpl implements AccountService {
   }
 
   @Override
-  public Optional<User> getUserById(int id) {
+  public Optional<User> getUserById(long id) {
     return userDao.getUser(id);
+  }
+
+  @Override
+  public Optional<List<Long>> getAllUserID() {
+    return userDao.getAllUserID();
   }
 
   @Override
@@ -30,6 +36,11 @@ public class AccountServiceImpl implements AccountService {
   public void addUser(User name) {
     userDao.createTable();
     userDao.addUser(name);
+  }
+
+  @Override
+  public boolean deleteUser(long id) {
+    return userDao.deleteUser(id);
   }
 
   @Override

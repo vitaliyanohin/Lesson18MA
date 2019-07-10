@@ -12,15 +12,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Optional;
 
-@WebServlet(value = "/register")
-public class UserRegistrationServlet extends HttpServlet {
+@WebServlet(value = "/index")
+public class UserAuthorizationServlet extends HttpServlet {
 
   private static final AccountServiceImpl accountService = AccountServiceFactory.getInstance();
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    System.out.println("get");
-    req.getRequestDispatcher("register.jsp").forward(req, resp);
+    resp.sendRedirect("/");
   }
 
   @Override
@@ -29,20 +28,14 @@ public class UserRegistrationServlet extends HttpServlet {
     String pass = req.getParameter("pass");
     String rPass = req.getParameter("rpass");
     Optional<User> currentUser = accountService.getUserByName(login);
-    if (currentUser.isPresent()) {
-      req.setAttribute("info", "such user already exists!");
-      req.getRequestDispatcher("register.jsp").forward(req, resp);
-      return;
-    }
-    if (pass.equals(rPass) ) {
-      User userProfile = new User(login, pass);
-        accountService.addUser(userProfile);
+    if (currentUser.isPresent() & pass.equals(rPass) & currentUser.get().getPassword().equals(pass)) {
       resp.setStatus(HttpServletResponse.SC_OK);
+      req.setAttribute("info", "HELLO!");
       resp.sendRedirect("allUsers.jsp");
     } else {
-      req.setAttribute("info", "Your password not equals!");
+      req.setAttribute("info", "Your password not equals, or User exists!");
       req.setAttribute("email", login);
-      req.getRequestDispatcher("register.jsp").forward(req, resp);
+      req.getRequestDispatcher("index.jsp").forward(req, resp);
     }
   }
 }
