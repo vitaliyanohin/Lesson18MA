@@ -42,7 +42,7 @@ public class UserAuthorizationServlet extends HttpServlet {
       resp.sendRedirect("allUsers.jsp");
     } else {
       req.setAttribute("info", "Your password not equals!");
-      req.setAttribute("pass", login);
+      req.setAttribute("email", login);
       req.getRequestDispatcher("index.jsp").forward(req, resp);
     }
   }
