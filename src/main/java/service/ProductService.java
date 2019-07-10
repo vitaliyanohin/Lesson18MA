@@ -13,7 +13,11 @@ public interface ProductService {
 
   Optional<List<Long>> getAllProductId();
 
+  Optional<List<Product>> getArrayOfAllProducts();
+
   Boolean addProduct(Product name);
+
+  boolean deleteProduct(long id);
 
   int size();
 }

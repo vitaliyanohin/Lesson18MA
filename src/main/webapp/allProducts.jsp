@@ -20,25 +20,22 @@
     <a href="newProduct"> NewProduct </a><br>
     <form action="allUsers" method="post">
         <a href="allUsers"> All Users </a><br>
-            <% PrintWriter printWriter = response.getWriter();
-            printWriter.write("<center>");
-            printWriter.write(" <h2> Список пользователей:</h2>");
-            printWriter.write(" <table border=\"1\" align=\"center\">\n"
-            + "<tr>" + "<th> Name </th>\n" + "<th> Price </th>\n");
-    ProductServiceImpl productService = ProductServiceFactory.getInstance();
-  List<Long> allProductIdList =  productService.getAllProductId().get();
-     for (Long currentId : allProductIdList) {
-            printWriter.write("<tr>");
-            printWriter.write("<td>" + productService.getProductById(currentId).get().getName() + "</td>");
-            printWriter.write("<center>");
-            printWriter.write("<td>" + productService.getProductById(currentId).get().getPrice() + "</td>");
-            printWriter.write("<td>"
-                 + "<form  action=\"delete\" method=\"post\">\n" //functional "Delete" in development
-                 +"<button name=\"delete\" type=\"submit\" value=\"" + currentId + "\" </button> Delete </form>"
-                 +"<form  action=\"allUsers\" method=\"post\">\n" //functional "Edit" in development
-                 +"<button name=\"edit\" type=\"submit\" value=\"" + currentId + "\"  </button> Edit </form>" + "</td>");
-            printWriter.write("</tr>");
-     }
-        %>
+    </form>
+        <center>
+            <h2> Список пользователей:</h2>
+            <table border="1" align="center">
+                <tr> <th> Email </th>
+                    <th> Password </th>
+                    <th> Actions </th>
+                    <c:forEach var="currentProduct" items="${allProductList}">
+                <tr>
+                    <td> ${currentProduct.getName()}</td>
+                    <td> ${currentProduct.getPrice()}</td>
+                    <td> <form  action="delete" method="post" >
+                        <button name="delete" type="submit" value="${currentProduct.getId()}" >Delete</button> </form>
+                        <form  action="allUsers" method="post" >
+                            <button  name="edit" type="submit" value="${currentProduct.getId()}" >Edit</button> </form> </td>
+                </tr>
+                </c:forEach>
 </body>
 </html>

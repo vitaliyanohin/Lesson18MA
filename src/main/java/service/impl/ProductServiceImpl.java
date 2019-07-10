@@ -28,10 +28,20 @@ public class ProductServiceImpl implements ProductService {
   }
 
   @Override
+  public Optional<List<Product>> getArrayOfAllProducts() {
+    return productDao.getArrayOfAllProducts();
+  }
+
+  @Override
   public Boolean addProduct(Product name) {
     productDao.createTable();
     productDao.addProduct(name);
     return true;
+  }
+
+  @Override
+  public boolean deleteProduct(long id) {
+    return productDao.deleteProduct(id);
   }
 
   @Override

@@ -15,7 +15,7 @@ import java.util.Optional;
 @WebServlet(value = "/index")
 public class UserAuthorizationServlet extends HttpServlet {
 
-  private static final AccountServiceImpl ACCOUNT_SERVICE = AccountServiceFactory.getInstance();
+  private static final AccountServiceImpl accountService = AccountServiceFactory.getInstance();
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -29,16 +29,20 @@ public class UserAuthorizationServlet extends HttpServlet {
     String login = req.getParameter("email");
     String pass = req.getParameter("pass");
     String repeatPassword = req.getParameter("repeatPassword");
-    Optional<User> currentUser = ACCOUNT_SERVICE.getUserByLogin(login);
-    if (currentUser.isPresent()
-            & pass.equals(repeatPassword)
+    Optional<User> currentUser = accountService.getUserByLogin(login);
+    if (!currentUser.isPresent()) {
+      req.setAttribute("info", "User exists!");
+      req.getRequestDispatcher("index.jsp").forward(req, resp);
+      return;
+    }
+    if (pass.equals(repeatPassword)
             & currentUser.get().getPassword().equals(pass)) {
       resp.setStatus(HttpServletResponse.SC_OK);
       req.setAttribute("info", "HELLO!");
       resp.sendRedirect("allUsers.jsp");
     } else {
-      req.setAttribute("info", "Your password not equals, or User exists!");
-      req.setAttribute("email", login);
+      req.setAttribute("info", "Your password not equals!");
+      req.setAttribute("pass", login);
       req.getRequestDispatcher("index.jsp").forward(req, resp);
     }
   }

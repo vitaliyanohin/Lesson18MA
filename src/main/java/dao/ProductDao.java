@@ -13,7 +13,11 @@ public interface ProductDao {
 
   Optional<List<Long>> getAllProductId();
 
+  Optional<List<Product>> getArrayOfAllProducts();
+
   boolean addProduct(Product product);
+
+  boolean deleteProduct(long id);
 
   void createTable();
 

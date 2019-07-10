@@ -11,7 +11,9 @@ public interface AccountService {
 
   Optional<User> getUserById(long id);
 
-  public Optional<List<Long>> getAllUserId();
+  Optional<List<Long>> getAllUserId();
+
+  Optional<List<User>> getArrayOfAllUsers();
 
   void addUser(User name);
 

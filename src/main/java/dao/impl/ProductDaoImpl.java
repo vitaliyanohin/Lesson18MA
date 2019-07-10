@@ -69,6 +69,41 @@ public class ProductDaoImpl implements ProductDao {
   }
 
   @Override
+  public boolean deleteProduct(long id) {
+    try {
+      connection.setAutoCommit(false);
+      executor.execUpdate("DELETE FROM products WHERE id="
+              + "'" + id + "';");
+      connection.commit();
+      return true;
+    } catch (SQLException e) {
+      LOGGER.log(Level.ERROR, "Failed to delete product: ", e);
+      try {
+        connection.rollback();
+      } catch (SQLException ex) {
+        LOGGER.log(Level.ERROR, "Failed to rollback product: ", ex);
+      }
+    } finally {
+      try {
+        connection.setAutoCommit(true);
+      } catch (SQLException e) {
+        LOGGER.log(Level.ERROR, "Failed to set AutoCommit: ", e);
+      }
+    }
+    return false;
+  }
+
+  @Override
+  public Optional<List<Product>> getArrayOfAllProducts() {
+    try {
+      return executor.execQueryAllProducts("SELECT * FROM products");
+    } catch (SQLException e) {
+      LOGGER.log(Level.ERROR, "Failed to get arrays of products: ", e);
+    }
+    return Optional.empty();
+  }
+
+  @Override
   public boolean addProduct(Product product) {
     try {
       connection.setAutoCommit(false);

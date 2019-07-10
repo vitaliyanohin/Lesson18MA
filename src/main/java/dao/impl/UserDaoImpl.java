@@ -105,6 +105,16 @@ public class UserDaoImpl implements UserDao {
     return false;
   }
 
+ @Override
+  public Optional<List<User>> getArrayOfAllUsers() {
+   try {
+    return executor.execQueryAllUsers("SELECT * FROM users");
+  } catch (SQLException e) {
+    LOGGER.log(Level.ERROR, "Failed to get Array of users: ", e);
+  }
+    return Optional.empty();
+}
+
   @Override
   public Optional<List<Long>> getAllUserId() {
     try {

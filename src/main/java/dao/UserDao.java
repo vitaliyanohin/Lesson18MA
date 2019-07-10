@@ -11,6 +11,8 @@ public interface UserDao {
 
   Optional<User> getUserById(long id);
 
+  Optional<List<User>> getArrayOfAllUsers();
+
   boolean addUser(User user);
 
   boolean deleteUser(long id);

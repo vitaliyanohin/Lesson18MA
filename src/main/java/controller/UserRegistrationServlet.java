@@ -15,7 +15,7 @@ import java.util.Optional;
 @WebServlet(value = "/register")
 public class UserRegistrationServlet extends HttpServlet {
 
-  private static final AccountServiceImpl ACCOUNT_SERVICE = AccountServiceFactory.getInstance();
+  private static final AccountServiceImpl accountService = AccountServiceFactory.getInstance();
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -30,7 +30,7 @@ public class UserRegistrationServlet extends HttpServlet {
     String login = req.getParameter("email");
     String pass = req.getParameter("pass");
     String repeatPassword = req.getParameter("repeatPassword");
-    Optional<User> currentUser = ACCOUNT_SERVICE.getUserByLogin(login);
+    Optional<User> currentUser = accountService.getUserByLogin(login);
     if (currentUser.isPresent()) {
       req.setAttribute("info", "such user already exists!");
       req.getRequestDispatcher("register.jsp").forward(req, resp);
@@ -38,12 +38,12 @@ public class UserRegistrationServlet extends HttpServlet {
     }
     if (pass.equals(repeatPassword) ) {
       User userProfile = new User(login, pass);
-      ACCOUNT_SERVICE.addUser(userProfile);
+      accountService.addUser(userProfile);
       resp.setStatus(HttpServletResponse.SC_OK);
-      resp.sendRedirect("allUsers.jsp");
+      resp.sendRedirect("/allUsers");
     } else {
       req.setAttribute("info", "Your password not equals!");
-      req.setAttribute("email", login);
+      req.setAttribute("pass", login);
       req.getRequestDispatcher("register.jsp").forward(req, resp);
     }
   }
