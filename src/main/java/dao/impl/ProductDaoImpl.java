@@ -25,7 +25,7 @@ public class ProductDaoImpl implements ProductDao {
   }
 
   @Override
-  public Optional<Product> getProduct(String name) {
+  public Optional<Product> getProductByName(String name) {
     try {
       return executor.execQuery("SELECT * FROM products WHERE product_name='" + name + "'",
               result -> {
@@ -59,7 +59,7 @@ public class ProductDaoImpl implements ProductDao {
   }
 
   @Override
-  public Optional<List<Long>> getAllProductID() {
+  public Optional<List<Long>> getAllProductId() {
     try {
       return Optional.ofNullable(executor.execQueryForAllID("SELECT * FROM products"));
     } catch (SQLException e) {
@@ -99,8 +99,8 @@ public class ProductDaoImpl implements ProductDao {
   public void createTable() {
     try {
       executor.execUpdate("CREATE TABLE IF NOT EXISTS products (id bigint auto_increment,"
-              + " product_name varchar(256), description varchar(256), "
-              + "price varchar(256), primary key (id))");
+              + " product_name VARCHAR(256), description VARCHAR(256), "
+              + "price VARCHAR(256), PRIMARY KEY (id))");
     } catch (SQLException e) {
        LOGGER.log(Level.ERROR, "Failed to create table: ", e);
     }

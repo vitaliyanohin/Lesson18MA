@@ -26,7 +26,7 @@
             printWriter.write(" <table border=\"1\" align=\"center\">\n"
             + "<tr>" + "<th> Email </th>\n" + "<th> Password </th>\n" + "<th> Actions </th>\n");
      AccountServiceImpl accountService = AccountServiceFactory.getInstance();
-     List<Long> allUserIdList =  accountService.getAllUserID().get();
+     List<Long> allUserIdList =  accountService.getAllUserId().get();
      for (Long currentId : allUserIdList) {
             printWriter.write("<tr>");
             printWriter.write("<td>" + accountService.getUserById(currentId).get().getEmail() + "</td>");

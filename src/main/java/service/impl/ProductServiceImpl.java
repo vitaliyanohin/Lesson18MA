@@ -14,7 +14,7 @@ public class ProductServiceImpl implements ProductService {
 
   @Override
   public Optional<Product> getProductByName(String name) {
-    return productDao.getProduct(name);
+    return productDao.getProductByName(name);
   }
 
   @Override
@@ -23,8 +23,8 @@ public class ProductServiceImpl implements ProductService {
   }
 
   @Override
-  public Optional<List<Long>> getAllProductID() {
-    return productDao.getAllProductID();
+  public Optional<List<Long>> getAllProductId() {
+    return productDao.getAllProductId();
   }
 
   @Override

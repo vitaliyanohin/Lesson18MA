@@ -25,7 +25,7 @@
             printWriter.write(" <table border=\"1\" align=\"center\">\n"
             + "<tr>" + "<th> Name </th>\n" + "<th> Price </th>\n");
     ProductServiceImpl productService = ProductServiceFactory.getInstance();
-  List<Long> allProductIdList =  productService.getAllProductID().get();
+  List<Long> allProductIdList =  productService.getAllProductId().get();
      for (Long currentId : allProductIdList) {
             printWriter.write("<tr>");
             printWriter.write("<td>" + productService.getProductById(currentId).get().getName() + "</td>");

@@ -15,20 +15,24 @@ import java.util.Optional;
 @WebServlet(value = "/index")
 public class UserAuthorizationServlet extends HttpServlet {
 
-  private static final AccountServiceImpl accountService = AccountServiceFactory.getInstance();
+  private static final AccountServiceImpl ACCOUNT_SERVICE = AccountServiceFactory.getInstance();
 
   @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+  protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+          throws ServletException, IOException {
     resp.sendRedirect("/");
   }
 
   @Override
-  protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+  protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+          throws ServletException, IOException {
     String login = req.getParameter("email");
     String pass = req.getParameter("pass");
-    String rPass = req.getParameter("rpass");
-    Optional<User> currentUser = accountService.getUserByName(login);
-    if (currentUser.isPresent() & pass.equals(rPass) & currentUser.get().getPassword().equals(pass)) {
+    String repeatPassword = req.getParameter("repeatPassword");
+    Optional<User> currentUser = ACCOUNT_SERVICE.getUserByLogin(login);
+    if (currentUser.isPresent()
+            & pass.equals(repeatPassword)
+            & currentUser.get().getPassword().equals(pass)) {
       resp.setStatus(HttpServletResponse.SC_OK);
       req.setAttribute("info", "HELLO!");
       resp.sendRedirect("allUsers.jsp");

@@ -20,12 +20,12 @@ public class GetSQLConnectionFactory {
       StringBuilder url = new StringBuilder();
 
       url.
-              append("jdbc:mysql://").        //db type
-              append("localhost:").           //host name
-              append("3306/").                //port
-              append("mysql?").          //db name
-              append("user=user&").          //login
-              append("password=user");       //password
+              append("jdbc:mysql://").
+              append("localhost:").
+              append("3306/").
+              append("mysql?").
+              append("user=user&").
+              append("password=user");
       LOGGER.info("URL: " + url + "\n");
       Connection connection = DriverManager.getConnection(url.toString());
       try {

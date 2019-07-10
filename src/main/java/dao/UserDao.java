@@ -7,15 +7,15 @@ import java.util.Optional;
 
 public interface UserDao {
 
-  Optional<User> getUser(String name);
+  Optional<User> getUserByLogin(String login);
 
-  Optional<User> getUser(long id);
+  Optional<User> getUserById(long id);
 
   boolean addUser(User user);
 
   boolean deleteUser(long id);
 
-  Optional<List<Long>> getAllUserID();
+  Optional<List<Long>> getAllUserId();
 
   int size();
 

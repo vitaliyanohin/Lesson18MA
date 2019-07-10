@@ -14,21 +14,22 @@ import java.io.IOException;
 @WebServlet(value = "/newProduct")
 public class NewProductServlet extends HttpServlet {
 
-  private static final ProductServiceImpl productService = ProductServiceFactory.getInstance();
+  private static final ProductServiceImpl PRODUCT_SERVICE = ProductServiceFactory.getInstance();
 
   @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    System.out.println("get");
+  protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+          throws ServletException, IOException {
     req.getRequestDispatcher("newProduct.jsp").forward(req, resp);
   }
 
   @Override
-  protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+  protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+          throws ServletException, IOException {
     String product = req.getParameter("product");
     String description = req.getParameter("description");
     Double price = Double.valueOf(req.getParameter("price"));
     Product newProduct = new Product(product, description, price);
-    productService.addProduct(newProduct);
+    PRODUCT_SERVICE.addProduct(newProduct);
     resp.setStatus(HttpServletResponse.SC_OK);
     resp.sendRedirect("/");
   }

@@ -11,7 +11,7 @@ public interface ProductService {
 
   Optional<Product> getProductById(long id);
 
-  Optional<List<Long>> getAllProductID();
+  Optional<List<Long>> getAllProductId();
 
   Boolean addProduct(Product name);
 

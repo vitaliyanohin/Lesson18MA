@@ -13,17 +13,19 @@ import java.io.IOException;
 @WebServlet(value = "/delete")
 public class DeleteUserServlet extends HttpServlet {
 
-  private static final AccountServiceImpl accountService = AccountServiceFactory.getInstance();
+  private static final AccountServiceImpl ACCOUNT_SERVICE = AccountServiceFactory.getInstance();
 
   @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+  protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+          throws ServletException, IOException {
     resp.sendRedirect("/");
   }
 
   @Override
-  protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+  protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+          throws ServletException, IOException {
     long id = Long.parseLong(req.getParameter("delete"));
-    accountService.deleteUser(id);
+    ACCOUNT_SERVICE.deleteUser(id);
     req.getRequestDispatcher("allUsers.jsp").forward(req, resp);
   }
 }
