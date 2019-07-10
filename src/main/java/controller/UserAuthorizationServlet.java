@@ -30,14 +30,18 @@ public class UserAuthorizationServlet extends HttpServlet {
     String pass = req.getParameter("pass");
     String repeatPassword = req.getParameter("repeatPassword");
     Optional<User> currentUser = ACCOUNT_SERVICE.getUserByLogin(login);
-    if (currentUser.isPresent()
-            & pass.equals(repeatPassword)
+    if (!currentUser.isPresent()) {
+      req.setAttribute("info", "User exists!");
+      req.getRequestDispatcher("index.jsp").forward(req, resp);
+      return;
+    }
+    if (pass.equals(repeatPassword)
             & currentUser.get().getPassword().equals(pass)) {
       resp.setStatus(HttpServletResponse.SC_OK);
       req.setAttribute("info", "HELLO!");
       resp.sendRedirect("allUsers.jsp");
     } else {
-      req.setAttribute("info", "Your password not equals, or User exists!");
+      req.setAttribute("info", "Your password not equals!");
       req.setAttribute("email", login);
       req.getRequestDispatcher("index.jsp").forward(req, resp);
     }
