@@ -13,7 +13,8 @@ import java.io.IOException;
 public class UserProfileServlet extends HttpServlet {
 
   @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+  protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+          throws ServletException, IOException {
     User user = (User) req.getSession().getAttribute("User");
     req.setAttribute("user", user);
     req.getRequestDispatcher("UserProfile.jsp").forward(req, resp);

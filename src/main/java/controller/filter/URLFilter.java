@@ -26,13 +26,13 @@ public class URLFilter implements Filter {
           throws IOException, ServletException {
     HttpSession session = ((HttpServletRequest) request).getSession();
     User user = (User) session.getAttribute("User");
-      switch (user.getRole()) {
-        case ("admin"):
-          chain.doFilter(request, response);
-          return;
-        case ("user"):
-          response.getWriter().write("Access is denied!");
-          return;
+    switch (user.getRole()) {
+      case ("admin"):
+        chain.doFilter(request, response);
+        return;
+      case ("user"):
+        response.getWriter().write("Access is denied!");
+        return;
     }
     request.setAttribute("info", "PLS SING IN!!");
     request.getRequestDispatcher("index.jsp").forward(request, response);
