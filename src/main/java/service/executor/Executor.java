@@ -64,7 +64,8 @@ public class Executor {
     while (resultSet.next()) {
       listOfAllUsers.add(new User(resultSet.getLong(1),
               resultSet.getString(2),
-              resultSet.getString(3)));
+              resultSet.getString(3),
+              resultSet.getString(4)));
     }
     resultSet.close();
     statement.close();

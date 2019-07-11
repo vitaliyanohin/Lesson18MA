@@ -14,8 +14,8 @@
 <body>
 <center>
     <c:out value="${info}"/>
-    <form action="index" method="post">
-        Email <input name="email" type="email" value="${pass}"/><br>
+    <form action="index" method="get">
+        Email <input name="email" type="email" value="${email}"/><br>
         Password <input name="pass" id="password" type="password"><br>
         Repeat password <input name="repeatPassword" id="repeatPassword" type="password"><br>
         <button type="submit"> Sing in</button><br>

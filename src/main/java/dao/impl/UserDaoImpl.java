@@ -32,7 +32,8 @@ public class UserDaoImpl implements UserDao {
                         result.next();
                         return Optional.of(new User(result.getLong(1),
                                 result.getString(2),
-                                result.getString(3)));
+                                result.getString(3),
+                                result.getString(4)));
                         });
     } catch (SQLException e) {
        LOGGER.log(Level.ERROR, "Failed to get user by name: ", e);
@@ -47,7 +48,8 @@ public class UserDaoImpl implements UserDao {
               result -> {
                         result.next();
                         return Optional.of(new User(result.getString(2),
-                                result.getString(3)));
+                                result.getString(3),
+                                result.getString(4)));
                         });
     } catch (SQLException e) {
        LOGGER.log(Level.ERROR, "Failed to get user by ID: ", e);
@@ -59,8 +61,8 @@ public class UserDaoImpl implements UserDao {
   public boolean addUser(User user) {
     try {
       connection.setAutoCommit(false);
-      executor.execUpdate("INSERT INTO users (user_name, password) VALUES "
-              + "('" + user.getEmail() + "', " + "'" + user.getPassword() + "');");
+      executor.execUpdate("INSERT INTO users (user_name, password, role) VALUES "
+              + "('" + user.getEmail() + "', " + "'" + user.getPassword() + "', '" + user.getRole() + "');");
       connection.commit();
       return true;
     } catch (SQLException e) {
@@ -139,7 +141,7 @@ public class UserDaoImpl implements UserDao {
   public void createTable() {
     try {
       executor.execUpdate("CREATE TABLE IF NOT EXISTS users (id bigint auto_increment,"
-              + " user_name VARCHAR(256), password VARCHAR(256), PRIMARY KEY (id));");
+              + " user_name VARCHAR(256), password VARCHAR(256), role VARCHAR(256), PRIMARY KEY (id));");
     } catch (SQLException e) {
        LOGGER.log(Level.ERROR, "Failed to create table: ", e);
     }

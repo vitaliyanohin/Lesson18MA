@@ -2,6 +2,7 @@ package controller;
 
 import factory.ProductServiceFactory;
 import model.Product;
+import model.User;
 import service.impl.ProductServiceImpl;
 
 import javax.servlet.ServletException;
@@ -22,6 +23,8 @@ public class AllProductServlet extends HttpServlet {
           throws ServletException, IOException {
     if (productService.getAllProducts().isPresent()) {
       List<Product> allProductList = productService.getAllProducts().get();
+      User user = (User) req.getSession().getAttribute("User");
+      req.setAttribute("user", user);
       req.setAttribute("allProductList", allProductList);
     }
     req.getRequestDispatcher("allProducts.jsp").forward(req, resp);

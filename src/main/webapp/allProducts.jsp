@@ -16,13 +16,8 @@
     <title>Title</title>
 </head>
 <body>
-<form action="newProduct" method="post">
-    <a href="newProduct"> NewProduct </a><br>
-    <form action="allUsers" method="post">
-        <a href="allUsers"> All Users </a><br>
-    </form>
         <center>
-            <h2> Список пользователей:</h2>
+            <h2> My Products:</h2>
             <table border="1" align="center">
                 <tr> <th> Email </th>
                     <th> Password </th>
@@ -33,9 +28,20 @@
                     <td> ${currentProduct.getPrice()}</td>
                     <td> <form  action="delete/Product" method="post" >
                         <button name="delete" type="submit" value="${currentProduct.getId()}" >Delete</button> </form>
+                        <c:if  test="${user.getRole() eq 'admin'}"  >
                         <form  action="allUsers" method="post" >
                             <button  name="edit" type="submit" value="${currentProduct.getId()}" >Edit</button> </form> </td>
+                </c:if>
                 </tr>
                 </c:forEach>
+            </table>
+                <center>
+                    <form action="newProduct" method="post">
+                        <a href="newProduct"> NewProduct </a><br>
+                        <c:if  test="${user.getRole() eq 'admin'}"  >
+                        <form action="allUsers" method="post">
+                            <a href="allUsers"> All Users </a><br>
+                        </form>
+                        </c:if>
 </body>
 </html>

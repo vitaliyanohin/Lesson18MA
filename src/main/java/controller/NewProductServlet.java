@@ -31,6 +31,6 @@ public class NewProductServlet extends HttpServlet {
     Product newProduct = new Product(product, description, price);
     productService.addProduct(newProduct);
     resp.setStatus(HttpServletResponse.SC_OK);
-    resp.sendRedirect("/");
+    resp.sendRedirect("/UserProfile");
   }
 }
