@@ -13,7 +13,7 @@ public interface ProductDao {
 
   Optional<List<Long>> getAllProductId();
 
-  Optional<List<Product>> getArrayOfAllProducts();
+  Optional<List<Product>> getAllProducts();
 
   boolean addProduct(Product product);
 

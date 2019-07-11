@@ -94,7 +94,7 @@ public class ProductDaoImpl implements ProductDao {
   }
 
   @Override
-  public Optional<List<Product>> getArrayOfAllProducts() {
+  public Optional<List<Product>> getAllProducts() {
     try {
       return executor.execQueryAllProducts("SELECT * FROM products");
     } catch (SQLException e) {

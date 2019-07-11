@@ -18,13 +18,8 @@
         Email <input name="email" type="email" value="${pass}"/><br>
         Password <input name="pass" id="password" type="password"><br>
         Repeat password <input name="repeatPassword" id="repeatPassword" type="password"><br>
-        <button type="submit"> Sing in</button>
-        <br>
-        <button type="submit"
-                formaction="register"
-                formmethod="post">Sing up
-        </button>
-        <br>
+        <button type="submit"> Sing in</button><br>
+        <button type="submit" formaction="register" formmethod="post">Sing up</button><br>
     </form>
     <a href="register"> Registration </a><br>
     <a href="newProduct"> New Product </a><br>

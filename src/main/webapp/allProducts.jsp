@@ -31,7 +31,7 @@
                 <tr>
                     <td> ${currentProduct.getName()}</td>
                     <td> ${currentProduct.getPrice()}</td>
-                    <td> <form  action="delete" method="post" >
+                    <td> <form  action="delete/Product" method="post" >
                         <button name="delete" type="submit" value="${currentProduct.getId()}" >Delete</button> </form>
                         <form  action="allUsers" method="post" >
                             <button  name="edit" type="submit" value="${currentProduct.getId()}" >Edit</button> </form> </td>

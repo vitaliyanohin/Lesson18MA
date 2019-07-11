@@ -20,8 +20,8 @@ public class AllProductServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
           throws ServletException, IOException {
-    if (productService.getArrayOfAllProducts().isPresent()) {
-      List<Product> allProductList = productService.getArrayOfAllProducts().get();
+    if (productService.getAllProducts().isPresent()) {
+      List<Product> allProductList = productService.getAllProducts().get();
       req.setAttribute("allProductList", allProductList);
     }
     req.getRequestDispatcher("allProducts.jsp").forward(req, resp);

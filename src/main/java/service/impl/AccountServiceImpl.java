@@ -28,8 +28,8 @@ public class AccountServiceImpl implements AccountService {
   }
 
   @Override
-  public Optional<List<User>> getArrayOfAllUsers() {
-    return userDao.getArrayOfAllUsers();
+  public Optional<List<User>> getAllUsers() {
+    return userDao.getAllUsers();
   }
 
   @Override

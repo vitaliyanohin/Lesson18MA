@@ -13,7 +13,7 @@ public interface AccountService {
 
   Optional<List<Long>> getAllUserId();
 
-  Optional<List<User>> getArrayOfAllUsers();
+  Optional<List<User>> getAllUsers();
 
   void addUser(User name);
 

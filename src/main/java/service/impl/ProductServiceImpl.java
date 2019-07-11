@@ -28,8 +28,8 @@ public class ProductServiceImpl implements ProductService {
   }
 
   @Override
-  public Optional<List<Product>> getArrayOfAllProducts() {
-    return productDao.getArrayOfAllProducts();
+  public Optional<List<Product>> getAllProducts() {
+    return productDao.getAllProducts();
   }
 
   @Override

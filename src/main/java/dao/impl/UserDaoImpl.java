@@ -106,7 +106,7 @@ public class UserDaoImpl implements UserDao {
   }
 
  @Override
-  public Optional<List<User>> getArrayOfAllUsers() {
+  public Optional<List<User>> getAllUsers() {
    try {
     return executor.execQueryAllUsers("SELECT * FROM users");
   } catch (SQLException e) {

@@ -20,20 +20,27 @@
     <center>
         <h2> Список пользователей:</h2>
         <table border="1" align="center">
-            <tr> <th> Email </th>
-                <th> Password </th>
-                <th> Actions </th>
+            <tr>
+                <th> Email</th>
+                <th> Password</th>
+                <th> Actions</th>
                 <c:forEach var="currentUser" items="${allUserList}">
-    <tr>
-            <td> ${currentUser.getEmail()}</td>
-            <td> ${currentUser.getPassword()}</td>
-            <td> <form  action="delete" method="post" >
-                <button name="delete" type="submit"
-                        value="${currentUser.getId()}" >Delete</button> </form>
-                <form  action="allUsers" method="post" >
-                <button  name="edit" type="submit"
-                         value="${currentUser.getId()}" >Edit</button> </form> </td>
-    </tr>
+            <tr>
+                <td> ${currentUser.getEmail()}</td>
+                <td> ${currentUser.getPassword()}</td>
+                <td>
+                    <form action="delete/User" method="post">
+                        <button name="delete" type="submit"
+                                value="${currentUser.getId()}">Delete
+                        </button>
+                    </form>
+                    <form action="allUsers" method="post">
+                        <button name="edit" type="submit"
+                                value="${currentUser.getId()}">Edit
+                        </button>
+                    </form>
+                </td>
+            </tr>
             </c:forEach>
 
 </body>

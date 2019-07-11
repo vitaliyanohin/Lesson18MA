@@ -11,7 +11,7 @@ public interface UserDao {
 
   Optional<User> getUserById(long id);
 
-  Optional<List<User>> getArrayOfAllUsers();
+  Optional<List<User>> getAllUsers();
 
   boolean addUser(User user);
 
