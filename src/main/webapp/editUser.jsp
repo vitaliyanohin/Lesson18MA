@@ -15,6 +15,8 @@
     Email <input name="email" type="email" value="${user.getEmail()}"/><br>
     Password <input name="pass" id="password" type="password" ><br>
     Repeat password <input name="repeatPassword" id="repeatPassword" type="password"><br>
+    <input type="radio" name="role" value="user">Role: user<Br>
+    <input type="radio" name="role" value="admin"> Role: admin<Br>
     <button  name="edit" type="submit" value="${user.getId()}"> Change DATA </button><br>
 
 </form>

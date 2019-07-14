@@ -36,7 +36,9 @@ public class EditUserServlet extends HttpServlet {
     String login = req.getParameter("email");
     String pass = req.getParameter("pass");
     String repeatPassword = req.getParameter("repeatPassword");
+    String role = req.getParameter("role");
     User user = accountService.getUserById(id).get();
+
     if ((login.isEmpty() & pass.isEmpty() & repeatPassword.isEmpty())
             | (login.equals(user.getEmail()) & pass.equals(user.getPassword()))) {
       resp.sendRedirect("/allUsers");
@@ -59,7 +61,7 @@ public class EditUserServlet extends HttpServlet {
       resp.sendRedirect("/allUsers");
       return;
     }
-    if (login.equals(user.getEmail()) | login.isEmpty()
+    if ((login.equals(user.getEmail()) | login.isEmpty())
             & !pass.equals(user.getPassword())
             & pass.equals(repeatPassword)
             & !pass.isEmpty()) {
@@ -67,5 +69,6 @@ public class EditUserServlet extends HttpServlet {
       accountService.updateUser(user);
       resp.sendRedirect("/allUsers");
     }
+    resp.sendRedirect("/allUsers");
   }
 }
