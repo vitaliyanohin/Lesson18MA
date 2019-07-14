@@ -16,7 +16,6 @@ public class EditProductServlet extends HttpServlet {
 
   private static final ProductServiceImpl productService = ProductServiceFactory.getInstance();
 
-
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
           throws ServletException, IOException {

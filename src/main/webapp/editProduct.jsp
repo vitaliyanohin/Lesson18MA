@@ -17,7 +17,6 @@
         <input name="description" type="text"  value="${product.getDescription()}"><br>
         <input name="price" type="text" value="${product.getPrice()}"><br>
     <button  name="edit" type="submit" value="${product.getId()}"> Change DATA </button><br>
-
 </form>
 </center>
 </body>

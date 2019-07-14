@@ -13,7 +13,6 @@
 </head>
 <body>
 <center>
-
     <c:out value="${info}"/>
     <form action="register" method="post">
         Email <input name="email" type="email" value="${pass}"/><br>

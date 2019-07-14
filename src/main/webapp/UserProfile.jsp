@@ -29,6 +29,5 @@
         <button type="submit" formaction="allUsers" formmethod="get">All Users</button><br>
     </form>
         </c:if>
-
 </body>
 </html>

@@ -18,7 +18,6 @@
     <input type="radio" name="role" value="user">Role: user<Br>
     <input type="radio" name="role" value="admin"> Role: admin<Br>
     <button  name="edit" type="submit" value="${user.getId()}"> Change DATA </button><br>
-
 </form>
 </body>
 </html>

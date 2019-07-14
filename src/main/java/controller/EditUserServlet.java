@@ -16,7 +16,6 @@ public class EditUserServlet extends HttpServlet {
 
   private static final AccountServiceImpl accountService = AccountServiceFactory.getInstance();
 
-
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
           throws ServletException, IOException {
