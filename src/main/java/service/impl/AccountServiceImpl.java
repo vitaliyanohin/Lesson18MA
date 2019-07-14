@@ -33,6 +33,11 @@ public class AccountServiceImpl implements AccountService {
   }
 
   @Override
+  public boolean updateUser(User user) {
+    return userDao.updateUser(user);
+  }
+
+  @Override
   public int size() {
     return userDao.size();
   }

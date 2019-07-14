@@ -17,6 +17,8 @@ public interface UserDao {
 
   boolean deleteUser(long id);
 
+  boolean updateUser(User user);
+
   Optional<List<Long>> getAllUserId();
 
   int size();

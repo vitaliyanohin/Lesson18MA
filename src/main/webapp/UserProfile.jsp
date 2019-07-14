@@ -15,16 +15,20 @@
 <center>
     <h2> Профиль:</h2>
     <c:out value="${info}"/>
-    <form action="UserProfile" method="get">
-        Email <input name="email" type="email" value="${user.getEmail()}"/><br>
-        Password <input name="pass" id="password" type="password"><br>
-        Repeat password <input name="repeatPassword" id="repeatPassword" type="password"><br>
-        <button type="submit"> Change DATA </button><br>
-        <button type="submit" formaction="allProducts" formmethod="get">My Product</button><br>
-        <button type="submit" formaction="newProduct" formmethod="get">New Product</button><br>
+    <a href="newProduct"> New Product </a><br>
+    <a href="allProducts"> All Products </a> <br>
         <c:if  test="${user.getRole() eq 'admin'}" >
+    <h3> Add NEW USER:</h3>
+    <form action="register" method="post">
+        Email <input name="email" type="email"/><br>
+        Password <input name="pass" type="password"><br>
+        Repeat password <input name="repeatPassword" type="password"><br>
+        <input type="radio" name="role" value="user">Role: user<Br>
+        <input type="radio" name="role" value="admin"> Role: admin<Br>
+        <button type="submit"> Submit </button><br>
         <button type="submit" formaction="allUsers" formmethod="get">All Users</button><br>
-        </c:if>
     </form>
+        </c:if>
+
 </body>
 </html>

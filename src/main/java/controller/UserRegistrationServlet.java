@@ -29,6 +29,7 @@ public class UserRegistrationServlet extends HttpServlet {
           throws ServletException, IOException {
     String login = req.getParameter("email");
     String pass = req.getParameter("pass");
+    String role = req.getParameter("role");
     String repeatPassword = req.getParameter("repeatPassword");
     Optional<User> currentUser = accountService.getUserByLogin(login);
     if (login.isEmpty() | pass.isEmpty() | repeatPassword.isEmpty()) {
@@ -42,7 +43,7 @@ public class UserRegistrationServlet extends HttpServlet {
       return;
     }
     if (pass.equals(repeatPassword) ) {
-      User userProfile = new User(login, pass, "user");
+      User userProfile = new User(login, pass, role.isEmpty()? "user": role);
       accountService.addUser(userProfile);
       resp.setStatus(HttpServletResponse.SC_OK);
       resp.sendRedirect("/UserProfile");

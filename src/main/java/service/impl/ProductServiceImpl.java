@@ -40,6 +40,11 @@ public class ProductServiceImpl implements ProductService {
   }
 
   @Override
+  public boolean updateProduct(Product product) {
+    return productDao.updateProduct(product);
+  }
+
+  @Override
   public boolean deleteProduct(long id) {
     return productDao.deleteProduct(id);
   }

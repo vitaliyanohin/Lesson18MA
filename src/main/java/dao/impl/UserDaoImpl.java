@@ -47,7 +47,8 @@ public class UserDaoImpl implements UserDao {
      return executor.execQuery("SELECT * FROM users WHERE id=" + id,
               result -> {
                         result.next();
-                        return Optional.of(new User(result.getString(2),
+                        return Optional.of(new User(result.getLong(1),
+                                result.getString(2),
                                 result.getString(3),
                                 result.getString(4)));
                         });
@@ -107,7 +108,22 @@ public class UserDaoImpl implements UserDao {
     return false;
   }
 
- @Override
+  @Override
+  public boolean updateUser(User user) {
+    try {
+      executor.execUpdate("UPDATE users " +
+              "SET user_name = '" + user.getEmail() + "' "
+              + ", password= '" + user.getPassword() +  "' "
+              +", role= '" + user.getRole() + "' "
+              + "WHERE id=" + user.getId() + " ;");
+      return true;
+    } catch (SQLException e) {
+       LOGGER.log(Level.ERROR, "Failed to update user: ", e);
+    }
+    return false;
+  }
+
+  @Override
   public Optional<List<User>> getAllUsers() {
    try {
     return executor.execQueryAllUsers("SELECT * FROM users");

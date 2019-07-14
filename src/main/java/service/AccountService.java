@@ -15,6 +15,8 @@ public interface AccountService {
 
   Optional<List<User>> getAllUsers();
 
+  boolean updateUser(User user);
+
   void addUser(User name);
 
   boolean deleteUser(long id);

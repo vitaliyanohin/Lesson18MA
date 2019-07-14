@@ -131,6 +131,21 @@ public class ProductDaoImpl implements ProductDao {
   }
 
   @Override
+  public boolean updateProduct(Product product) {
+    try {
+      executor.execUpdate("UPDATE products " +
+              "SET product_name = '" + product.getName() + "' "
+              + ", description= '" + product.getDescription() +  "' "
+              +", price= '" + product.getPrice() + "' "
+              + "WHERE id=" + product.getId() + " ;");
+      return true;
+    } catch (SQLException e) {
+      LOGGER.log(Level.ERROR, "Failed to update product: ", e);
+    }
+    return false;
+  }
+
+  @Override
   public void createTable() {
     try {
       executor.execUpdate("CREATE TABLE IF NOT EXISTS products (id bigint auto_increment,"
