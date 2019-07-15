@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Optional;
 
 @WebServlet(value = "/editProduct")
 public class EditProductServlet extends HttpServlet {
@@ -20,8 +21,9 @@ public class EditProductServlet extends HttpServlet {
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
           throws ServletException, IOException {
     Long productId = Long.valueOf(req.getParameter("edit"));
-    if (productService.getProductById(productId).isPresent()) {
-      Product product = productService.getProductById(productId).get();
+    Optional<Product> currentProduct = productService.getProductById(productId);
+    if (currentProduct.isPresent()) {
+      Product product = currentProduct.get();
       req.setAttribute("product", product);
       req.getRequestDispatcher("editProduct.jsp").forward(req, resp);
     }

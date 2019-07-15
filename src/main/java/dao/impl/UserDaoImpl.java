@@ -67,7 +67,7 @@ public class UserDaoImpl implements UserDao {
       connection.commit();
       return true;
     } catch (SQLException e) {
-      LOGGER.log(Level.ERROR, "Failed to set user: ", e);
+       LOGGER.log(Level.ERROR, "Failed to set user: ", e);
       try {
         connection.rollback();
       } catch (SQLException ex) {
@@ -92,17 +92,17 @@ public class UserDaoImpl implements UserDao {
       connection.commit();
       return true;
     } catch (SQLException e) {
-      LOGGER.log(Level.ERROR, "Failed to delete user: ", e);
+       LOGGER.log(Level.ERROR, "Failed to delete user: ", e);
       try {
         connection.rollback();
       } catch (SQLException ex) {
-        LOGGER.log(Level.ERROR, "Failed to rollback user: ", ex);
+         LOGGER.log(Level.ERROR, "Failed to rollback user: ", ex);
       }
     } finally {
       try {
         connection.setAutoCommit(true);
       } catch (SQLException e) {
-        LOGGER.log(Level.ERROR, "Failed to set AutoCommit: ", e);
+         LOGGER.log(Level.ERROR, "Failed to set AutoCommit: ", e);
       }
     }
     return false;
@@ -128,7 +128,7 @@ public class UserDaoImpl implements UserDao {
    try {
     return executor.execQueryAllUsers("SELECT * FROM users");
   } catch (SQLException e) {
-    LOGGER.log(Level.ERROR, "Failed to get Array of users: ", e);
+     LOGGER.log(Level.ERROR, "Failed to get Array of users: ", e);
   }
     return Optional.empty();
 }
@@ -138,7 +138,7 @@ public class UserDaoImpl implements UserDao {
     try {
       return Optional.ofNullable(executor.execQueryForAllID("SELECT * FROM users"));
     } catch (SQLException e) {
-      LOGGER.log(Level.ERROR, "Failed to get all users ID: ", e);
+       LOGGER.log(Level.ERROR, "Failed to get all users ID: ", e);
     }
     return Optional.empty();
   }

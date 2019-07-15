@@ -63,7 +63,7 @@ public class ProductDaoImpl implements ProductDao {
     try {
       return Optional.ofNullable(executor.execQueryForAllID("SELECT * FROM products"));
     } catch (SQLException e) {
-      LOGGER.log(Level.ERROR, "Failed to get all Product ID: ", e);
+       LOGGER.log(Level.ERROR, "Failed to get all Product ID: ", e);
     }
     return Optional.empty();
   }
@@ -77,17 +77,17 @@ public class ProductDaoImpl implements ProductDao {
       connection.commit();
       return true;
     } catch (SQLException e) {
-      LOGGER.log(Level.ERROR, "Failed to delete product: ", e);
+       LOGGER.log(Level.ERROR, "Failed to delete product: ", e);
       try {
         connection.rollback();
       } catch (SQLException ex) {
-        LOGGER.log(Level.ERROR, "Failed to rollback product: ", ex);
+         LOGGER.log(Level.ERROR, "Failed to rollback product: ", ex);
       }
     } finally {
       try {
         connection.setAutoCommit(true);
       } catch (SQLException e) {
-        LOGGER.log(Level.ERROR, "Failed to set AutoCommit: ", e);
+         LOGGER.log(Level.ERROR, "Failed to set AutoCommit: ", e);
       }
     }
     return false;
@@ -98,7 +98,7 @@ public class ProductDaoImpl implements ProductDao {
     try {
       return executor.execQueryAllProducts("SELECT * FROM products");
     } catch (SQLException e) {
-      LOGGER.log(Level.ERROR, "Failed to get arrays of products: ", e);
+       LOGGER.log(Level.ERROR, "Failed to get arrays of products: ", e);
     }
     return Optional.empty();
   }
@@ -140,7 +140,7 @@ public class ProductDaoImpl implements ProductDao {
               + "WHERE id=" + product.getId() + " ;");
       return true;
     } catch (SQLException e) {
-      LOGGER.log(Level.ERROR, "Failed to update product: ", e);
+       LOGGER.log(Level.ERROR, "Failed to update product: ", e);
     }
     return false;
   }

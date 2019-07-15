@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Optional;
 
 @WebServlet(value = "/editUser")
 public class EditUserServlet extends HttpServlet {
@@ -20,8 +21,9 @@ public class EditUserServlet extends HttpServlet {
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
           throws ServletException, IOException {
     Long userId = Long.valueOf(req.getParameter("edit"));
-    if (accountService.getUserById(userId).isPresent()) {
-      User user = accountService.getUserById(userId).get();
+    Optional<User> currentUser = accountService.getUserById(userId);
+    if (currentUser.isPresent()) {
+      User user = currentUser.get();
       req.setAttribute("user", user);
       req.getRequestDispatcher("editUser.jsp").forward(req, resp);
     }
@@ -36,12 +38,10 @@ public class EditUserServlet extends HttpServlet {
     String repeatPassword = req.getParameter("repeatPassword");
     String role = req.getParameter("role");
     User user = accountService.getUserById(id).get();
-    if (!login.equals(user.getEmail()) & !login.isEmpty()) {
+    if (!login.isEmpty()) {
       user.setEmail(login);
     }
-    if (!pass.equals(user.getPassword())
-            & pass.equals(repeatPassword)
-            & !pass.isEmpty()) {
+    if (pass.equals(repeatPassword) & !pass.isEmpty()) {
       user.setPassword(pass);
     }
     if (role != null && !role.equals(user.getRole())) {
