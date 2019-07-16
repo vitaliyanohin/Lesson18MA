@@ -41,7 +41,6 @@ public class ConfirmationOfAnOrderServlet extends HttpServlet {
     }
     req.setAttribute("email", login);
     req.setAttribute("address", address);
-//    req.setAttribute("productList", req.getAttribute("productList"));
     req.setAttribute("info", "code is not correct!");
     req.getRequestDispatcher("confirmOrder.jsp").forward(req, resp);
   }

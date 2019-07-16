@@ -1,7 +1,9 @@
 package service;
 
 import model.Product;
+import model.User;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +16,8 @@ public interface ProductService {
   Optional<List<Long>> getAllProductId();
 
   Optional<List<Product>> getAllProducts();
+
+  ArrayList<Product> getBoxList(User user);
 
   Boolean addProduct(Product name);
 

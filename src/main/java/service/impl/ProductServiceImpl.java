@@ -42,6 +42,7 @@ public class ProductServiceImpl implements ProductService {
     return true;
   }
 
+  @Override
   public ArrayList<Product> getBoxList(User user) {
       return user.getBox()
               .stream()

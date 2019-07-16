@@ -11,7 +11,7 @@ public class ConfirmCode {
     StringBuilder stringBuilder = new StringBuilder();
     Random random = new Random();
     for (int i = 0; i < 4; i++) {
-      int randomChar = random.ints(CHAR_START,(CHAR_END+1)).findFirst().getAsInt();
+      int randomChar = random.ints(CHAR_START,(CHAR_END + 1)).findFirst().getAsInt();
       stringBuilder.append((char) randomChar);
     }
     return stringBuilder.toString();

@@ -1,9 +1,7 @@
 package controller;
 
 import factory.AccountServiceFactory;
-import factory.ProductServiceFactory;
 import service.impl.AccountServiceImpl;
-import service.impl.ProductServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,7 +14,6 @@ import java.io.IOException;
 public class DeleteUserServlet extends HttpServlet {
 
   private static final AccountServiceImpl accountService = AccountServiceFactory.getInstance();
-  private static final ProductServiceImpl productService = ProductServiceFactory.getInstance();
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
