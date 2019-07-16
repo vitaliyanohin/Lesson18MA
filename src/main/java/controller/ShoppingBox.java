@@ -20,6 +20,6 @@ public class ShoppingBox extends HttpServlet {
     User user = (User) req.getSession().getAttribute("User");
     user.addInBox(productId);
     req.getSession().setAttribute("Box", user.boxSize());
-   resp.sendRedirect(referer);
+    resp.sendRedirect(referer);
   }
 }

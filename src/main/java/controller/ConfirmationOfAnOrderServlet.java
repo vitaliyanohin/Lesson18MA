@@ -1,7 +1,7 @@
 package controller;
 
 import utils.ConfirmCode;
-import utils.SendEmailTLS;
+import utils.SendEmail;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,7 +23,7 @@ public class ConfirmationOfAnOrderServlet extends HttpServlet {
     confirmCode = ConfirmCode.code();
     login = req.getParameter("email");
     address = req.getParameter("address");
-    new Thread(() -> SendEmailTLS.sendCode(login, confirmCode)).start();
+    new Thread(() -> SendEmail.sendCode(login, confirmCode)).start();
     req.setAttribute("email", login);
     req.setAttribute("address", address);
     req.getRequestDispatcher("confirmOrder.jsp").forward(req, resp);
@@ -42,6 +42,5 @@ public class ConfirmationOfAnOrderServlet extends HttpServlet {
     req.setAttribute("address", address);
     req.setAttribute("info", "code is not correct!");
     req.getRequestDispatcher("confirmOrder.jsp").forward(req, resp);
-
   }
 }
