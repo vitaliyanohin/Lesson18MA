@@ -59,6 +59,10 @@ public class User {
     shoppingBox.add(id);
   }
 
+  public ArrayList<Long> getBox() {
+    return shoppingBox.products;
+  }
+
   public int boxSize() {
     return shoppingBox.size();
   }

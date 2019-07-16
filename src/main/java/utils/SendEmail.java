@@ -16,7 +16,7 @@ public class SendEmail {
 
   private static final Logger LOGGER = Logger.getLogger(SendEmail.class);
 
-  public static void sendCode(String email, String code) {
+  public static void sendCode(String email, String code, Double totalPrice) {
 
     final String username = "testuserma1488@gmail.com";
     final String password = "TestUser1488";
@@ -36,7 +36,8 @@ public class SendEmail {
       Message message = new MimeMessage(session);
       message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
       message.setSubject("Confirm CODE");
-      message.setText("Your Confirm CODE: " + code);
+      message.setText("Your order for: " + totalPrice + "UAH\n"
+              + "Your Confirm CODE: " + code );
       Transport.send(message);
     } catch (MessagingException e) {
        LOGGER.log(Level.ERROR, "Failed to send email: ", e);

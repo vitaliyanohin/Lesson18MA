@@ -3,10 +3,13 @@ package service.impl;
 import dao.ProductDao;
 import factory.ProductDaoFactory;
 import model.Product;
+import model.User;
 import service.ProductService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class ProductServiceImpl implements ProductService {
 
@@ -37,6 +40,13 @@ public class ProductServiceImpl implements ProductService {
     productDao.createTable();
     productDao.addProduct(name);
     return true;
+  }
+
+  public ArrayList<Product> getBoxList(User user) {
+      return user.getBox()
+              .stream()
+              .map(x -> getProductById(x).get())
+              .collect(Collectors.toCollection(ArrayList::new));
   }
 
   @Override

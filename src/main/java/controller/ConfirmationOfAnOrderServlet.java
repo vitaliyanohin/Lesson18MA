@@ -23,7 +23,8 @@ public class ConfirmationOfAnOrderServlet extends HttpServlet {
     confirmCode = ConfirmCode.code();
     login = req.getParameter("email");
     address = req.getParameter("address");
-    new Thread(() -> SendEmail.sendCode(login, confirmCode)).start();
+    Double totalPrice = (Double) req.getAttribute("totalPrice");
+    new Thread(() -> SendEmail.sendCode(login, confirmCode, totalPrice)).start();
     req.setAttribute("email", login);
     req.setAttribute("address", address);
     req.getRequestDispatcher("confirmOrder.jsp").forward(req, resp);
@@ -40,6 +41,7 @@ public class ConfirmationOfAnOrderServlet extends HttpServlet {
     }
     req.setAttribute("email", login);
     req.setAttribute("address", address);
+//    req.setAttribute("productList", req.getAttribute("productList"));
     req.setAttribute("info", "code is not correct!");
     req.getRequestDispatcher("confirmOrder.jsp").forward(req, resp);
   }

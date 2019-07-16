@@ -43,7 +43,7 @@
                 </tr>
                 </c:forEach>
             </table>
-            <form action="confirmOrder.jsp" method="get" >
+            <form action="confirmOrder.jsp">
                 <button type="submit"> Confirm order </button>
             </form>
             <c:if  test="${user.getRole() eq 'admin'}"  >
