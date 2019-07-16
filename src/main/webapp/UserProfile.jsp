@@ -12,9 +12,9 @@
     <title>Title</title>
 </head>
 <body>
+<center> <h2> <c:out value="${info}"/> </h2> </center>
 <center>
-    <h2> Профиль:</h2>
-    <c:out value="${info}"/>
+    <h2> Your Profile:</h2>
     <a href="newProduct"> New Product </a><br>
     <a href="allProducts"> All Products </a> <br>
         <c:if  test="${user.getRole() eq 'admin'}" >
