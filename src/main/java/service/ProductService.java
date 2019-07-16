@@ -17,6 +17,9 @@ public interface ProductService {
 
   Boolean addProduct(Product name);
 
+  boolean updateProduct(Product product);
+
+
   boolean deleteProduct(long id);
 
   int size();

@@ -19,17 +19,19 @@
         <center>
             <h2> My Products:</h2>
             <table border="1" align="center">
-                <tr> <th> Email </th>
-                    <th> Password </th>
+                <tr> <th> Name </th>
+                    <th> description </th>
+                    <th> Price </th>
                     <th> Actions </th>
                     <c:forEach var="currentProduct" items="${allProductList}">
                 <tr>
                     <td> ${currentProduct.getName()}</td>
+                    <td> ${currentProduct.getDescription()}</td>
                     <td> ${currentProduct.getPrice()}</td>
                     <td> <form  action="delete/Product" method="post" >
                         <button name="delete" type="submit" value="${currentProduct.getId()}" >Delete</button> </form>
                         <c:if  test="${user.getRole() eq 'admin'}"  >
-                        <form  action="allUsers" method="post" >
+                        <form  action="editProduct" method="get" >
                             <button  name="edit" type="submit" value="${currentProduct.getId()}" >Edit</button> </form> </td>
                 </c:if>
                 </tr>

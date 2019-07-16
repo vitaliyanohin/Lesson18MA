@@ -17,6 +17,8 @@ public interface ProductDao {
 
   boolean addProduct(Product product);
 
+  boolean updateProduct(Product product);
+
   boolean deleteProduct(long id);
 
   void createTable();

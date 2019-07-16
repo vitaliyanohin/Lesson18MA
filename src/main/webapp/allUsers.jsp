@@ -34,7 +34,7 @@
                                 value="${currentUser.getId()}">Delete
                         </button>
                     </form>
-                    <form action="allUsers" method="post">
+                    <form action="editUser" method="get">
                         <button name="edit" type="submit"
                                 value="${currentUser.getId()}">Edit
                         </button>
@@ -42,6 +42,5 @@
                 </td>
             </tr>
             </c:forEach>
-
 </body>
 </html>
