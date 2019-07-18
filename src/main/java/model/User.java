@@ -1,16 +1,20 @@
 package model;
 
+import java.util.ArrayList;
+
 public class User {
   private Long id;
   private String email;
   private String password;
   private String role;
+  private ShoppingBox shoppingBox;
 
   public User(Long id, String email, String password, String role) {
     this.id = id;
     this.email = email;
     this.password = password;
     this.role = role;
+    shoppingBox = new ShoppingBox();
   }
 
   public User(String email, String password, String role) {
@@ -18,6 +22,7 @@ public class User {
     this.password = password;
     this.role = role;
   }
+
   public Long getId() {
     return id;
   }
@@ -49,4 +54,41 @@ public class User {
   public void setRole(String role) {
     this.role = role;
   }
+
+  public void addInBox(Long id) {
+    shoppingBox.add(id);
+  }
+
+  public ArrayList<Long> getBox() {
+    return shoppingBox.products;
+  }
+
+  public int boxSize() {
+    return shoppingBox.size();
+  }
+
+  public void clearUserBox() {
+    shoppingBox.clearBox();
+  }
+
+   class ShoppingBox {
+
+    private ArrayList<Long> products;
+
+    private ShoppingBox() {
+      products = new ArrayList<>();
+    }
+
+    private void add(Long id) {
+      products.add(id);
+    }
+
+    private int size() {
+      return products.size();
+    }
+
+    private void clearBox() {
+       products.clear();
+     }
+   }
 }

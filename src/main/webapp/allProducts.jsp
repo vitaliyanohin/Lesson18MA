@@ -18,6 +18,8 @@
 <body>
         <center>
             <h2> My Products:</h2>
+            <c:out value="${info}"/>
+          <c:out value="${sessionScope.Box}"/>
             <table border="1" align="center">
                 <tr> <th> Name </th>
                     <th> description </th>
@@ -28,19 +30,27 @@
                     <td> ${currentProduct.getName()}</td>
                     <td> ${currentProduct.getDescription()}</td>
                     <td> ${currentProduct.getPrice()}</td>
-                    <td> <form  action="delete/Product" method="post" >
-                        <button name="delete" type="submit" value="${currentProduct.getId()}" >Delete</button> </form>
+                    <td>
+                        <form  action="ShoppingBox" method="get" >
+                            <button name="add" type="submit" value="${currentProduct.getId()}" >Add in Box</button> </form>
                         <c:if  test="${user.getRole() eq 'admin'}"  >
+                        <form  action="delete/Product" method="post" >
+                        <button name="delete" type="submit" value="${currentProduct.getId()}" >Delete</button> </form>
                         <form  action="editProduct" method="get" >
                             <button  name="edit" type="submit" value="${currentProduct.getId()}" >Edit</button> </form> </td>
                 </c:if>
+
                 </tr>
                 </c:forEach>
             </table>
+            <form action="confirmOrder.jsp">
+                <button type="submit"> Confirm order </button>
+            </form>
+            <c:if  test="${user.getRole() eq 'admin'}"  >
                 <center>
                     <form action="newProduct" method="post">
                         <a href="newProduct"> NewProduct </a><br>
-                        <c:if  test="${user.getRole() eq 'admin'}"  >
+
                         <form action="allUsers" method="post">
                             <a href="allUsers"> All Users </a><br>
                         </form>
