@@ -19,6 +19,10 @@ public interface ProductService {
 
   ArrayList<Product> getBoxList(User user);
 
+  double orderTotalPrice(List<Product> productList);
+
+  void clearUserBox(User user);
+
   Boolean addProduct(Product name);
 
   boolean updateProduct(Product product);

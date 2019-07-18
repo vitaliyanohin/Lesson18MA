@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.DoubleStream;
 
 @WebFilter(filterName = "FilterURL", urlPatterns = {"/confirmOrder.jsp", "/Confirmation"})
 public class BoxFilter implements Filter {
@@ -34,10 +33,7 @@ public class BoxFilter implements Filter {
     HttpSession session = ((HttpServletRequest) request).getSession();
     User user = (User) session.getAttribute("User");
     List<Product> productList = productService.getBoxList(user);
-    Double totalPrice = productList
-            .stream()
-            .flatMapToDouble(x -> DoubleStream.of(x.getPrice()))
-            .sum();
+    Double totalPrice = productService.orderTotalPrice(productList);
     request.setAttribute("productList", productList);
     request.setAttribute("totalPrice", totalPrice);
     chain.doFilter(request, response);

@@ -67,6 +67,10 @@ public class User {
     return shoppingBox.size();
   }
 
+  public void clearUserBox() {
+    shoppingBox.clearBox();
+  }
+
    class ShoppingBox {
 
     private ArrayList<Long> products;
@@ -82,5 +86,9 @@ public class User {
     private int size() {
       return products.size();
     }
-  }
+
+    private void clearBox() {
+       products.clear();
+     }
+   }
 }

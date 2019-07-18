@@ -1,5 +1,9 @@
 package controller;
 
+import factory.ProductServiceFactory;
+import model.Order;
+import model.User;
+import service.impl.ProductServiceImpl;
 import utils.ConfirmCode;
 import utils.SendEmail;
 
@@ -13,6 +17,7 @@ import java.io.IOException;
 @WebServlet(value = "/Confirmation")
 public class ConfirmationOfAnOrderServlet extends HttpServlet {
 
+  private static final ProductServiceImpl productService = ProductServiceFactory.getInstance();
   private String confirmCode;
   private String login;
   private String address;
@@ -35,6 +40,10 @@ public class ConfirmationOfAnOrderServlet extends HttpServlet {
           throws ServletException, IOException {
     String confirmCodeFromUser = req.getParameter("code");
     if (confirmCodeFromUser.equals(confirmCode)) {
+      User user = (User) req.getSession().getAttribute("User");
+      Order order = new Order(address, user);
+      order.addOrderToJDBC();
+      productService.clearUserBox(user);
       req.setAttribute("info", "request has been sent! TY!");
       req.getRequestDispatcher("UserProfile.jsp").include(req, resp);
       return;
