@@ -33,9 +33,8 @@ public class Order {
   }
 
   private int generateOrderId() {
-    int max = 9998;
+    int max = 9999;
     int min = 1000;
     return (int) (Math.random() * ++max) + min;
-
   }
 }
