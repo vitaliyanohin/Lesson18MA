@@ -31,7 +31,7 @@
                     <td> ${currentProduct.getDescription()}</td>
                     <td> ${currentProduct.getPrice()}</td>
                     <td>
-                        <form  action="ShoppingBox" method="get" >
+                        <form  action="ShoppingBoxServlet" method="get" >
                             <button name="add" type="submit" value="${currentProduct.getId()}" >Add in Box</button> </form>
                         <c:if  test="${user.getRole() eq 'admin'}"  >
                         <form  action="delete/Product" method="post" >

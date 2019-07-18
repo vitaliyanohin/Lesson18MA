@@ -5,36 +5,36 @@ import factory.GetSQLConnectionFactory;
 import model.Product;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-import service.executor.Executor;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class ProductDaoImpl implements ProductDao {
 
-  private static final Logger LOGGER =  Logger.getLogger(ProductDaoImpl.class);
+  private static final Logger LOGGER = Logger.getLogger(ProductDaoImpl.class);
 
-  private Executor executor;
   private Connection connection;
 
   public ProductDaoImpl() {
     connection = GetSQLConnectionFactory.getMysqlConnection();
-    executor = new Executor(connection);
   }
 
   @Override
   public Optional<Product> getProductByName(String name) {
-    try {
-      return executor.execQuery("SELECT * FROM products WHERE product_name='" + name + "'",
-              result -> {
-                    result.next();
-                    return Optional.of(new Product(result.getLong(1),
-                            result.getString(2),
-                            result.getString(3),
-                            result.getDouble(4)));
-                        });
+    try (Statement statement = connection.createStatement()) {
+      statement.execute("SELECT * FROM products WHERE product_name='" + name + "'");
+      ResultSet resultSet = statement.getResultSet();
+      while (resultSet.next()) {
+        return Optional.of(new Product(resultSet.getLong("id"),
+                resultSet.getString("product_name"),
+                resultSet.getString("description"),
+                resultSet.getDouble("price")));
+      }
     } catch (SQLException e) {
        LOGGER.log(Level.ERROR, "Failed to get product by name: ", e);
     }
@@ -43,15 +43,15 @@ public class ProductDaoImpl implements ProductDao {
 
   @Override
   public Optional<Product> getProductById(long id) {
-    try {
-      return executor.execQuery("SELECT * FROM products WHERE id= " + id,
-              result -> {
-                        result.next();
-                        return Optional.of(new  Product(result.getLong(1),
-                                result.getString(2),
-                                result.getString(3),
-                                result.getDouble(4)));
-                        });
+    try (Statement statement = connection.createStatement()) {
+      statement.execute("SELECT * FROM products WHERE id= " + id);
+      ResultSet resultSet = statement.getResultSet();
+      while (resultSet.next()) {
+        return Optional.of(new Product(resultSet.getLong("id"),
+                resultSet.getString("product_name"),
+                resultSet.getString("description"),
+                resultSet.getDouble("price")));
+      }
     } catch (SQLException e) {
        LOGGER.log(Level.ERROR, "Failed to get product by ID: ", e);
     }
@@ -60,8 +60,14 @@ public class ProductDaoImpl implements ProductDao {
 
   @Override
   public Optional<List<Long>> getAllProductId() {
-    try {
-      return Optional.ofNullable(executor.execQueryForAllID("SELECT * FROM products"));
+    try (Statement statement = connection.createStatement()) {
+      statement.execute("SELECT * FROM products");
+      ResultSet resultSet = statement.getResultSet();
+      List<Long> list = new ArrayList<>();
+      while (resultSet.next()) {
+        list.add(resultSet.getLong(1));
+      }
+      return Optional.of(list);
     } catch (SQLException e) {
        LOGGER.log(Level.ERROR, "Failed to get all Product ID: ", e);
     }
@@ -70,33 +76,27 @@ public class ProductDaoImpl implements ProductDao {
 
   @Override
   public boolean deleteProduct(long id) {
-    try {
-      connection.setAutoCommit(false);
-      executor.execUpdate("DELETE FROM products WHERE id="
-              + "'" + id + "';");
-      connection.commit();
-      return true;
+    try (Statement statement = connection.createStatement()) {
+      statement.execute("DELETE FROM products WHERE id=" + "'" + id + "';");
     } catch (SQLException e) {
-       LOGGER.log(Level.ERROR, "Failed to delete product: ", e);
-      try {
-        connection.rollback();
-      } catch (SQLException ex) {
-         LOGGER.log(Level.ERROR, "Failed to rollback product: ", ex);
-      }
-    } finally {
-      try {
-        connection.setAutoCommit(true);
-      } catch (SQLException e) {
-         LOGGER.log(Level.ERROR, "Failed to set AutoCommit: ", e);
-      }
+       LOGGER.log(Level.ERROR, "Failed to set AutoCommit: ", e);
     }
     return false;
   }
 
   @Override
   public Optional<List<Product>> getAllProducts() {
-    try {
-      return executor.execQueryAllProducts("SELECT * FROM products");
+    try (Statement statement = connection.createStatement()) {
+      statement.execute("SELECT * FROM products");
+      ResultSet resultSet = statement.getResultSet();
+      List<Product> listOfAllProducts = new ArrayList<>();
+      while (resultSet.next()) {
+        listOfAllProducts.add(new Product(resultSet.getLong(1),
+                resultSet.getString(2),
+                resultSet.getString(3),
+                resultSet.getDouble(4)));
+      }
+      return Optional.of(listOfAllProducts);
     } catch (SQLException e) {
        LOGGER.log(Level.ERROR, "Failed to get arrays of products: ", e);
     }
@@ -105,40 +105,27 @@ public class ProductDaoImpl implements ProductDao {
 
   @Override
   public boolean addProduct(Product product) {
-    try {
-      connection.setAutoCommit(false);
-      executor.execUpdate("INSERT INTO products (product_name, description, price) VALUES "
-              + "('" + product.getName() + "', '"
-              + product.getDescription() + "', '"
-              + product.getPrice() + "');");
-      connection.commit();
-      return true;
+    try (Statement statement = connection.createStatement()) {
+      String sqlQuery = String.format("INSERT INTO products (product_name, description, price) "
+                      + "VALUES ('%s', '%s', '%s')",
+              product.getName(), product.getDescription(), product.getPrice());
+      return statement.execute(sqlQuery);
     } catch (SQLException e) {
        LOGGER.log(Level.ERROR, "Failed to set product: ", e);
-      try {
-        connection.rollback();
-      } catch (SQLException ex) {
-         LOGGER.log(Level.ERROR, "Failed to rollback product: ", ex);
-      }
-    } finally {
-      try {
-        connection.setAutoCommit(true);
-      } catch (SQLException e) {
-         LOGGER.log(Level.ERROR, "Failed to set AutoCommit: ", e);
-      }
     }
     return false;
   }
 
   @Override
   public boolean updateProduct(Product product) {
-    try {
-      executor.execUpdate("UPDATE products " +
-              "SET product_name = '" + product.getName() + "' "
-              + ", description= '" + product.getDescription() +  "' "
-              +", price= '" + product.getPrice() + "' "
-              + "WHERE id=" + product.getId() + " ;");
-      return true;
+    try (Statement statement = connection.createStatement()) {
+      String sqlQuery = String.format("UPDATE products "
+                      + "SET product_name = '%s' , "
+                      + "description= '%s' , "
+                      + "price= '%s' "
+                      + "WHERE id= %s ;",
+              product.getName(), product.getDescription(), product.getPrice(), product.getId());
+      return statement.execute(sqlQuery);
     } catch (SQLException e) {
        LOGGER.log(Level.ERROR, "Failed to update product: ", e);
     }
@@ -147,10 +134,11 @@ public class ProductDaoImpl implements ProductDao {
 
   @Override
   public void createTable() {
-    try {
-      executor.execUpdate("CREATE TABLE IF NOT EXISTS products (id bigint auto_increment,"
+    try (Statement statement = connection.createStatement()) {
+      String sqlQuery = "CREATE TABLE IF NOT EXISTS products (id bigint auto_increment,"
               + " product_name VARCHAR(256), description VARCHAR(256), "
-              + "price VARCHAR(256), PRIMARY KEY (id))");
+              + "price VARCHAR(256), PRIMARY KEY (id))";
+      statement.execute(sqlQuery);
     } catch (SQLException e) {
        LOGGER.log(Level.ERROR, "Failed to create table: ", e);
     }
@@ -158,8 +146,8 @@ public class ProductDaoImpl implements ProductDao {
 
   @Override
   public void dropTable() {
-    try {
-      executor.execUpdate("DROP TABLE products");
+    try (Statement statement = connection.createStatement()) {
+      statement.execute("DROP TABLE products");
     } catch (SQLException e) {
        LOGGER.log(Level.ERROR, "Failed to drop table: ", e);
     }
@@ -167,8 +155,10 @@ public class ProductDaoImpl implements ProductDao {
 
   @Override
   public int size() {
-    try {
-      return executor.size("SELECT COUNT(*) FROM products;\n");
+    try (Statement statement = connection.createStatement()) {
+      ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM products");
+      resultSet.next();
+      return resultSet.getInt(1);
     } catch (SQLException e) {
        LOGGER.log(Level.ERROR, "Failed to get table size: ", e);
     }
