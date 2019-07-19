@@ -76,7 +76,7 @@ public class UserDaoImpl implements UserDao {
     try (Statement statement = connection.createStatement()) {
       statement.execute("DELETE FROM users WHERE id=" + "'" + id + "';");
     } catch (SQLException e) {
-       LOGGER.log(Level.ERROR, "Failed to set AutoCommit: ", e);
+       LOGGER.log(Level.ERROR, "Failed to delete user: ", e);
     }
     return false;
   }

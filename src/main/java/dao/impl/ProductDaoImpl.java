@@ -79,7 +79,7 @@ public class ProductDaoImpl implements ProductDao {
     try (Statement statement = connection.createStatement()) {
       statement.execute("DELETE FROM products WHERE id=" + "'" + id + "';");
     } catch (SQLException e) {
-       LOGGER.log(Level.ERROR, "Failed to set AutoCommit: ", e);
+       LOGGER.log(Level.ERROR, "Failed to delete product: ", e);
     }
     return false;
   }
