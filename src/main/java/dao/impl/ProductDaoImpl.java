@@ -1,15 +1,15 @@
 package dao.impl;
 
 import dao.ProductDao;
-import factory.GetSQLConnectionFactory;
 import model.Product;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import utils.GetSQLConnection;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -17,18 +17,35 @@ import java.util.Optional;
 public class ProductDaoImpl implements ProductDao {
 
   private static final Logger LOGGER = Logger.getLogger(ProductDaoImpl.class);
-
+  private static final String GET_PRODUCT_BY_NAME = "SELECT * FROM products WHERE product_name= ?";
+  private static final String GET_PRODUCT_BY_ID = "SELECT * FROM products WHERE id= ?";
+  private static final String GET_ALL_PRODUCT = "SELECT * FROM products";
+  private static final String TABLE_SIZE = "SELECT COUNT(*) FROM products";
+  private static final String DELETE_PRODUCT = "SELECT * FROM products WHERE id= ?";
+  private static final String DROP_TABLE = "DROP TABLE products";
+  private static final String ADD_PRODUCT =
+          "INSERT INTO products (product_name, description, price) "
+          + "VALUES (?, ?, ?)";
+  private static final String UPDATE_PRODUCT = "UPDATE products "
+          + "SET product_name = ?, "
+          + "description= ?, "
+          + "price= ? "
+          + "WHERE id= ?";
+  private static final String CREATE_TABLE =
+          "CREATE TABLE IF NOT EXISTS products (id BIGINT auto_increment,"
+          + " product_name VARCHAR(256), description VARCHAR(256), "
+          + "price VARCHAR(256), PRIMARY KEY (id))";
   private Connection connection;
 
   public ProductDaoImpl() {
-    connection = GetSQLConnectionFactory.getMysqlConnection();
+    connection = GetSQLConnection.getMysqlConnection();
   }
 
   @Override
   public Optional<Product> getProductByName(String name) {
-    try (Statement statement = connection.createStatement()) {
-      statement.execute("SELECT * FROM products WHERE product_name='" + name + "'");
-      ResultSet resultSet = statement.getResultSet();
+    try (PreparedStatement statement = connection.prepareStatement(GET_PRODUCT_BY_NAME)) {
+      statement.setString(1, name);
+      ResultSet resultSet = statement.executeQuery();
       while (resultSet.next()) {
         return Optional.of(new Product(resultSet.getLong("id"),
                 resultSet.getString("product_name"),
@@ -43,9 +60,9 @@ public class ProductDaoImpl implements ProductDao {
 
   @Override
   public Optional<Product> getProductById(long id) {
-    try (Statement statement = connection.createStatement()) {
-      statement.execute("SELECT * FROM products WHERE id= " + id);
-      ResultSet resultSet = statement.getResultSet();
+    try (PreparedStatement statement = connection.prepareStatement(GET_PRODUCT_BY_ID)) {
+      statement.setLong(1, id);
+      ResultSet resultSet = statement.executeQuery();
       while (resultSet.next()) {
         return Optional.of(new Product(resultSet.getLong("id"),
                 resultSet.getString("product_name"),
@@ -60,9 +77,8 @@ public class ProductDaoImpl implements ProductDao {
 
   @Override
   public Optional<List<Long>> getAllProductId() {
-    try (Statement statement = connection.createStatement()) {
-      statement.execute("SELECT * FROM products");
-      ResultSet resultSet = statement.getResultSet();
+    try (PreparedStatement statement = connection.prepareStatement(GET_ALL_PRODUCT)) {
+      ResultSet resultSet = statement.executeQuery();
       List<Long> list = new ArrayList<>();
       while (resultSet.next()) {
         list.add(resultSet.getLong(1));
@@ -76,8 +92,9 @@ public class ProductDaoImpl implements ProductDao {
 
   @Override
   public boolean deleteProduct(long id) {
-    try (Statement statement = connection.createStatement()) {
-      statement.execute("DELETE FROM products WHERE id=" + "'" + id + "';");
+    try (PreparedStatement statement = connection.prepareStatement(DELETE_PRODUCT)) {
+      statement.setLong(1, id);
+      return statement.execute();
     } catch (SQLException e) {
        LOGGER.log(Level.ERROR, "Failed to delete product: ", e);
     }
@@ -86,9 +103,8 @@ public class ProductDaoImpl implements ProductDao {
 
   @Override
   public Optional<List<Product>> getAllProducts() {
-    try (Statement statement = connection.createStatement()) {
-      statement.execute("SELECT * FROM products");
-      ResultSet resultSet = statement.getResultSet();
+    try (PreparedStatement statement = connection.prepareStatement(GET_ALL_PRODUCT)) {
+      ResultSet resultSet = statement.executeQuery();
       List<Product> listOfAllProducts = new ArrayList<>();
       while (resultSet.next()) {
         listOfAllProducts.add(new Product(resultSet.getLong(1),
@@ -105,11 +121,11 @@ public class ProductDaoImpl implements ProductDao {
 
   @Override
   public boolean addProduct(Product product) {
-    try (Statement statement = connection.createStatement()) {
-      String sqlQuery = String.format("INSERT INTO products (product_name, description, price) "
-                      + "VALUES ('%s', '%s', '%s')",
-              product.getName(), product.getDescription(), product.getPrice());
-      return statement.execute(sqlQuery);
+    try (PreparedStatement statement = connection.prepareStatement(ADD_PRODUCT)) {
+      statement.setString(1, product.getName());
+      statement.setString(2, product.getDescription());
+      statement.setDouble(3, product.getPrice());
+      return statement.execute();
     } catch (SQLException e) {
        LOGGER.log(Level.ERROR, "Failed to set product: ", e);
     }
@@ -118,14 +134,11 @@ public class ProductDaoImpl implements ProductDao {
 
   @Override
   public boolean updateProduct(Product product) {
-    try (Statement statement = connection.createStatement()) {
-      String sqlQuery = String.format("UPDATE products "
-                      + "SET product_name = '%s' , "
-                      + "description= '%s' , "
-                      + "price= '%s' "
-                      + "WHERE id= %s ;",
-              product.getName(), product.getDescription(), product.getPrice(), product.getId());
-      return statement.execute(sqlQuery);
+    try (PreparedStatement statement = connection.prepareStatement(UPDATE_PRODUCT)) {
+      statement.setString(1, product.getName());
+      statement.setString(2, product.getDescription());
+      statement.setDouble(3, product.getPrice());
+      return statement.execute();
     } catch (SQLException e) {
        LOGGER.log(Level.ERROR, "Failed to update product: ", e);
     }
@@ -134,11 +147,8 @@ public class ProductDaoImpl implements ProductDao {
 
   @Override
   public void createTable() {
-    try (Statement statement = connection.createStatement()) {
-      String sqlQuery = "CREATE TABLE IF NOT EXISTS products (id bigint auto_increment,"
-              + " product_name VARCHAR(256), description VARCHAR(256), "
-              + "price VARCHAR(256), PRIMARY KEY (id))";
-      statement.execute(sqlQuery);
+    try (PreparedStatement statement = connection.prepareStatement(CREATE_TABLE)) {
+      statement.execute();
     } catch (SQLException e) {
        LOGGER.log(Level.ERROR, "Failed to create table: ", e);
     }
@@ -146,8 +156,8 @@ public class ProductDaoImpl implements ProductDao {
 
   @Override
   public void dropTable() {
-    try (Statement statement = connection.createStatement()) {
-      statement.execute("DROP TABLE products");
+    try (PreparedStatement statement = connection.prepareStatement(DROP_TABLE)) {
+      statement.execute();
     } catch (SQLException e) {
        LOGGER.log(Level.ERROR, "Failed to drop table: ", e);
     }
@@ -155,8 +165,8 @@ public class ProductDaoImpl implements ProductDao {
 
   @Override
   public int size() {
-    try (Statement statement = connection.createStatement()) {
-      ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM products");
+    try (PreparedStatement statement = connection.prepareStatement(TABLE_SIZE)) {
+      ResultSet resultSet = statement.executeQuery();
       resultSet.next();
       return resultSet.getInt(1);
     } catch (SQLException e) {

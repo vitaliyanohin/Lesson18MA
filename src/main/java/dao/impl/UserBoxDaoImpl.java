@@ -1,47 +1,77 @@
 package dao.impl;
 
 import dao.UserBoxDao;
-import factory.GetSQLConnectionFactory;
+import model.Product;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import utils.GetSQLConnection;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class UserBoxDaoImpl implements UserBoxDao {
 
   private static final Logger LOGGER = Logger.getLogger(UserBoxDaoImpl.class);
-
+  private static final String CREATE_BASKET_TABLE =
+          "CREATE TABLE IF NOT EXISTS basketTable (BusketID BIGINT,"
+          + "userID BIGINT, ProductID BIGINT, FOREIGN KEY (ProductID) REFERENCES products(id), "
+          + "FOREIGN KEY (userID) REFERENCES users(id))";
+  private static final String ADD_PRODUCT_IN_BUSKET =
+          "INSERT INTO basketTable (BusketID, userID, ProductID)"
+          + " VALUES (?, ?, ?)";
+  private static final String GET_PRODUCTS_FORM_BOX =
+          "SELECT id, product_name, description, price FROM products "
+          + "INNER JOIN baskettable b on products.id = b.ProductID "
+          + "WHERE BusketID = ?";
   private Connection connection;
 
   public UserBoxDaoImpl() {
-    connection = GetSQLConnectionFactory.getMysqlConnection();
+    connection = GetSQLConnection.getMysqlConnection();
+  }
+
+    @Override
+    public void createProductBasketTable() {
+      try (PreparedStatement statement = connection.prepareStatement(CREATE_BASKET_TABLE)) {
+        statement.execute();
+      } catch (SQLException e) {
+        LOGGER.log(Level.ERROR, "Failed to create table: ", e);
+      }
   }
 
   @Override
-  public boolean addOrderToDb(long orderId, String address, long userId, long productId) {
-    try (Statement statement = connection.createStatement()) {
-      String sqlQuery = String.format("INSERT INTO orderTable (OrderID, address, userID, ProductID)"
-                      + " VALUES ('%s', '%s', '%s', '%s')",
-              orderId, address, userId, productId);
-      return statement.execute(sqlQuery);
+  public boolean addProductToBasket(Long boxId, Long userId, Long productId) {
+    try (PreparedStatement statement = connection.prepareStatement(ADD_PRODUCT_IN_BUSKET)) {
+      statement.setLong(1, boxId);
+      statement.setLong(2, userId);
+      statement.setLong(3, productId);
+      return statement.execute();
     } catch (SQLException e) {
-       LOGGER.log(Level.ERROR, "Failed to set order: ", e);
+      LOGGER.log(Level.ERROR, "Failed to set product to basket: ", e);
     }
     return false;
   }
 
   @Override
-  public void createOrderTable() {
-    try (Statement statement = connection.createStatement()) {
-      String sqlQuery = "CREATE TABLE IF NOT EXISTS orderTable (OrderID bigint,"
-              + " address VARCHAR(256), userID bigint, "
-              + "ProductID bigint, FOREIGN KEY (ProductID) REFERENCES products(id), "
-              + "FOREIGN KEY (userID) REFERENCES users(id))";
-      statement.execute(sqlQuery);
+  public Optional<List<Product>> getProductsFromUserBox(Long boxId) {
+    try (PreparedStatement statement = connection.prepareStatement(GET_PRODUCTS_FORM_BOX)) {
+      statement.setLong(1, boxId);
+      ResultSet resultSet = statement.executeQuery();
+      List<Product> list = new ArrayList<>();
+      while (resultSet.next()) {
+        list.add(new Product(resultSet.getLong(1),
+                resultSet.getString(2),
+                resultSet.getString(3),
+                resultSet.getDouble(4)));
+      }
+      return Optional.of(list);
     } catch (SQLException e) {
-       LOGGER.log(Level.ERROR, "Failed to create table: ", e);
+      LOGGER.log(Level.ERROR, "Failed to get arrays of products: ", e);
     }
+    return Optional.empty();
   }
 }

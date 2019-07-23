@@ -1,6 +1,5 @@
 package service.executor;
 
-import model.Product;
 import model.User;
 
 import java.sql.Connection;
@@ -72,19 +71,19 @@ public class Executor {
     return Optional.of(listOfAllUsers);
   }
 
-  public Optional<List<Product>> execQueryAllProducts(String query) throws SQLException {
-    Statement statement = connection.createStatement();
-    statement.execute(query);
-    ResultSet resultSet = statement.getResultSet();
-    List<Product> listOfAllProducts = new ArrayList<>();
-    while (resultSet.next()) {
-      listOfAllProducts.add(new Product(resultSet.getLong(1),
-              resultSet.getString(2),
-              resultSet.getString(3),
-              resultSet.getDouble(4)));
-    }
-    resultSet.close();
-    statement.close();
-    return Optional.of(listOfAllProducts);
-  }
+  //public Optional<List<Product>> execQueryAllProducts(String query) throws SQLException {
+//    Statement statement = connection.createStatement();
+//    statement.execute(query);
+//    ResultSet resultSet = statement.getResultSet();
+//    List<Product> listOfAllProducts = new ArrayList<>();
+//    while (resultSet.next()) {
+//      listOfAllProducts.add(new Product(resultSet.getLong(1),
+//              resultSet.getString(2),
+//              resultSet.getString(3),
+//              resultSet.getDouble(4)));
+//    }
+//    resultSet.close();
+//    statement.close();
+//    return Optional.of(listOfAllProducts);
+  //}
 }

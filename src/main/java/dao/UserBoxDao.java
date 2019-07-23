@@ -1,9 +1,15 @@
 package dao;
 
+import model.Product;
+
+import java.util.List;
+import java.util.Optional;
+
 public interface UserBoxDao {
 
-  boolean addOrderToDb(long orderId, String address, long userId, long productId);
+  void createProductBasketTable();
 
-  void createOrderTable();
+  boolean addProductToBasket(Long boxId, Long userId, Long productId);
 
+  Optional<List<Product>> getProductsFromUserBox(Long boxId);
 }

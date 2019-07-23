@@ -1,14 +1,14 @@
 package factory;
 
-import service.impl.UserBoxServiceImpl;
+import service.impl.UserOrderServiceImpl;
 
 public class UserBoxServiceFactory {
 
-  private static UserBoxServiceImpl userBoxService;
+  private static UserOrderServiceImpl userBoxService;
 
-  public static UserBoxServiceImpl getInstance() {
+  public static UserOrderServiceImpl getInstance() {
     if (userBoxService == null) {
-      userBoxService = new UserBoxServiceImpl();
+      userBoxService = new UserOrderServiceImpl();
     }
     return userBoxService;
   }

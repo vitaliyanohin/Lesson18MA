@@ -1,7 +1,5 @@
 package model;
 
-import java.util.ArrayList;
-
 public class User {
   private Long id;
   private String email;
@@ -21,6 +19,10 @@ public class User {
     this.email = email;
     this.password = password;
     this.role = role;
+  }
+
+  public void createNewUserBox() {
+    shoppingBox = new ShoppingBox();
   }
 
   public Long getId() {
@@ -43,6 +45,10 @@ public class User {
     return password;
   }
 
+  public Long getBoxId() {
+    return shoppingBox.getBoxId();
+  }
+
   public void setPassword(String password) {
     this.password = password;
   }
@@ -55,40 +61,31 @@ public class User {
     this.role = role;
   }
 
-  public void addInBox(Long id) {
-    shoppingBox.add(id);
-  }
-
-  public ArrayList<Long> getBox() {
-    return shoppingBox.products;
-  }
-
-  public int boxSize() {
-    return shoppingBox.size();
-  }
-
-  public void clearUserBox() {
-    shoppingBox.clearBox();
+  public int incrementAndGetBoxSize() {
+    return shoppingBox.boxSize();
   }
 
    class ShoppingBox {
 
-    private ArrayList<Long> products;
+    private Long BoxId;
+    private int size = 1;
 
     private ShoppingBox() {
-      products = new ArrayList<>();
+      BoxId = generateBoxId();
     }
 
-    private void add(Long id) {
-      products.add(id);
-    }
+     private Long getBoxId() {
+       return BoxId;
+     }
 
-    private int size() {
-      return products.size();
-    }
+     private int boxSize() {
+     return size++;
+     }
 
-    private void clearBox() {
-       products.clear();
+     private Long generateBoxId() {
+       int max = 9999;
+       int min = 1000;
+       return Long.valueOf((int) ((Math.random() * ++max) + min));
      }
    }
 }

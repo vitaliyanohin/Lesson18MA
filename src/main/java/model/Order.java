@@ -1,40 +1,27 @@
 package model;
 
-import java.util.ArrayList;
-
 public class Order {
 
   private String address;
-  private long userId;
-  private long orderId;
-  private ArrayList<Long> box;
+  private Long userId;
+  private Long boxId;
 
-  public Order(long userId, String address, ArrayList<Long> box) {
+  public Order(Long userId, String address, Long boxId) {
     this.address = address;
     this.userId = userId;
-    this.box = box;
-    orderId = generateOrderId();
+    this.boxId = boxId;
+
   }
 
   public String getAddress() {
     return address;
   }
 
-  public long getUserId() {
+  public Long getUserId() {
     return userId;
   }
 
-  public long getOrderId() {
-    return orderId;
-  }
-
-  public ArrayList<Long> getBox() {
-    return box;
-  }
-
-  private int generateOrderId() {
-    int max = 9999;
-    int min = 1000;
-    return (int) (Math.random() * ++max) + min;
+  public Long getBoxId() {
+    return boxId;
   }
 }

@@ -1,4 +1,4 @@
-package factory;
+package utils;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -8,9 +8,9 @@ import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class GetSQLConnectionFactory {
+public class GetSQLConnection {
 
-  private static final Logger LOGGER =  Logger.getLogger(GetSQLConnectionFactory.class);
+  private static final Logger LOGGER =  Logger.getLogger(GetSQLConnection.class);
   public static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
 
   public static Connection getMysqlConnection() {
