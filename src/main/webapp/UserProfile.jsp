@@ -17,6 +17,7 @@
     <h2> Your Profile:</h2>
     <a href="newProduct"> New Product </a><br>
     <a href="allProducts"> All Products </a> <br>
+    <a href="myOrders"> My Orders </a> <br>
         <c:if  test="${user.getRole() eq 'admin'}" >
     <h3> Add NEW USER:</h3>
     <form action="register" method="post">

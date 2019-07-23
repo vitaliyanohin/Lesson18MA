@@ -1,6 +1,8 @@
 package controller;
 
+import factory.UserBoxServiceFactory;
 import model.User;
+import service.impl.UserOrderServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,14 +14,16 @@ import java.io.IOException;
 @WebServlet(value = "/ShoppingBoxServlet")
 public class ShoppingBoxServlet extends HttpServlet {
 
+  private static final UserOrderServiceImpl userBoxService = UserBoxServiceFactory.getInstance();
+
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
           throws ServletException, IOException {
     String previousURL = req.getHeader("Referer");
     Long productId = Long.valueOf(req.getParameter("add"));
     User user = (User) req.getSession().getAttribute("User");
-    user.addInBox(productId);
-    req.getSession().setAttribute("Box", user.boxSize());
+    userBoxService.addProductToBasket(user, productId);
+    req.getSession().setAttribute("Box", user.incrementAndGetBoxSize());
     resp.sendRedirect(previousURL);
   }
 }

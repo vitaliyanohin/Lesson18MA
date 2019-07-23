@@ -11,8 +11,6 @@ public interface AccountService {
 
   Optional<User> getUserById(long id);
 
-  Optional<List<Long>> getAllUserId();
-
   Optional<List<User>> getAllUsers();
 
   boolean updateUser(User user);

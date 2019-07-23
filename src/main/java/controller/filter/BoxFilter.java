@@ -1,9 +1,11 @@
 package controller.filter;
 
 import factory.ProductServiceFactory;
+import factory.UserBoxServiceFactory;
 import model.Product;
 import model.User;
 import service.impl.ProductServiceImpl;
+import service.impl.UserOrderServiceImpl;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -21,6 +23,7 @@ import java.util.List;
 public class BoxFilter implements Filter {
 
   private static final ProductServiceImpl productService = ProductServiceFactory.getInstance();
+  private static final UserOrderServiceImpl userBoxService = UserBoxServiceFactory.getInstance();
 
   @Override
   public void init(FilterConfig filterConfig) throws ServletException {
@@ -32,7 +35,7 @@ public class BoxFilter implements Filter {
           throws IOException, ServletException {
     HttpSession session = ((HttpServletRequest) request).getSession();
     User user = (User) session.getAttribute("User");
-    List<Product> productList = productService.getBoxList(user);
+    List<Product> productList = userBoxService.getProductsFromUserBox(user.getBoxId()).get();
     Double totalPrice = productService.orderTotalPrice(productList);
     request.setAttribute("productList", productList);
     request.setAttribute("totalPrice", totalPrice);

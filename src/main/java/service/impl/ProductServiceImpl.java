@@ -3,13 +3,10 @@ package service.impl;
 import dao.ProductDao;
 import factory.ProductDaoFactory;
 import model.Product;
-import model.User;
 import service.ProductService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.DoubleStream;
 
 public class ProductServiceImpl implements ProductService {
@@ -45,22 +42,7 @@ public class ProductServiceImpl implements ProductService {
 
   @Override
   public double orderTotalPrice(List<Product> productList) {
-   return productList
-            .stream()
-            .flatMapToDouble(x -> DoubleStream.of(x.getPrice()))
-            .sum();
-  }
-
-  @Override
-  public ArrayList<Product> getBoxList(User user) {
-      return user.getBox()
-              .stream()
-              .map(x -> getProductById(x).get())
-              .collect(Collectors.toCollection(ArrayList::new));
-  }
-
-  public void clearUserBox(User user) {
-    user.clearUserBox();
+    return productList.stream().flatMapToDouble(x -> DoubleStream.of(x.getPrice())).sum();
   }
 
   @Override

@@ -19,8 +19,6 @@ public interface UserDao {
 
   boolean updateUser(User user);
 
-  Optional<List<Long>> getAllUserId();
-
   int size();
 
   void createTable();
