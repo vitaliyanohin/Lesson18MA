@@ -25,7 +25,6 @@ public class BoxFilter implements Filter {
   private static final ProductServiceImpl productService = ProductServiceFactory.getInstance();
   private static final UserOrderServiceImpl userBoxService = UserBoxServiceFactory.getInstance();
 
-
   @Override
   public void init(FilterConfig filterConfig) throws ServletException {
 
