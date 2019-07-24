@@ -17,4 +17,11 @@ public interface UserOrderService {
   Optional<List<MyOrder>> getUserOrderByOrderId(Long orderId);
 
   Optional<List<Product>> getProductsFromUserBox(Long boxId);
+
+  void createAndAddUserBasketInDb(User user);
+
+  int basketSize(User user);
+
+  Optional<Long> getBasketIdIfExists(User user);
+
 }

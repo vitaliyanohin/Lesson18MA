@@ -17,20 +17,26 @@ import java.util.Optional;
 public class OrderDaoImpl implements OrderDao {
 
   private static final Logger LOGGER = Logger.getLogger(OrderDaoImpl.class);
+
   private static final String CREATE_ORDER_TABLE =
           "CREATE TABLE IF NOT EXISTS orderTable (OrderID BIGINT auto_increment,"
           + "  userID BIGINT, address VARCHAR(256),"
-          + "BusketID BIGINT, "
-          + "FOREIGN KEY (userID) REFERENCES users(id), PRIMARY KEY (OrderID))";
-  private static final String ADD_ORDER_TO_DB = "INSERT INTO orderTable (userID, address, BusketID)"
+          + "BasketID BIGINT, "
+          + " FOREIGN KEY (BasketID) REFERENCES user_basket(BasketID)," +
+                  " PRIMARY KEY (OrderID))";
+
+  private static final String ADD_ORDER_TO_DB = "INSERT INTO orderTable (userID, address, BasketID)"
           + " VALUES (?, ?, ?)";
+
   private static final String GET_USER_ORDERS = "SELECT OrderID FROM ordertable WHERE userID= ?";
+
   private static final String GET_USER_ORDER_BY_ID =
           "select OrderID, address, user_name, product_name, description, price "
-          + " FROM ordertable INNER JOIN baskettable on ordertable.BusketID = baskettable.BusketID "
-          + "INNER JOIN users u on baskettable.userID = u.id "
-          + "INNER JOIN products p on baskettable.ProductID = p.id "
+          + " FROM ordertable INNER JOIN product_basket on ordertable.BasketID = product_basket.BasketID "
+          + "INNER JOIN users u on userID = u.id "
+          + "INNER JOIN products p on product_basket.ProductID = p.id "
           + "WHERE OrderID= ?";
+
   private Connection connection;
 
   public OrderDaoImpl() {

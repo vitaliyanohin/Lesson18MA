@@ -3,6 +3,7 @@ package controller;
 import factory.AccountServiceFactory;
 import model.User;
 import service.impl.AccountServiceImpl;
+import utils.EncryptPassword;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -42,6 +43,7 @@ public class UserRegistrationServlet extends HttpServlet {
       return;
     }
     if (pass.equals(repeatPassword) ) {
+      pass = EncryptPassword.encryptPassword(pass);
       User userProfile = new User(login, pass, role);
       accountService.addUser(userProfile);
       resp.setStatus(HttpServletResponse.SC_OK);

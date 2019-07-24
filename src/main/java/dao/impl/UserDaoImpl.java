@@ -30,6 +30,7 @@ public class UserDaoImpl implements UserDao {
           + "password= ?, "
           + "role= ? "
           + "WHERE id= ?";
+
   private static final String CREATE_TABLE =
           "CREATE TABLE IF NOT EXISTS users (id BIGINT auto_increment,"
           + " user_name VARCHAR(256), password VARCHAR(256), role VARCHAR(256), PRIMARY KEY (id));";

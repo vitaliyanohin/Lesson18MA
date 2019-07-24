@@ -26,15 +26,18 @@ public class ProductDaoImpl implements ProductDao {
   private static final String ADD_PRODUCT =
           "INSERT INTO products (product_name, description, price) "
           + "VALUES (?, ?, ?)";
+
   private static final String UPDATE_PRODUCT = "UPDATE products "
           + "SET product_name = ?, "
           + "description= ?, "
           + "price= ? "
           + "WHERE id= ?";
+
   private static final String CREATE_TABLE =
           "CREATE TABLE IF NOT EXISTS products (id BIGINT auto_increment,"
           + " product_name VARCHAR(256), description VARCHAR(256), "
           + "price VARCHAR(256), PRIMARY KEY (id))";
+
   private Connection connection;
 
   public ProductDaoImpl() {

@@ -22,8 +22,12 @@ public class ShoppingBoxServlet extends HttpServlet {
     String previousURL = req.getHeader("Referer");
     Long productId = Long.valueOf(req.getParameter("add"));
     User user = (User) req.getSession().getAttribute("User");
+    if (!user.getBasketId().isPresent()) {
+      userBoxService.createAndAddUserBasketInDb(user);
+      req.getSession().setAttribute("User" , user);
+    }
     userBoxService.addProductToBasket(user, productId);
-    req.getSession().setAttribute("Box", user.incrementAndGetBoxSize());
+    req.getSession().setAttribute("Box", userBoxService.basketSize(user));
     resp.sendRedirect(previousURL);
   }
 }
