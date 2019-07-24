@@ -32,12 +32,10 @@ public class UserBoxDaoImpl implements UserBoxDao {
                   + " FOREIGN KEY (userID) REFERENCES users(id), PRIMARY KEY (BasketID))";
   
   private static final String ADD_PRODUCT_IN_BUSKET =
-          "INSERT INTO product_basket (BasketID, ProductID)"
-          + " VALUES (?, ?)";
+          "INSERT INTO product_basket (BasketID, ProductID) VALUES (?, ?)";
 
   private static final String ADD_USER_BASKET_IN_DB =
-          "INSERT INTO user_basket (userID, Available)"
-                  + " VALUES (?, ?)";
+          "INSERT INTO user_basket (userID, Available) VALUES (?, ?)";
   
   private static final String GET_PRODUCTS_FORM_BOX =
           "SELECT id, product_name, description, price FROM products "

@@ -23,7 +23,6 @@ public class AuthorizationFilter implements Filter {
   private static final AccountServiceImpl accountService = AccountServiceFactory.getInstance();
   private static final UserOrderServiceImpl userBoxService = UserBoxServiceFactory.getInstance();
 
-
   @Override
   public void init(FilterConfig filterConfig) throws ServletException {
 
