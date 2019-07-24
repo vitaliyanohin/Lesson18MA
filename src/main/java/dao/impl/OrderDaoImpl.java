@@ -20,10 +20,8 @@ public class OrderDaoImpl implements OrderDao {
 
   private static final String CREATE_ORDER_TABLE =
           "CREATE TABLE IF NOT EXISTS orderTable (OrderID BIGINT auto_increment,"
-          + "  userID BIGINT, address VARCHAR(256),"
-          + "BasketID BIGINT, "
-          + " FOREIGN KEY (BasketID) REFERENCES user_basket(BasketID)," +
-                  " PRIMARY KEY (OrderID))";
+          + "  userID BIGINT, address VARCHAR(256), BasketID BIGINT, "
+          + " FOREIGN KEY (BasketID) REFERENCES user_basket(BasketID), PRIMARY KEY (OrderID))";
 
   private static final String ADD_ORDER_TO_DB = "INSERT INTO orderTable (userID, address, BasketID)"
           + " VALUES (?, ?, ?)";
