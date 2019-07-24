@@ -35,6 +35,7 @@ public class AuthorizationFilter implements Filter {
     String login = req.getParameter("email");
     String pass = req.getParameter("pass");
     String repeatPassword = req.getParameter("repeatPassword");
+    String encryptPass = EncryptPassword.encryptPassword(pass).orElse("").toString();
     Optional<User> currentUser = accountService.getUserByLogin(login);
     if (!currentUser.isPresent()) {
       req.setAttribute("info", "User exists, pls Sing UP!");
@@ -43,7 +44,7 @@ public class AuthorizationFilter implements Filter {
       return;
     }
     if (pass.equals(repeatPassword)
-            & currentUser.get().getPassword().equals(EncryptPassword.encryptPassword(pass))) {
+            & currentUser.get().getPassword().equals(encryptPass)) {
       User user = currentUser.get();
       if (userBoxService.getBasketIdIfExists(user).isPresent()) {
         user.setBasketId(userBoxService.getBasketIdIfExists(user).get());

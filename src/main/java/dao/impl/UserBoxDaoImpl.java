@@ -21,9 +21,10 @@ public class UserBoxDaoImpl implements UserBoxDao {
   private static final Logger LOGGER = Logger.getLogger(UserBoxDaoImpl.class);
 
   private static final String CREATE_PRODUCT_BASKET_TABLE =
-          "CREATE TABLE IF NOT EXISTS product_basket (Product_basket_id BIGINT auto_increment, BasketID BIGINT,"
-          + " ProductID BIGINT, FOREIGN KEY (ProductID) REFERENCES products(id), "
-                  + "FOREIGN KEY (BasketID) REFERENCES user_basket(BasketID), PRIMARY KEY (Product_basket_id))";
+          "CREATE TABLE IF NOT EXISTS product_basket (Product_basket_id BIGINT auto_increment, "
+                  + "BasketID BIGINT, ProductID BIGINT, FOREIGN KEY (ProductID) REFERENCES products(id), "
+                  + "FOREIGN KEY (BasketID) REFERENCES user_basket(BasketID), "
+                  + "PRIMARY KEY (Product_basket_id))";
 
   private static final String CREATE_USER_BASKET_TABLE =
           "CREATE TABLE IF NOT EXISTS user_basket (BasketID BIGINT auto_increment , " +
@@ -47,7 +48,8 @@ public class UserBoxDaoImpl implements UserBoxDao {
 
   private static final String BASKET_SIZE = "SELECT COUNT(*) FROM product_basket WHERE BasketID= ?";
 
-  private static final String GET_BASKET_ID = "SELECT BasketId FROM user_basket WHERE userID= ? AND Available= 'true'";
+  private static final String GET_BASKET_ID = "SELECT BasketId FROM user_basket "
+          + "WHERE userID= ? AND Available= 'true'";
 
   private Connection connection;
 
@@ -85,7 +87,7 @@ public class UserBoxDaoImpl implements UserBoxDao {
 
       return Optional.ofNullable(Long.valueOf(resultSet.getInt(1)));
     } catch (SQLException e) {
-      LOGGER.log(Level.ERROR, "Failed to set product to basket: ", e);
+      LOGGER.log(Level.ERROR, "Failed to add  user basket in DB: ", e);
     }
     return Optional.empty();
   }
@@ -153,7 +155,7 @@ public class UserBoxDaoImpl implements UserBoxDao {
       resultSet.next();
       return Optional.of(resultSet.getLong(1));
     } catch (SQLException e) {
-      LOGGER.log(Level.ERROR, "Failed to set Available in basket: ", e);
+      LOGGER.log(Level.ERROR, "Failed to get BasketId: ", e);
     }
     return Optional.empty();
   }
