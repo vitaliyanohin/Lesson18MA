@@ -20,13 +20,19 @@ public class UserOrderServiceImpl implements UserOrderService {
 
   public void addOrderToDb(Order order) {
     orderDao.createOrderTable();
-    orderDao.addOrderToDb(order.getUserId(), order.getAddress(), order.getBoxId());
+    orderDao.addOrderToDb(order.getUserId(), order.getAddress(), order.getBoxId().get());
+    userBoxDao.setAvailableBasket("false", order.getBoxId().get());
   }
 
   @Override
   public void addProductToBasket(User user, Long id) {
     userBoxDao.createProductBasketTable();
-    userBoxDao.addProductToBasket(user.getBoxId(), user.getId(), id);
+    userBoxDao.addProductToBasket(user.getBasketId(), id);
+  }
+
+  @Override
+  public void createAndAddUserBasketInDb(User user) {
+    user.setBasketId(userBoxDao.addUserBasketInDb(user).get());
   }
 
   @Override
@@ -41,5 +47,15 @@ public class UserOrderServiceImpl implements UserOrderService {
   @Override
   public Optional<List<Product>> getProductsFromUserBox(Long boxId) {
     return userBoxDao.getProductsFromUserBox(boxId);
+  }
+
+  @Override
+  public int basketSize(User user) {
+    return userBoxDao.basketSize(user);
+  }
+
+  @Override
+  public Optional<Long> getBasketIdIfExists(User user) {
+    return userBoxDao.getBasketIdIfExists(user);
   }
 }

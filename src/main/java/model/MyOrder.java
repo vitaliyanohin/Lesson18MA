@@ -9,11 +9,7 @@ public class MyOrder {
   private String description;
   private Double price;
 
-  public MyOrder(Long orderId,
-                 String address,
-                 String user,
-                 String product,
-                 String description,
+  public MyOrder(Long orderId, String address, String user, String product, String description,
                  Double price) {
     this.OrderId = orderId;
     this.address = address;

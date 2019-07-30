@@ -1,19 +1,20 @@
 package model;
 
+import java.util.Optional;
+
 public class User {
   private Long id;
   private String email;
   private String password;
   private String role;
-  private ShoppingBox shoppingBox;
+  private Optional<Long> basketId = Optional.empty();
 
   public User(Long id, String email, String password, String role) {
     this.id = id;
     this.email = email;
     this.password = password;
     this.role = role;
-    shoppingBox = new ShoppingBox();
-  }
+}
 
   public User(String email, String password, String role) {
     this.email = email;
@@ -21,12 +22,20 @@ public class User {
     this.role = role;
   }
 
-  public void createNewUserBox() {
-    shoppingBox = new ShoppingBox();
-  }
-
   public Long getId() {
     return id;
+  }
+
+  public Optional<Long> getBasketId() {
+    return basketId;
+  }
+
+  public void setBasketId(Long basketId) {
+    this.basketId = Optional.ofNullable(basketId);
+  }
+
+  public void dropBasketId() {
+    basketId = Optional.empty();
   }
 
   public void setId(Long id) {
@@ -45,9 +54,6 @@ public class User {
     return password;
   }
 
-  public Long getBoxId() {
-    return shoppingBox.getBoxId();
-  }
 
   public void setPassword(String password) {
     this.password = password;
@@ -60,32 +66,4 @@ public class User {
   public void setRole(String role) {
     this.role = role;
   }
-
-  public int incrementAndGetBoxSize() {
-    return shoppingBox.boxSize();
-  }
-
-   class ShoppingBox {
-
-    private Long BoxId;
-    private int size = 1;
-
-    private ShoppingBox() {
-      BoxId = generateBoxId();
-    }
-
-     private Long getBoxId() {
-       return BoxId;
-     }
-
-     private int boxSize() {
-     return size++;
-     }
-
-     private Long generateBoxId() {
-       int max = 9999;
-       int min = 1000;
-       return Long.valueOf((int) ((Math.random() * ++max) + min));
-     }
-   }
 }

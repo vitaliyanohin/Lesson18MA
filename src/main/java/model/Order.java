@@ -1,12 +1,14 @@
 package model;
 
+import java.util.Optional;
+
 public class Order {
 
   private String address;
   private Long userId;
-  private Long boxId;
+  private Optional<Long> boxId;
 
-  public Order(Long userId, String address, Long boxId) {
+  public Order(Long userId, String address, Optional<Long> boxId) {
     this.address = address;
     this.userId = userId;
     this.boxId = boxId;
@@ -21,7 +23,7 @@ public class Order {
     return userId;
   }
 
-  public Long getBoxId() {
+  public Optional<Long> getBoxId() {
     return boxId;
   }
 }

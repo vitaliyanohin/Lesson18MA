@@ -42,9 +42,10 @@ public class ConfirmationOfAnOrderServlet extends HttpServlet {
     String confirmCode = String.valueOf(req.getSession().getAttribute("code"));
     if (confirmCodeFromUser.equals(confirmCode)) {
       User user = (User) req.getSession().getAttribute("User");
-      Order order = new Order(user.getId(), address, user.getBoxId());
+      Order order = new Order(user.getId(), address, user.getBasketId());
       userBoxService.addOrderToDb(order);
-      user.createNewUserBox();
+      user.dropBasketId();
+      req.getSession().setAttribute("User", user) ;
       req.setAttribute("info", "request has been sent! TY!");
       req.getRequestDispatcher("UserProfile.jsp").include(req, resp);
       return;

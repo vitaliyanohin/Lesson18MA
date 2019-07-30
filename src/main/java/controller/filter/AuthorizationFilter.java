@@ -1,8 +1,11 @@
 package controller.filter;
 
 import factory.AccountServiceFactory;
+import factory.UserBoxServiceFactory;
 import model.User;
 import service.impl.AccountServiceImpl;
+import service.impl.UserOrderServiceImpl;
+import utils.EncryptPassword;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -18,6 +21,7 @@ import java.util.Optional;
 public class AuthorizationFilter implements Filter {
 
   private static final AccountServiceImpl accountService = AccountServiceFactory.getInstance();
+  private static final UserOrderServiceImpl userBoxService = UserBoxServiceFactory.getInstance();
 
   @Override
   public void init(FilterConfig filterConfig) throws ServletException {
@@ -30,6 +34,7 @@ public class AuthorizationFilter implements Filter {
     String login = req.getParameter("email");
     String pass = req.getParameter("pass");
     String repeatPassword = req.getParameter("repeatPassword");
+    String encryptPass = EncryptPassword.encryptPassword(pass).orElse("").toString();
     Optional<User> currentUser = accountService.getUserByLogin(login);
     if (!currentUser.isPresent()) {
       req.setAttribute("info", "User exists, pls Sing UP!");
@@ -37,8 +42,12 @@ public class AuthorizationFilter implements Filter {
       req.getRequestDispatcher("index.jsp").forward(req, resp);
       return;
     }
-    if (pass.equals(repeatPassword) & currentUser.get().getPassword().equals(pass)) {
+    if (pass.equals(repeatPassword)
+            & currentUser.get().getPassword().equals(encryptPass)) {
       User user = currentUser.get();
+      if (userBoxService.getBasketIdIfExists(user).isPresent()) {
+        user.setBasketId(userBoxService.getBasketIdIfExists(user).get());
+      }
       req.setAttribute("User", user);
       chain.doFilter(req, resp);
     } else {
