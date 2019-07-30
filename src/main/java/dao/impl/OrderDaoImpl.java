@@ -21,21 +21,21 @@ public class OrderDaoImpl implements OrderDao {
   private static final Logger LOGGER = Logger.getLogger(OrderDaoImpl.class);
 
   private static final String CREATE_ORDER_TABLE =
-          "CREATE TABLE IF NOT EXISTS orderTable (OrderID BIGINT auto_increment,"
-          + "  userID BIGINT, address VARCHAR(256), BasketID BIGINT, "
-          + " FOREIGN KEY (BasketID) REFERENCES user_basket(BasketID), PRIMARY KEY (OrderID))";
+          "CREATE TABLE IF NOT EXISTS order_table (order_id BIGINT auto_increment,"
+          + "  user_id BIGINT, address VARCHAR(256), basket_id BIGINT, "
+          + " FOREIGN KEY (basket_id) REFERENCES user_basket(basket_id), PRIMARY KEY (order_id))";
 
-  private static final String ADD_ORDER_TO_DB = "INSERT INTO orderTable (userID, address, BasketID)"
+  private static final String ADD_ORDER_TO_DB = "INSERT INTO order_table (user_id, address, basket_id)"
           + " VALUES (?, ?, ?)";
 
-  private static final String GET_USER_ORDERS = "SELECT OrderID FROM ordertable WHERE userID= ?";
+  private static final String GET_USER_ORDERS = "SELECT order_id FROM order_table WHERE user_id= ?";
 
   private static final String GET_USER_ORDER_BY_ID =
-          "select OrderID, address, user_name, product_name, description, price "
-          + " FROM ordertable INNER JOIN product_basket on ordertable.BasketID = product_basket.BasketID "
-          + "INNER JOIN users u on userID = u.id "
-          + "INNER JOIN products p on product_basket.ProductID = p.id "
-          + "WHERE OrderID= ?";
+          "select order_id, address, user_name, product_name, description, price "
+          + " FROM order_table INNER JOIN product_basket on order_table.basket_id = product_basket.basket_id "
+          + "INNER JOIN users u on user_id = u.id "
+          + "INNER JOIN products p on product_basket.product_id = p.id "
+          + "WHERE order_id= ?";
 
   private Connection connection;
 
@@ -101,7 +101,7 @@ public class OrderDaoImpl implements OrderDao {
     }
     return Optional.empty();
   }
-///ololol
+
   @Override
   public boolean addOrderToDb(User userId, String address, Basket boxId) {
     return false;

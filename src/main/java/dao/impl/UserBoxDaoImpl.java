@@ -2,6 +2,7 @@ package dao.impl;
 
 import com.mysql.jdbc.Statement;
 import dao.UserBoxDao;
+import model.Basket;
 import model.Product;
 import model.User;
 import org.apache.log4j.Level;
@@ -22,32 +23,32 @@ public class UserBoxDaoImpl implements UserBoxDao {
 
   private static final String CREATE_PRODUCT_BASKET_TABLE =
           "CREATE TABLE IF NOT EXISTS product_basket (Product_basket_id BIGINT auto_increment, "
-                  + "BasketID BIGINT, ProductID BIGINT, FOREIGN KEY (ProductID) REFERENCES products(id), "
-                  + "FOREIGN KEY (BasketID) REFERENCES user_basket(BasketID), "
+                  + "basket_id BIGINT, product_id BIGINT, FOREIGN KEY (product_id) REFERENCES products(id), "
+                  + "FOREIGN KEY (basket_id) REFERENCES user_basket(basket_id), "
                   + "PRIMARY KEY (Product_basket_id))";
 
   private static final String CREATE_USER_BASKET_TABLE =
-          "CREATE TABLE IF NOT EXISTS user_basket (BasketID BIGINT auto_increment , " +
-                  "userID BIGINT, Available VARCHAR(5),"
-                  + " FOREIGN KEY (userID) REFERENCES users(id), PRIMARY KEY (BasketID))";
+          "CREATE TABLE IF NOT EXISTS user_basket (basket_id BIGINT auto_increment , " +
+                  "user_id BIGINT, Available VARCHAR(5),"
+                  + " FOREIGN KEY (user_id) REFERENCES users(id), PRIMARY KEY (basket_id))";
   
   private static final String ADD_PRODUCT_IN_BUSKET =
-          "INSERT INTO product_basket (BasketID, ProductID) VALUES (?, ?)";
+          "INSERT INTO product_basket (basket_id, product_id) VALUES (?, ?)";
 
   private static final String ADD_USER_BASKET_IN_DB =
-          "INSERT INTO user_basket (userID, Available) VALUES (?, ?)";
+          "INSERT INTO user_basket (user_id, Available) VALUES (?, ?)";
   
   private static final String GET_PRODUCTS_FORM_BOX =
           "SELECT id, product_name, description, price FROM products "
-          + "INNER JOIN product_basket b on products.id = b.ProductID "
-          + "WHERE BasketID = ?";
+          + "INNER JOIN product_basket b on products.id = b.product_id "
+          + "WHERE basket_id = ?";
 
-  private static final String SET_AVAILABLE = "UPDATE user_basket SET Available= ? WHERE BasketID= ?";
+  private static final String SET_AVAILABLE = "UPDATE user_basket SET Available= ? WHERE basket_id= ?";
 
-  private static final String BASKET_SIZE = "SELECT COUNT(*) FROM product_basket WHERE BasketID= ?";
+  private static final String BASKET_SIZE = "SELECT COUNT(*) FROM product_basket WHERE basket_id= ?";
 
-  private static final String GET_BASKET_ID = "SELECT BasketId FROM user_basket "
-          + "WHERE userID= ? AND Available= 'true'";
+  private static final String GET_BASKET_ID = "SELECT basket_id FROM user_basket "
+          + "WHERE user_id= ? AND Available= 'true'";
 
   private Connection connection;
 
@@ -74,6 +75,11 @@ public class UserBoxDaoImpl implements UserBoxDao {
   }
 
   @Override
+  public Optional<Long> addUserBasketInDb(Basket user) {
+    return Optional.empty();
+  }
+
+  @Override
   public Optional<Long> addUserBasketInDb(User user) {
     try (PreparedStatement statement = connection.prepareStatement(ADD_USER_BASKET_IN_DB,
             Statement.RETURN_GENERATED_KEYS)) {
@@ -91,9 +97,9 @@ public class UserBoxDaoImpl implements UserBoxDao {
   }
 
   @Override
-  public boolean addProductToBasket(Optional<Long> boxId, Long productId) {
+  public boolean addProductToBasket(Long boxId, Long productId) {
     try (PreparedStatement statement = connection.prepareStatement(ADD_PRODUCT_IN_BUSKET)) {
-      statement.setLong(1, boxId.get());
+      statement.setLong(1, boxId);
       statement.setLong(2, productId);
       return statement.execute();
     } catch (SQLException e) {
@@ -124,7 +130,7 @@ public class UserBoxDaoImpl implements UserBoxDao {
   @Override
   public int basketSize(User user) {
       try (PreparedStatement statement = connection.prepareStatement(BASKET_SIZE)) {
-        statement.setLong(1, user.getBasketId().get());
+        statement.setLong(1, user.getBasketId());
         ResultSet resultSet = statement.executeQuery();
         resultSet.next();
         return resultSet.getInt(1);
