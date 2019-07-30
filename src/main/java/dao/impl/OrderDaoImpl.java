@@ -1,7 +1,9 @@
 package dao.impl;
 
 import dao.OrderDao;
+import model.Basket;
 import model.MyOrder;
+import model.User;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import utils.GetSQLConnection;
@@ -98,5 +100,10 @@ public class OrderDaoImpl implements OrderDao {
       LOGGER.log(Level.ERROR, "Failed to set order: ", e);
     }
     return Optional.empty();
+  }
+///ololol
+  @Override
+  public boolean addOrderToDb(User userId, String address, Basket boxId) {
+    return false;
   }
 }
