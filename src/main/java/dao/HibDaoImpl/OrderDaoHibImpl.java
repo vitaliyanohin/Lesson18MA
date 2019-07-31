@@ -4,11 +4,15 @@ import dao.OrderDao;
 import model.Basket;
 import model.Orders;
 import model.User;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import utils.HibernateUtil;
 
 public class OrderDaoHibImpl implements OrderDao {
+
+  private static final Logger LOGGER = Logger.getLogger(OrderDaoHibImpl.class);
 
   @Override
   public boolean addOrderToDb(User userId, String address, Basket boxId) {
@@ -22,7 +26,7 @@ public class OrderDaoHibImpl implements OrderDao {
       if (transaction != null) {
         transaction.rollback();
       }
-      e.printStackTrace();
+      LOGGER.log(Level.ERROR, "Failed to add order in DB: ", e);
     }
     return false;
   }

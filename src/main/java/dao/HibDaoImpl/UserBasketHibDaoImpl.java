@@ -1,13 +1,15 @@
 package dao.HibDaoImpl;
 
 import dao.UserBoxDao;
-import dao.UserDao;
 import model.Basket;
 import model.Product;
 import model.User;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import utils.EncryptPassword;
 import utils.HibernateUtil;
 
 import java.util.List;
@@ -15,15 +17,17 @@ import java.util.Optional;
 
 public class UserBasketHibDaoImpl implements UserBoxDao {
 
+  private static final Logger LOGGER = Logger.getLogger(UserBasketHibDaoImpl.class);
+
   @Override
   public Optional<List<Product>> getProductsFromUserBox(User user) {
     try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-      Query query = session.createQuery("From Basket where user_id = :id AND available= 'true'");
+      Query query = session.createQuery("FROM Basket WHERE user_id = :id AND available= 'true'");
       query.setParameter("id", user);
       Basket basket = (Basket) query.uniqueResult();
       return Optional.of(basket.getProducts());
     } catch (Exception e) {
-      e.printStackTrace();
+       LOGGER.log(Level.ERROR, "Failed to  get products from user box: ", e);
     }
     return Optional.empty();
   }
@@ -40,7 +44,7 @@ public class UserBasketHibDaoImpl implements UserBoxDao {
       if (transaction != null) {
         transaction.rollback();
       }
-      e.printStackTrace();
+       LOGGER.log(Level.ERROR, "Failed to user add User basket in DB: ", e);
     }
     return false;
   }
@@ -48,12 +52,12 @@ public class UserBasketHibDaoImpl implements UserBoxDao {
   @Override
   public Optional<Basket> getBasket(User user) {
     try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-      Query query = session.createQuery("From Basket where user_id = :id AND available= 'true' ");
+      Query query = session.createQuery("FROM Basket WGERE user_id = :id AND available= 'true' ");
       query.setParameter("id", user);
       Basket basket = (Basket) query.uniqueResult();
      return Optional.of(basket);
     } catch (Exception e) {
-      e.printStackTrace();
+      LOGGER.log(Level.ERROR, "Failed to get basket: ", e);
     }
     return Optional.empty();
   }

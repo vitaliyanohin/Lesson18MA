@@ -2,6 +2,8 @@ package dao.HibDaoImpl;
 
 import dao.UserDao;
 import model.User;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -12,6 +14,8 @@ import java.util.Optional;
 
 public class UserHibDaoImpl implements UserDao {
 
+  private static final Logger LOGGER = Logger.getLogger(UserHibDaoImpl.class);
+
   @Override
   public Optional<User> getUserByLogin(String login) {
     try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -19,7 +23,7 @@ public class UserHibDaoImpl implements UserDao {
       query.setParameter("email", login);
       return query.uniqueResultOptional();
     } catch (Exception e) {
-      e.printStackTrace();
+       LOGGER.log(Level.ERROR, "Failed to  get user: ", e);
     }
     return Optional.empty();
   }
@@ -27,10 +31,10 @@ public class UserHibDaoImpl implements UserDao {
   @Override
   public Optional<List<User>> getAllUsers() {
     try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-      Query query = session.createQuery("From User");
+      Query query = session.createQuery("FROM User");
       return Optional.of(query.list());
     } catch (Exception e) {
-      e.printStackTrace();
+       LOGGER.log(Level.ERROR, "Failed to get All user: ", e);
     }
     return Optional.empty();
   }
@@ -46,7 +50,7 @@ public class UserHibDaoImpl implements UserDao {
       if (transaction != null) {
         transaction.rollback();
       }
-      e.printStackTrace();
+       LOGGER.log(Level.ERROR, "Failed to  save or update user: ", e);
     }
     return false;
   }
@@ -64,7 +68,7 @@ public class UserHibDaoImpl implements UserDao {
       if (transaction != null) {
         transaction.rollback();
       }
-      e.printStackTrace();
+       LOGGER.log(Level.ERROR, "Failed to  delete user: ", e);
     }
     return false;
   }
@@ -75,7 +79,7 @@ public class UserHibDaoImpl implements UserDao {
       session.get(User.class, id);
       return Optional.of(session.get(User.class, id));
     } catch (Exception e) {
-      e.printStackTrace();
+      LOGGER.log(Level.ERROR, "Failed to  get user by id: ", e);
     }
     return Optional.empty();
   }

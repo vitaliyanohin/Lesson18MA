@@ -13,8 +13,5 @@ public interface ProductDao {
 
   boolean saveOrUpdateProduct(Product product);
 
-  boolean updateProduct(Product product);
-
   boolean deleteProduct(long id);
-
 }

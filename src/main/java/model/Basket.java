@@ -38,8 +38,6 @@ public class Basket {
   )
 private List<Product> products;
 
-
-
   public Basket() {
   }
 

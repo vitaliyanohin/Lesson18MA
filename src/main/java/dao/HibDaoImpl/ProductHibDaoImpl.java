@@ -1,11 +1,13 @@
 package dao.HibDaoImpl;
 
 import dao.ProductDao;
-import model.Basket;
 import model.Product;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import utils.EncryptPassword;
 import utils.HibernateUtil;
 
 import java.util.List;
@@ -13,13 +15,15 @@ import java.util.Optional;
 
 public class ProductHibDaoImpl implements ProductDao {
 
+  private static final Logger LOGGER = Logger.getLogger(ProductHibDaoImpl.class);
+
   @Override
   public Optional<Product> getProductById(long id) {
     try (Session session = HibernateUtil.getSessionFactory().openSession()) {
       session.get(Product.class, id);
       return Optional.of(session.get(Product.class, id));
     } catch (Exception e) {
-      e.printStackTrace();
+       LOGGER.log(Level.ERROR, "Failed to get Product by Id: ", e);
     }
     return Optional.empty();
   }
@@ -27,10 +31,10 @@ public class ProductHibDaoImpl implements ProductDao {
   @Override
   public Optional<List<Product>> getAllProducts() {
     try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-      Query query = session.createQuery("From Product");
+      Query query = session.createQuery("FROM Product");
       return Optional.of(query.list());
     } catch (Exception e) {
-      e.printStackTrace();
+       LOGGER.log(Level.ERROR, "Failed to get all Product: ", e);
     }
     return Optional.empty();
   }
@@ -46,13 +50,8 @@ public class ProductHibDaoImpl implements ProductDao {
       if (transaction != null) {
         transaction.rollback();
       }
-      e.printStackTrace();
+      LOGGER.log(Level.ERROR, "Failed save or update Product: ", e);
     }
-    return false;
-  }
-
-  @Override
-  public boolean updateProduct(Product product) {
     return false;
   }
 
@@ -61,7 +60,7 @@ public class ProductHibDaoImpl implements ProductDao {
     Transaction transaction = null;
     try (Session session = HibernateUtil.getSessionFactory().openSession()) {
       transaction = session.beginTransaction();
-    Product  product = session.load(Product.class,id);
+    Product  product = session.load(Product.class, id);
       session.delete(product);
       transaction.commit();
       return true;
@@ -69,7 +68,7 @@ public class ProductHibDaoImpl implements ProductDao {
       if (transaction != null) {
         transaction.rollback();
       }
-      e.printStackTrace();
+       LOGGER.log(Level.ERROR, "Failed to delete Product: ", e);
     }
     return false;
   }
