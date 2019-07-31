@@ -28,28 +28,17 @@ public class AccountServiceImpl implements AccountService {
   }
 
   @Override
-  public boolean updateUser(User user) {
-    return userDao.updateUser(user);
-  }
-
-  @Override
-  public int size() {
-    return userDao.size();
+  public boolean saveOrUpdateUser(User user) {
+    return userDao.saveOrUpdateUser(user);
   }
 
   @Override
   public void addUser(User name) {
-    userDao.createTable();
-    userDao.addUser(name);
+    userDao.saveOrUpdateUser(name);
   }
 
   @Override
   public boolean deleteUser(long id) {
     return userDao.deleteUser(id);
-  }
-
-  @Override
-  public void cleanUp() {
-    userDao.dropTable();
   }
 }

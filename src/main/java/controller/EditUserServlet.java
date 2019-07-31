@@ -3,6 +3,7 @@ package controller;
 import factory.AccountServiceFactory;
 import model.User;
 import service.impl.AccountServiceImpl;
+import utils.EncryptPassword;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -42,12 +43,12 @@ public class EditUserServlet extends HttpServlet {
       user.setEmail(login);
     }
     if (pass.equals(repeatPassword) & !pass.isEmpty()) {
-      user.setPassword(pass);
+      user.setPassword(EncryptPassword.encryptPassword(pass).toString());
     }
     if (role != null && !role.equals(user.getRole())) {
       user.setRole(role);
     }
-    accountService.updateUser(user);
+    accountService.saveOrUpdateUser(user);
     resp.sendRedirect("/allUsers");
   }
 }

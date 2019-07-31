@@ -29,7 +29,7 @@ public class NewProductServlet extends HttpServlet {
     String description = req.getParameter("description");
     Double price = Double.valueOf(req.getParameter("price"));
     Product newProduct = new Product(product, description, price);
-    productService.addProduct(newProduct);
+    productService.saveOrUpdateProduct(newProduct);
     resp.setStatus(HttpServletResponse.SC_OK);
     resp.sendRedirect("/UserProfile");
   }

@@ -1,18 +1,18 @@
 package dao;
 
-import model.MyOrder;
+import model.Basket;
+import model.User;
+import org.hibernate.criterion.Order;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface OrderDao {
 
-  boolean addOrderToDb(Long userId, String address, Long boxId);
+  boolean addOrderToDb(User userId, String address, Basket boxId);
 
-  void createOrderTable();
-
-  Optional<List<Long>> getUserOrders(Long userId);
-
-  Optional<List<MyOrder>> getUserOrderByOrderId(Long orderId);
+  default Optional<List<Order>> getUserOrders(User user) {
+    return Optional.empty();
+  }
 
 }

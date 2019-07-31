@@ -1,11 +1,35 @@
 package model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import java.util.List;
+
+@Entity
+@Table(name = "product_Hibernate")
 public class Product {
 
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "id")
   private Long id;
+
+  @Column(name = "name")
   private String name;
+
+  @Column(name = "description")
   private String description;
+
+  @Column(name = "price")
   private Double price;
+
+  @ManyToMany(mappedBy = "products", fetch = FetchType.EAGER)
+  private List<Basket> baskets;
 
   public Product(Long id, String name, String description, Double price) {
     this.id = id;
@@ -13,14 +37,20 @@ public class Product {
     this.description = description;
     this.price = price;
   }
+
   public Product(String name, String description, Double price) {
     this.name = name;
     this.description = description;
     this.price = price;
   }
+
+  public Product() {
+  }
+
   public Product(String string) {
     this.name = string;
   }
+
 
   public Long getId() {
     return id;

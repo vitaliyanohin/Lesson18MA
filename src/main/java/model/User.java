@@ -1,13 +1,34 @@
 package model;
 
-import java.util.Optional;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
+
+@Entity
+@Table(name = "user_Hibernate")
 public class User {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "id")
   private Long id;
+
+  @Column(name = "email")
   private String email;
+
+  @Column(name = "password")
   private String password;
+
+  @Column(name = "role")
   private String role;
-  private Optional<Long> basketId = Optional.empty();
+
+  @Transient
+  private Basket basket = null;
 
   public User(Long id, String email, String password, String role) {
     this.id = id;
@@ -22,20 +43,23 @@ public class User {
     this.role = role;
   }
 
+  public User() {
+  }
+
   public Long getId() {
     return id;
   }
 
-  public Optional<Long> getBasketId() {
-    return basketId;
+  public Basket getBasketId() {
+    return basket;
   }
 
-  public void setBasketId(Long basketId) {
-    this.basketId = Optional.ofNullable(basketId);
+  public void setBasketId(Basket basket) {
+    this.basket = basket;
   }
 
   public void dropBasketId() {
-    basketId = Optional.empty();
+    basket = null;
   }
 
   public void setId(Long id) {
@@ -53,7 +77,6 @@ public class User {
   public String getPassword() {
     return password;
   }
-
 
   public void setPassword(String password) {
     this.password = password;

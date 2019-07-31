@@ -1,7 +1,7 @@
 package factory;
 
+import dao.HibDaoImpl.OrderDaoHibImpl;
 import dao.OrderDao;
-import dao.impl.OrderDaoImpl;
 
 public class OrderDaoFactory {
 
@@ -9,7 +9,7 @@ public class OrderDaoFactory {
 
   public static OrderDao getInstance() {
     if (orderDaoInstance == null) {
-      orderDaoInstance = new OrderDaoImpl();
+      orderDaoInstance = new OrderDaoHibImpl();
     }
     return orderDaoInstance;
   }
