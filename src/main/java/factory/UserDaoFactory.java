@@ -1,7 +1,7 @@
 package factory;
 
+import dao.HibDaoImpl.UserHibDaoImpl;
 import dao.UserDao;
-import dao.impl.UserDaoImpl;
 
 public class UserDaoFactory {
 
@@ -9,7 +9,7 @@ public class UserDaoFactory {
 
   public static UserDao getInstance() {
     if (userDao == null) {
-      userDao = new UserDaoImpl();
+      userDao = new UserHibDaoImpl();
     }
     return userDao;
   }

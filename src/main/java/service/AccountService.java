@@ -9,18 +9,13 @@ public interface AccountService {
 
   Optional<User> getUserByLogin(String login);
 
-  Optional<User> getUserById(long id);
-
   Optional<List<User>> getAllUsers();
 
-  boolean updateUser(User user);
+  boolean saveOrUpdateUser(User user);
 
   void addUser(User name);
 
   boolean deleteUser(long id);
 
-  void cleanUp();
-
-  int size();
-
+  Optional<User> getUserById(long id);
 }

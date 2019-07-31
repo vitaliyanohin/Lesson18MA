@@ -45,8 +45,8 @@ public class AuthorizationFilter implements Filter {
     if (pass.equals(repeatPassword)
             & currentUser.get().getPassword().equals(encryptPass)) {
       User user = currentUser.get();
-      if (userBoxService.getBasketIdIfExists(user).isPresent()) {
-        user.setBasketId(userBoxService.getBasketIdIfExists(user).get());
+      if (userBoxService.getBasket(user).isPresent()) {
+        user.setBasketId(userBoxService.getBasket(user).get());
       }
       req.setAttribute("User", user);
       chain.doFilter(req, resp);

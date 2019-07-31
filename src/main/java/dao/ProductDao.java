@@ -7,23 +7,14 @@ import java.util.Optional;
 
 public interface ProductDao {
 
-  Optional<Product> getProductByName(String name);
-
   Optional<Product> getProductById(long id);
-
-  Optional<List<Long>> getAllProductId();
 
   Optional<List<Product>> getAllProducts();
 
-  boolean addProduct(Product product);
+  boolean saveOrUpdateProduct(Product product);
 
   boolean updateProduct(Product product);
 
   boolean deleteProduct(long id);
 
-  void createTable();
-
-  void dropTable();
-
-  int size();
 }

@@ -1,5 +1,6 @@
 package dao;
 
+import model.Basket;
 import model.Product;
 import model.User;
 
@@ -8,19 +9,11 @@ import java.util.Optional;
 
 public interface UserBoxDao {
 
-  void createProductBasketTable();
+  boolean addUserBasketInDb(Basket user);
 
-  boolean addProductToBasket(Optional<Long> boxId, Long productId);
+  Optional<Basket> getBasket(User user);
 
-  Optional<List<Product>> getProductsFromUserBox(Long boxId);
-
-  void createUserBasketTable();
-
-  Optional<Long> addUserBasketInDb(User user);
-
-  int basketSize(User user);
-
-  void setAvailableBasket(String value, Long basketId);
-
-  Optional<Long> getBasketIdIfExists(User user);
+  default Optional<List<Product>> getProductsFromUserBox(User user) {
+    return Optional.empty();
+  }
 }

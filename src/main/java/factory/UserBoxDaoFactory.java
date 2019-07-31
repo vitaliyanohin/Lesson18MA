@@ -1,7 +1,7 @@
 package factory;
 
+import dao.HibDaoImpl.UserBasketHibDaoImpl;
 import dao.UserBoxDao;
-import dao.impl.UserBoxDaoImpl;
 
 public class UserBoxDaoFactory {
 
@@ -9,7 +9,7 @@ public class UserBoxDaoFactory {
 
   public static UserBoxDao getInstance() {
     if (userBoxDaoInstance == null) {
-      userBoxDaoInstance = new UserBoxDaoImpl();
+      userBoxDaoInstance = new UserBasketHibDaoImpl();
     }
     return userBoxDaoInstance;
   }

@@ -9,19 +9,13 @@ public interface UserDao {
 
   Optional<User> getUserByLogin(String login);
 
-  Optional<User> getUserById(long id);
-
   Optional<List<User>> getAllUsers();
 
-  boolean addUser(User user);
+  boolean saveOrUpdateUser(User user);
 
   boolean deleteUser(long id);
 
-  boolean updateUser(User user);
+  Optional<User> getUserById(long id);
 
-  int size();
-
-  void createTable();
-
-  void dropTable();
 }
+

@@ -40,7 +40,7 @@ public class EditProductServlet extends HttpServlet {
     product.setName(name);
     product.setDescription(description);
     product.setPrice(price);
-    productService.updateProduct(product);
+    productService.saveOrUpdateProduct(product);
     resp.sendRedirect("/allProducts");
   }
 }

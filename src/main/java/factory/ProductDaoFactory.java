@@ -1,7 +1,7 @@
 package factory;
 
+import dao.HibDaoImpl.ProductHibDaoImpl;
 import dao.ProductDao;
-import dao.impl.ProductDaoImpl;
 
 public class ProductDaoFactory {
 
@@ -9,7 +9,7 @@ public class ProductDaoFactory {
 
   public static ProductDao getInstance() {
     if (productDaoInstance == null) {
-      productDaoInstance = new ProductDaoImpl();
+      productDaoInstance = new ProductHibDaoImpl();
     }
     return productDaoInstance;
   }
