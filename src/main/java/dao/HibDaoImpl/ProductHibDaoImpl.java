@@ -32,7 +32,7 @@ public class ProductHibDaoImpl implements ProductDao {
   public Optional<List<Product>> getAllProducts() {
     try (Session session = HibernateUtil.getSessionFactory().openSession()) {
       Query query = session.createQuery("FROM Product");
-      return Optional.of(query.list());
+      return Optional.ofNullable(query.list());
     } catch (Exception e) {
        LOGGER.log(Level.ERROR, "Failed to get all Product: ", e);
     }
