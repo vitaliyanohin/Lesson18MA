@@ -7,7 +7,7 @@ import factory.OrderDaoFactory;
 import factory.ProductDaoFactory;
 import factory.UserBoxDaoFactory;
 import model.Basket;
-import model.Orders;
+import model.Order;
 import model.Product;
 import model.User;
 import service.UserOrderService;
@@ -23,10 +23,10 @@ public class UserOrderServiceImpl implements UserOrderService {
   private static final ProductDao productDao = ProductDaoFactory.getInstance();
 
 
-  public void addOrderToDb(Orders orders) {
-    orderDao.addOrderToDb(orders.getUserId(), orders.getAddress(), orders.getBoxId());
-    orders.getBoxId().setAvailable("false");
-    userBoxDao.addUserBasketInDb(orders.getBoxId());
+  public void addOrderToDb(Order order) {
+    orderDao.addOrderToDb(order.getUserId(), order.getAddress(), order.getBoxId());
+    order.getBoxId().setAvailable("false");
+    userBoxDao.addUserBasketInDb(order.getBoxId());
   }
 
   @Override

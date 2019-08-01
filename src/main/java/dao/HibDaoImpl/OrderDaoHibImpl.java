@@ -2,7 +2,7 @@ package dao.HibDaoImpl;
 
 import dao.OrderDao;
 import model.Basket;
-import model.Orders;
+import model.Order;
 import model.User;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -19,8 +19,8 @@ public class OrderDaoHibImpl implements OrderDao {
     Transaction transaction = null;
     try (Session session = HibernateUtil.getSessionFactory().openSession()) {
       transaction = session.beginTransaction();
-      Orders orders = new Orders(userId, boxId, address);
-      session.save(orders);
+      Order order = new Order(userId, boxId, address);
+      session.save(order);
       transaction.commit();
     } catch (Exception e) {
       if (transaction != null) {

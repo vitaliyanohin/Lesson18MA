@@ -1,7 +1,7 @@
 package service;
 
 import model.Basket;
-import model.Orders;
+import model.Order;
 import model.Product;
 import model.User;
 
@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface UserOrderService {
 
-  void addOrderToDb(Orders orders);
+  void addOrderToDb(Order order);
 
   void addProductToBasket(User user, Long id);
 

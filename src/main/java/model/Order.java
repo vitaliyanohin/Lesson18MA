@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "user_order_hibernate")
-public class Orders {
+public class Order {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,10 +31,10 @@ public class Orders {
   @Column(name = "address")
   private String address;
 
-  public Orders() {
+  public Order() {
   }
 
-  public Orders(User userId, Basket boxId, String address) {
+  public Order(User userId, Basket boxId, String address) {
     this.userId = userId;
     this.boxId = boxId;
     this.address = address;

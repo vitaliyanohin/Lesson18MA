@@ -1,7 +1,7 @@
 package controller;
 
 import factory.UserBoxServiceFactory;
-import model.Orders;
+import model.Order;
 import model.User;
 import service.impl.UserOrderServiceImpl;
 import utils.ConfirmCode;
@@ -42,8 +42,8 @@ public class ConfirmationOfAnOrderServlet extends HttpServlet {
     String confirmCode = String.valueOf(req.getSession().getAttribute("code"));
     if (confirmCodeFromUser.equals(confirmCode)) {
       User user = (User) req.getSession().getAttribute("User");
-      Orders orders = new Orders(user, user.getBasketId(),  address);
-      userBoxService.addOrderToDb(orders);
+      Order order = new Order(user, user.getBasketId(),  address);
+      userBoxService.addOrderToDb(order);
       user.dropBasketId();
       req.getSession().setAttribute("User", user) ;
       req.setAttribute("info", "request has been sent! TY!");
