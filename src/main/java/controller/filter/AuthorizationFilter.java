@@ -34,7 +34,6 @@ public class AuthorizationFilter implements Filter {
     String login = req.getParameter("email");
     String pass = req.getParameter("pass");
     String repeatPassword = req.getParameter("repeatPassword");
-    String encryptPass = EncryptPassword.encryptPassword(pass).orElse("").toString();
     Optional<User> currentUser = accountService.getUserByLogin(login);
     if (!currentUser.isPresent()) {
       req.setAttribute("info", "User exists, pls Sing UP!");
@@ -42,6 +41,8 @@ public class AuthorizationFilter implements Filter {
       req.getRequestDispatcher("index.jsp").forward(req, resp);
       return;
     }
+    byte[] salt = currentUser.get().getSalt();
+    String encryptPass = EncryptPassword.encryptPassword(pass, salt);
     if (pass.equals(repeatPassword)
             & currentUser.get().getPassword().equals(encryptPass)) {
       User user = currentUser.get();

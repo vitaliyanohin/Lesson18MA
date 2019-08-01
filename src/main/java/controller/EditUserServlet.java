@@ -43,7 +43,7 @@ public class EditUserServlet extends HttpServlet {
       user.setEmail(login);
     }
     if (pass.equals(repeatPassword) & !pass.isEmpty()) {
-      user.setPassword(EncryptPassword.encryptPassword(pass).toString());
+      user.setPassword(EncryptPassword.encryptPassword(pass, user.getSalt()));
     }
     if (role != null && !role.equals(user.getRole())) {
       user.setRole(role);
