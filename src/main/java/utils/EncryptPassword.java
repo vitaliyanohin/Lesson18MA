@@ -11,11 +11,6 @@ public class EncryptPassword {
 
   private static final Logger LOGGER = Logger.getLogger(EncryptPassword.class);
 
-  public static void main(String[] args) {
-    byte[] salt = {0, 1, 2, 3, 4, 5, 7, 8, 9, 10};
-    System.out.println(EncryptPassword.encryptPassword("password", salt));
-  }
-
   public static String encryptPassword(String passwordToHash, byte[] salt) {
     String generatedPassword = null;
     try {
