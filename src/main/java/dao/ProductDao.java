@@ -11,7 +11,7 @@ public interface ProductDao {
 
   Optional<List<Product>> getAllProducts();
 
-  boolean saveOrUpdateProduct(Product product);
+  void saveOrUpdateProduct(Product product);
 
-  boolean deleteProduct(long id);
+  void deleteProduct(long id);
 }

@@ -11,9 +11,9 @@ public interface UserDao {
 
   Optional<List<User>> getAllUsers();
 
-  boolean saveOrUpdateUser(User user);
+  void saveOrUpdateUser(User user);
 
-  boolean deleteUser(long id);
+  void deleteUser(long id);
 
   Optional<User> getUserById(long id);
 

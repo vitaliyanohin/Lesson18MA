@@ -28,8 +28,8 @@ public class AccountServiceImpl implements AccountService {
   }
 
   @Override
-  public boolean saveOrUpdateUser(User user) {
-    return userDao.saveOrUpdateUser(user);
+  public void saveOrUpdateUser(User user) {
+    userDao.saveOrUpdateUser(user);
   }
 
   @Override
@@ -38,7 +38,7 @@ public class AccountServiceImpl implements AccountService {
   }
 
   @Override
-  public boolean deleteUser(long id) {
-    return userDao.deleteUser(id);
+  public void deleteUser(long id) {
+    userDao.deleteUser(id);
   }
 }

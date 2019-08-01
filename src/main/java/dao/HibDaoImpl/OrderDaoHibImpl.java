@@ -15,7 +15,7 @@ public class OrderDaoHibImpl implements OrderDao {
   private static final Logger LOGGER = Logger.getLogger(OrderDaoHibImpl.class);
 
   @Override
-  public boolean addOrderToDb(User userId, String address, Basket boxId) {
+  public void addOrderToDb(User userId, String address, Basket boxId) {
     Transaction transaction = null;
     try (Session session = HibernateUtil.getSessionFactory().openSession()) {
       transaction = session.beginTransaction();
@@ -28,6 +28,5 @@ public class OrderDaoHibImpl implements OrderDao {
       }
       LOGGER.log(Level.ERROR, "Failed to add order in DB: ", e);
     }
-    return false;
   }
 }

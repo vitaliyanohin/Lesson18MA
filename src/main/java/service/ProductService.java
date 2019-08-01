@@ -13,7 +13,7 @@ public interface ProductService {
 
   double orderTotalPrice(List<Product> productList);
 
-  boolean deleteProduct(long id);
+  void deleteProduct(long id);
 
   void saveOrUpdateProduct(Product name);
 }

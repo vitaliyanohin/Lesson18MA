@@ -9,11 +9,9 @@ import java.util.Optional;
 
 public interface UserBoxDao {
 
-  boolean addUserBasketInDb(Basket user);
+  void addUserBasketInDb(Basket user);
 
   Optional<Basket> getBasket(User user);
 
-  default Optional<List<Product>> getProductsFromUserBox(User user) {
-    return Optional.empty();
-  }
+  Optional<List<Product>> getProductsFromUserBox(User user);
 }

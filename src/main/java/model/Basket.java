@@ -15,7 +15,7 @@ import javax.persistence.Table;
 import java.util.List;
 
 @Entity
-@Table(name = "user_basket_Hibernate")
+@Table(name = "basket_Hibernate")
 public class Basket {
 
   @Id
@@ -36,7 +36,7 @@ public class Basket {
           joinColumns = { @JoinColumn(name = "basket_id") },
           inverseJoinColumns = { @JoinColumn(name = "product_id") }
   )
-private List<Product> products;
+  private List<Product> products;
 
   public Basket() {
   }

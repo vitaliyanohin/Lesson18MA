@@ -11,11 +11,11 @@ public interface AccountService {
 
   Optional<List<User>> getAllUsers();
 
-  boolean saveOrUpdateUser(User user);
+  void saveOrUpdateUser(User user);
 
   void addUser(User name);
 
-  boolean deleteUser(long id);
+  void deleteUser(long id);
 
   Optional<User> getUserById(long id);
 }

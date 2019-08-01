@@ -40,7 +40,7 @@ public class ProductHibDaoImpl implements ProductDao {
   }
 
   @Override
-  public boolean saveOrUpdateProduct(Product product) {
+  public void saveOrUpdateProduct(Product product) {
     Transaction transaction = null;
     try (Session session = HibernateUtil.getSessionFactory().openSession()) {
       transaction = session.beginTransaction();
@@ -52,24 +52,21 @@ public class ProductHibDaoImpl implements ProductDao {
       }
       LOGGER.log(Level.ERROR, "Failed save or update Product: ", e);
     }
-    return false;
   }
 
   @Override
-  public boolean deleteProduct(long id) {
+  public void deleteProduct(long id) {
     Transaction transaction = null;
     try (Session session = HibernateUtil.getSessionFactory().openSession()) {
       transaction = session.beginTransaction();
-    Product  product = session.load(Product.class, id);
+      Product  product = session.load(Product.class, id);
       session.delete(product);
       transaction.commit();
-      return true;
     } catch (Exception e) {
       if (transaction != null) {
         transaction.rollback();
       }
        LOGGER.log(Level.ERROR, "Failed to delete Product: ", e);
     }
-    return false;
   }
 }

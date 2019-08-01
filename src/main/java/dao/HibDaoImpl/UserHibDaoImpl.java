@@ -32,7 +32,7 @@ public class UserHibDaoImpl implements UserDao {
   public Optional<List<User>> getAllUsers() {
     try (Session session = HibernateUtil.getSessionFactory().openSession()) {
       Query query = session.createQuery("FROM User");
-      return Optional.of(query.list());
+      return Optional.ofNullable(query.list());
     } catch (Exception e) {
        LOGGER.log(Level.ERROR, "Failed to get All user: ", e);
     }
@@ -40,7 +40,7 @@ public class UserHibDaoImpl implements UserDao {
   }
 
   @Override
-  public boolean saveOrUpdateUser(User user) {
+  public void saveOrUpdateUser(User user) {
     Transaction transaction = null;
     try (Session session = HibernateUtil.getSessionFactory().openSession()) {
       transaction = session.beginTransaction();
@@ -52,25 +52,22 @@ public class UserHibDaoImpl implements UserDao {
       }
        LOGGER.log(Level.ERROR, "Failed to  save or update user: ", e);
     }
-    return false;
   }
 
   @Override
-  public boolean deleteUser(long id) {
+  public void deleteUser(long id) {
     Transaction transaction = null;
     try (Session session = HibernateUtil.getSessionFactory().openSession()) {
       transaction = session.beginTransaction();
       User user = session.load(User.class, id);
       session.delete(user);
       transaction.commit();
-      return true;
     } catch (Exception e) {
       if (transaction != null) {
         transaction.rollback();
       }
        LOGGER.log(Level.ERROR, "Failed to  delete user: ", e);
     }
-    return false;
   }
 
   @Override
