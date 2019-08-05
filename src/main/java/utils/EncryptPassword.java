@@ -1,31 +1,42 @@
 package utils;
 
-import dao.impl.OrderDaoImpl;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Optional;
+import java.security.SecureRandom;
 
 public class EncryptPassword {
 
-  private static final Logger LOGGER = Logger.getLogger(OrderDaoImpl.class);
+  private static final Logger LOGGER = Logger.getLogger(EncryptPassword.class);
 
-  public static Optional<Object> encryptPassword(String input) {
+  public static String encryptPassword(String passwordToHash, byte[] salt) {
+    String generatedPassword = null;
     try {
-      MessageDigest md = MessageDigest.getInstance("SHA-512");
-      byte[] messageDigest = md.digest(input.getBytes());
-      BigInteger no = new BigInteger(1, messageDigest);
-      String hashtext = no.toString(16);
-      while (hashtext.length() < 32) {
-        hashtext = "0" + hashtext;
+      MessageDigest messageDigest = MessageDigest.getInstance("SHA-512");
+      messageDigest.update(salt);
+      byte[] bytes = messageDigest.digest(passwordToHash.getBytes());
+      StringBuilder stringBuilder = new StringBuilder();
+      for(int i=0; i< bytes.length ;i++) {
+        stringBuilder.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
       }
-      return Optional.of(hashtext);
+      generatedPassword = stringBuilder.toString();
     } catch (NoSuchAlgorithmException e) {
-       LOGGER.log(Level.ERROR, "Failed to  encrypt password: ", e);
+      LOGGER.log(Level.ERROR, "Failed to  encrypt password: ", e);
     }
-    return Optional.empty();
+    return generatedPassword;
+  }
+
+  public static byte[] getSalt() {
+    SecureRandom secureRandom = null;
+    try {
+      secureRandom = SecureRandom.getInstance("SHA1PRNG");
+    } catch (NoSuchAlgorithmException e) {
+      LOGGER.log(Level.ERROR, "Failed to  get random salt: ", e);
+    }
+    byte[] salt = new byte[16];
+    secureRandom.nextBytes(salt);
+    return salt;
   }
 }

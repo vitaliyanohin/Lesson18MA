@@ -27,6 +27,9 @@ public class User {
   @Column(name = "role")
   private String role;
 
+  @Column(name = "salt")
+  private byte[] salt;
+
   @Transient
   private Basket basket = null;
 
@@ -44,6 +47,14 @@ public class User {
   }
 
   public User() {
+  }
+
+  public byte[] getSalt() {
+    return salt;
+  }
+
+  public void setSalt(byte[] salt) {
+    this.salt = salt;
   }
 
   public Long getId() {

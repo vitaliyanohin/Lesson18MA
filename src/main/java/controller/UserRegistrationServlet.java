@@ -43,8 +43,10 @@ public class UserRegistrationServlet extends HttpServlet {
       return;
     }
     if (pass.equals(repeatPassword) ) {
-      pass = EncryptPassword.encryptPassword(pass).get().toString();
+      byte [] salt = EncryptPassword.getSalt();
+      pass = EncryptPassword.encryptPassword(pass, salt);
       User userProfile = new User(login, pass, role);
+      userProfile.setSalt(salt);
       accountService.addUser(userProfile);
       resp.setStatus(HttpServletResponse.SC_OK);
       resp.sendRedirect("/UserProfile");
