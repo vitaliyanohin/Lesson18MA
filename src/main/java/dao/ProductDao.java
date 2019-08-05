@@ -9,7 +9,7 @@ public interface ProductDao {
 
   Optional<Product> getProductById(long id);
 
-  Optional<List<Product>> getAllProducts();
+  List<Product> getAllProducts();
 
   void saveOrUpdateProduct(Product product);
 

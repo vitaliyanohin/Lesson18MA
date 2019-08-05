@@ -21,8 +21,8 @@ public class AllProductServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
           throws ServletException, IOException {
-    if (productService.getAllProducts().isPresent()) {
-      List<Product> allProductList = productService.getAllProducts().get();
+    if (!productService.getAllProducts().isEmpty()) {
+      List<Product> allProductList = productService.getAllProducts();
       User user = (User) req.getSession().getAttribute("User");
       req.setAttribute("user", user);
       req.setAttribute("allProductList", allProductList);

@@ -9,6 +9,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import utils.HibernateUtil;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,14 +30,14 @@ public class UserHibDaoImpl implements UserDao {
   }
 
   @Override
-  public Optional<List<User>> getAllUsers() {
+  public List<User> getAllUsers() {
     try (Session session = HibernateUtil.getSessionFactory().openSession()) {
       Query query = session.createQuery("FROM User");
-      return Optional.ofNullable(query.list());
+      return query.list();
     } catch (Exception e) {
        LOGGER.log(Level.ERROR, "Failed to get All user: ", e);
     }
-    return Optional.empty();
+    return Collections.emptyList();
   }
 
   @Override

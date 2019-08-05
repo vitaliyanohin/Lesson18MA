@@ -18,5 +18,5 @@ public interface UserOrderService {
 
   Optional<Basket> getBasket(User user);
 
-  Optional<List<Product>> getProductsFromUserBox(User user);
+  List<Product> getProductsFromUserBox(User user);
 }

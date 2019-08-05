@@ -9,7 +9,7 @@ public interface UserDao {
 
   Optional<User> getUserByLogin(String login);
 
-  Optional<List<User>> getAllUsers();
+  List<User> getAllUsers();
 
   void saveOrUpdateUser(User user);
 

@@ -20,8 +20,8 @@ public class AllUsersServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
           throws ServletException, IOException {
-    if (accountService.getAllUsers().isPresent()) {
-      List<User> allUserList = accountService.getAllUsers().get();
+    if (!accountService.getAllUsers().isEmpty()) {
+      List<User> allUserList = accountService.getAllUsers();
       req.setAttribute("allUserList", allUserList);
     }
     req.getRequestDispatcher("allUsers.jsp").forward(req, resp);

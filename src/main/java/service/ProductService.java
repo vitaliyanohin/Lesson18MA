@@ -9,7 +9,7 @@ public interface ProductService {
 
   Optional<Product> getProductById(long id);
 
-  Optional<List<Product>> getAllProducts();
+  List<Product> getAllProducts();
 
   double orderTotalPrice(List<Product> productList);
 

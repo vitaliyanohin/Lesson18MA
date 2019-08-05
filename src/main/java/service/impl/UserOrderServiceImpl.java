@@ -45,7 +45,7 @@ public class UserOrderServiceImpl implements UserOrderService {
   }
 
   @Override
-  public Optional<List<Product>> getProductsFromUserBox(User user) {
+  public List<Product> getProductsFromUserBox(User user) {
     return userBoxDao.getProductsFromUserBox(user);
   }
 

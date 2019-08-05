@@ -10,6 +10,7 @@ import org.hibernate.query.Query;
 import utils.EncryptPassword;
 import utils.HibernateUtil;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,14 +30,14 @@ public class ProductHibDaoImpl implements ProductDao {
   }
 
   @Override
-  public Optional<List<Product>> getAllProducts() {
+  public List<Product> getAllProducts() {
     try (Session session = HibernateUtil.getSessionFactory().openSession()) {
       Query query = session.createQuery("FROM Product");
-      return Optional.ofNullable(query.list());
+      return query.list();
     } catch (Exception e) {
        LOGGER.log(Level.ERROR, "Failed to get all Product: ", e);
     }
-    return Optional.empty();
+    return Collections.emptyList();
   }
 
   @Override

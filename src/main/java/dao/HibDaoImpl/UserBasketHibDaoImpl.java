@@ -12,6 +12,7 @@ import org.hibernate.query.Query;
 import utils.EncryptPassword;
 import utils.HibernateUtil;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,16 +22,16 @@ public class UserBasketHibDaoImpl implements UserBoxDao {
   private static final String GET_BASKET = "FROM Basket WHERE user_id = :id AND available= 'true'";
 
   @Override
-  public Optional<List<Product>> getProductsFromUserBox(User user) {
+  public List<Product> getProductsFromUserBox(User user) {
     try (Session session = HibernateUtil.getSessionFactory().openSession()) {
       Query query = session.createQuery(GET_BASKET);
       query.setParameter("id", user);
       Basket basket = (Basket) query.uniqueResult();
-      return Optional.ofNullable(basket.getProducts());
+      return basket.getProducts();
     } catch (Exception e) {
        LOGGER.log(Level.ERROR, "Failed to  get products from user box: ", e);
     }
-    return Optional.empty();
+    return Collections.emptyList();
   }
 
   @Override

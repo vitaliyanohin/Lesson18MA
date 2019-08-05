@@ -35,7 +35,7 @@ public class BoxFilter implements Filter {
           throws IOException, ServletException {
     HttpSession session = ((HttpServletRequest) request).getSession();
     User user = (User) session.getAttribute("User");
-    List<Product> productList = userBoxService.getProductsFromUserBox(user).get();
+    List<Product> productList = userBoxService.getProductsFromUserBox(user);
     Double totalPrice = productService.orderTotalPrice(productList);
     request.setAttribute("productList", productList);
     request.setAttribute("totalPrice", totalPrice);
