@@ -14,14 +14,14 @@ public class EncryptPassword {
   public static String encryptPassword(String passwordToHash, byte[] salt) {
     String generatedPassword = null;
     try {
-      MessageDigest md = MessageDigest.getInstance("SHA-512");
-      md.update(salt);
-      byte[] bytes = md.digest(passwordToHash.getBytes());
-      StringBuilder sb = new StringBuilder();
+      MessageDigest messageDigest = MessageDigest.getInstance("SHA-512");
+      messageDigest.update(salt);
+      byte[] bytes = messageDigest.digest(passwordToHash.getBytes());
+      StringBuilder stringBuilder = new StringBuilder();
       for(int i=0; i< bytes.length ;i++) {
-        sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+        stringBuilder.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
       }
-      generatedPassword = sb.toString();
+      generatedPassword = stringBuilder.toString();
     } catch (NoSuchAlgorithmException e) {
       LOGGER.log(Level.ERROR, "Failed to  encrypt password: ", e);
     }
@@ -29,14 +29,14 @@ public class EncryptPassword {
   }
 
   public static byte[] getSalt() {
-    SecureRandom sr = null;
+    SecureRandom secureRandom = null;
     try {
-      sr = SecureRandom.getInstance("SHA1PRNG");
+      secureRandom = SecureRandom.getInstance("SHA1PRNG");
     } catch (NoSuchAlgorithmException e) {
       LOGGER.log(Level.ERROR, "Failed to  get random salt: ", e);
     }
     byte[] salt = new byte[16];
-    sr.nextBytes(salt);
+    secureRandom.nextBytes(salt);
     return salt;
   }
 }
